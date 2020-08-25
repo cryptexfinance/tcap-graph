@@ -133,6 +133,23 @@ export class State extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get owner(): Bytes | null {
+    let value = this.get("owner");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set owner(value: Bytes | null) {
+    if (value === null) {
+      this.unset("owner");
+    } else {
+      this.set("owner", Value.fromBytes(value as Bytes));
+    }
+  }
+
   get isPaused(): boolean {
     let value = this.get("isPaused");
     return value.toBoolean();
@@ -199,6 +216,23 @@ export class State extends Entity {
       this.unset("ethContract");
     } else {
       this.set("ethContract", Value.fromBytes(value as Bytes));
+    }
+  }
+
+  get tcapOracle(): Bytes | null {
+    let value = this.get("tcapOracle");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set tcapOracle(value: Bytes | null) {
+    if (value === null) {
+      this.unset("tcapOracle");
+    } else {
+      this.set("tcapOracle", Value.fromBytes(value as Bytes));
     }
   }
 

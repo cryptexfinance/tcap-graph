@@ -8,11 +8,13 @@ type Vault @entity {
 
 type State @entity {
   id: ID!
+  owner: Bytes #address
   isPaused: Boolean
   hasWishlist: Boolean
   tcapContract: Bytes #address
   collateralContract: Bytes #address
   ethContract: Bytes #address
+  tcapOracle: Bytes #address
   burnFee: Int
   liquidationPenalty: Int
   ratio: Int
