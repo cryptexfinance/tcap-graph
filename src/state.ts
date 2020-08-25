@@ -1,11 +1,4 @@
 import {
-  BigInt,
-  DataSourceContext,
-  DataSourceTemplate,
-  dataSource,
-} from "@graphprotocol/graph-ts";
-import {
-  Contract,
   LogSetBurnFee,
   LogSetCollateralContract,
   LogSetCollateralPriceOracle,
@@ -32,7 +25,7 @@ export function handleLogSetBurnFee(event: LogSetBurnFee): void {
   state.save();
 }
 
-export function handlLogSetCollateralContract(
+export function handleLogSetCollateralContract(
   event: LogSetCollateralContract
 ): void {
   let state = State.load("0");
@@ -46,7 +39,7 @@ export function handlLogSetCollateralContract(
   state.save();
 }
 
-export function handlLogSetCollateralPriceOracle(
+export function handleLogSetCollateralPriceOracle(
   event: LogSetCollateralPriceOracle
 ): void {
   let state = State.load("0");

@@ -1,9 +1,4 @@
-import {
-  BigInt,
-  DataSourceContext,
-  DataSourceTemplate,
-  dataSource,
-} from "@graphprotocol/graph-ts";
+import { dataSource } from "@graphprotocol/graph-ts";
 import {
   Contract,
   LogAddCollateral,
