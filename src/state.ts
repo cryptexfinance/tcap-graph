@@ -15,6 +15,8 @@ import {
   LogSetTCAPOracle,
   LogSetTCAPXContract,
   LogEnableWhitelist,
+  OwnershipTransferred,
+  Paused,
 } from "../generated/Contract/Contract";
 import { State } from "../generated/schema";
 
@@ -128,6 +130,41 @@ export function handleLogEnableWhitelist(event: LogEnableWhitelist): void {
     state.owner = event.params._owner;
   }
   state.hasWishlist = event.params._enable;
+  // Entities can be written to the store with `.save()`
+  state.save();
+}
+
+export function handleOwnershipTransferred(event: OwnershipTransferred): void {
+  let state = State.load("0");
+
+  if (state == null) {
+    state = new State("0");
+  }
+  state.owner = event.params.newOwner;
+  // Entities can be written to the store with `.save()`
+  state.save();
+}
+
+export function handlePaused(event: Paused): void {
+  let state = State.load("0");
+
+  if (state == null) {
+    state = new State("0");
+    state.owner = event.params.account;
+  }
+  state.isPaused = true;
+  // Entities can be written to the store with `.save()`
+  state.save();
+}
+
+export function handleUnpaused(event: Paused): void {
+  let state = State.load("0");
+
+  if (state == null) {
+    state = new State("0");
+    state.owner = event.params.account;
+  }
+  state.isPaused = false;
   // Entities can be written to the store with `.save()`
   state.save();
 }
