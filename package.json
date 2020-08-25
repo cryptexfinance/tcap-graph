@@ -1,13 +1,13 @@
 {
-  "name": "WethVaultRinkeby",
+  "name": "tcap-rinkeby",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexglobal/tcap-rinkeby",
-    "create-local": "graph create --node http://localhost:8020/ cryptex/WethVaultRinkeby",
-    "remove-local": "graph remove --node http://localhost:8020/ cryptex/WethVaultRinkeby",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 cryptex/WethVaultRinkeby"
+    "create-local": "graph create --node http://localhost:8020/ cryptexglobal/tcap-rinkeby",
+    "remove-local": "graph remove --node http://localhost:8020/ cryptexglobal/tcap-rinkeby",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 cryptexglobal/tcap-rinkeby"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.18.0",
