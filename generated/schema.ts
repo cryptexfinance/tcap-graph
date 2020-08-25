@@ -93,13 +93,21 @@ export class Vault extends Entity {
     }
   }
 
-  get currentRatio(): i32 {
+  get currentRatio(): BigInt | null {
     let value = this.get("currentRatio");
-    return value.toI32();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set currentRatio(value: i32) {
-    this.set("currentRatio", Value.fromI32(value));
+  set currentRatio(value: BigInt | null) {
+    if (value === null) {
+      this.unset("currentRatio");
+    } else {
+      this.set("currentRatio", Value.fromBigInt(value as BigInt));
+    }
   }
 }
 
@@ -236,39 +244,71 @@ export class State extends Entity {
     }
   }
 
-  get burnFee(): i32 {
+  get burnFee(): BigInt | null {
     let value = this.get("burnFee");
-    return value.toI32();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set burnFee(value: i32) {
-    this.set("burnFee", Value.fromI32(value));
+  set burnFee(value: BigInt | null) {
+    if (value === null) {
+      this.unset("burnFee");
+    } else {
+      this.set("burnFee", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get liquidationPenalty(): i32 {
+  get liquidationPenalty(): BigInt | null {
     let value = this.get("liquidationPenalty");
-    return value.toI32();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set liquidationPenalty(value: i32) {
-    this.set("liquidationPenalty", Value.fromI32(value));
+  set liquidationPenalty(value: BigInt | null) {
+    if (value === null) {
+      this.unset("liquidationPenalty");
+    } else {
+      this.set("liquidationPenalty", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get ratio(): i32 {
+  get ratio(): BigInt | null {
     let value = this.get("ratio");
-    return value.toI32();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set ratio(value: i32) {
-    this.set("ratio", Value.fromI32(value));
+  set ratio(value: BigInt | null) {
+    if (value === null) {
+      this.unset("ratio");
+    } else {
+      this.set("ratio", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get divisor(): i32 {
+  get divisor(): BigInt | null {
     let value = this.get("divisor");
-    return value.toI32();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set divisor(value: i32) {
-    this.set("divisor", Value.fromI32(value));
+  set divisor(value: BigInt | null) {
+    if (value === null) {
+      this.unset("divisor");
+    } else {
+      this.set("divisor", Value.fromBigInt(value as BigInt));
+    }
   }
 }

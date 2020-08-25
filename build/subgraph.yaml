@@ -1,0 +1,80 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Vault
+    network: rinkeby
+    source:
+      address: "0x277d85357884d5F4485E0Cde94a43B77E3a2682e"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: Contract
+          file: Vault/abis/Contract.json
+      eventHandlers:
+        - event: LogAddCollateral(indexed address,indexed uint256,uint256)
+          handler: handleLogAddCollateral
+        - event: LogBurn(indexed address,indexed uint256,uint256)
+          handler: handleLogBurn
+        - event: LogCreateVault(indexed address,indexed uint256)
+          handler: handleLogCreateVault
+        - event: LogLiquidateVault(indexed uint256,indexed address,uint256,uint256)
+          handler: handleLogLiquidateVault
+        - event: LogMint(indexed address,indexed uint256,uint256)
+          handler: handleLogMint
+        - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
+          handler: handleLogRemoveCollateral
+      file: Vault/Vault.wasm
+  - kind: ethereum/contract
+    name: State
+    network: rinkeby
+    source:
+      address: "0x277d85357884d5F4485E0Cde94a43B77E3a2682e"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: Contract
+          file: State/abis/Contract.json
+      eventHandlers:
+        - event: LogEnableWhitelist(indexed address,bool)
+          handler: handleLogEnableWhitelist
+        - event: LogRetrieveFees(indexed address,uint256)
+          handler: handleLogRetrieveFees
+        - event: LogSetBurnFee(indexed address,uint256)
+          handler: handleLogSetBurnFee
+        - event: LogSetCollateralContract(indexed address,address)
+          handler: handleLogSetCollateralContract
+        - event: LogSetCollateralPriceOracle(indexed address,address)
+          handler: handleLogSetCollateralPriceOracle
+        - event: LogSetDivisor(indexed address,uint256)
+          handler: handleLogSetDivisor
+        - event: LogSetLiquidationPenalty(indexed address,uint256)
+          handler: handleLogSetLiquidationPenalty
+        - event: LogSetRatio(indexed address,uint256)
+          handler: handleLogSetRatio
+        - event: LogSetTCAPOracle(indexed address,address)
+          handler: handleLogSetTCAPOracle
+        - event: LogSetTCAPXContract(indexed address,address)
+          handler: handleLogSetTCAPXContract
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: State/State.wasm

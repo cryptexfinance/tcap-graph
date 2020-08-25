@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptex/WethVaultRinkeby",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexglobal/tcap-rinkeby",
     "create-local": "graph create --node http://localhost:8020/ cryptex/WethVaultRinkeby",
     "remove-local": "graph remove --node http://localhost:8020/ cryptex/WethVaultRinkeby",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 cryptex/WethVaultRinkeby"
