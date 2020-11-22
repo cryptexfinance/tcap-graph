@@ -1,13 +1,15 @@
 specVersion: 0.0.2
+repository: https://github.com/cryptexglobal/contracts
 schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Vault
+    name: WBTCVault
     network: rinkeby
     source:
-      address: "0x277d85357884d5F4485E0Cde94a43B77E3a2682e"
-      abi: Contract
+      address: "0x2F11442b356adbD3C7EDfbf7110b2BD6e6b7eB9e"
+      abi: ERC20Vault
+      startBlock: 7500000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -15,8 +17,8 @@ dataSources:
       entities:
         - Vault
       abis:
-        - name: Contract
-          file: Vault/abis/Contract.json
+        - name: ERC20Vault
+          file: WBTCVault/abis/ERC20Vault.json
       eventHandlers:
         - event: LogAddCollateral(indexed address,indexed uint256,uint256)
           handler: handleLogAddCollateral
@@ -30,43 +32,34 @@ dataSources:
           handler: handleLogMint
         - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
           handler: handleLogRemoveCollateral
-      file: Vault/Vault.wasm
+      file: WBTCVault/WBTCVault.wasm
   - kind: ethereum/contract
     name: State
     network: rinkeby
     source:
-      address: "0x277d85357884d5F4485E0Cde94a43B77E3a2682e"
-      abi: Contract
+      address: "0x2F11442b356adbD3C7EDfbf7110b2BD6e6b7eB9e"
+      abi: ERC20Vault
+      startBlock: 7500000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - State
+        - WBTCState
       abis:
-        - name: Contract
-          file: State/abis/Contract.json
+        - name: ERC20Vault
+          file: State/abis/ERC20Vault.json
       eventHandlers:
-        - event: LogEnableWhitelist(indexed address,bool)
-          handler: handleLogEnableWhitelist
+        - event: LogInitializeVault(uint256,uint256,uint256,uint256,address,address,address,address,address)
+          handler: handleLogInitializeVault
         - event: LogRetrieveFees(indexed address,uint256)
           handler: handleLogRetrieveFees
         - event: LogSetBurnFee(indexed address,uint256)
           handler: handleLogSetBurnFee
-        - event: LogSetCollateralContract(indexed address,address)
-          handler: handleLogSetCollateralContract
-        - event: LogSetCollateralPriceOracle(indexed address,address)
-          handler: handleLogSetCollateralPriceOracle
-        - event: LogSetDivisor(indexed address,uint256)
-          handler: handleLogSetDivisor
         - event: LogSetLiquidationPenalty(indexed address,uint256)
           handler: handleLogSetLiquidationPenalty
         - event: LogSetRatio(indexed address,uint256)
           handler: handleLogSetRatio
-        - event: LogSetTCAPOracle(indexed address,address)
-          handler: handleLogSetTCAPOracle
-        - event: LogSetTCAPXContract(indexed address,address)
-          handler: handleLogSetTCAPXContract
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: Paused(address)
@@ -74,3 +67,151 @@ dataSources:
         - event: Unpaused(address)
           handler: handleUnpaused
       file: State/State.wasm
+  - kind: ethereum/contract
+    name: DAIVault
+    network: rinkeby
+    source:
+      address: "0xdB92F6de9F93465a9de8F9c63F15c9BA3A0d0962"
+      abi: ERC20Vault
+      startBlock: 7500000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: ERC20Vault
+          file: DAIVault/abis/ERC20Vault.json
+      eventHandlers:
+        - event: LogAddCollateral(indexed address,indexed uint256,uint256)
+          handler: handleLogAddCollateral
+        - event: LogBurn(indexed address,indexed uint256,uint256)
+          handler: handleLogBurn
+        - event: LogCreateVault(indexed address,indexed uint256)
+          handler: handleLogCreateVault
+        - event: LogLiquidateVault(indexed uint256,indexed address,uint256,uint256)
+          handler: handleLogLiquidateVault
+        - event: LogMint(indexed address,indexed uint256,uint256)
+          handler: handleLogMint
+        - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
+          handler: handleLogRemoveCollateral
+      file: WBTCVault/WBTCVault.wasm
+  - kind: ethereum/contract
+    name: DAIState
+    network: rinkeby
+    source:
+      address: "0xdB92F6de9F93465a9de8F9c63F15c9BA3A0d0962"
+      abi: ERC20Vault
+      startBlock: 7500000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: ERC20Vault
+          file: DAIState/abis/ERC20Vault.json
+      eventHandlers:
+        - event: LogInitializeVault(uint256,uint256,uint256,uint256,address,address,address,address,address)
+          handler: handleLogInitializeVault
+        - event: LogRetrieveFees(indexed address,uint256)
+          handler: handleLogRetrieveFees
+        - event: LogSetBurnFee(indexed address,uint256)
+          handler: handleLogSetBurnFee
+        - event: LogSetLiquidationPenalty(indexed address,uint256)
+          handler: handleLogSetLiquidationPenalty
+        - event: LogSetRatio(indexed address,uint256)
+          handler: handleLogSetRatio
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: State/State.wasm
+  - kind: ethereum/contract
+    name: ETHVault
+    network: rinkeby
+    source:
+      address: "0xB6428Cdb64b028e504767E7E279AD63d5bc43e05"
+      abi: ETHVault
+      startBlock: 7500000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: ETHVault
+          file: ETHVault/abis/ETHVault.json
+      eventHandlers:
+        - event: LogAddCollateral(indexed address,indexed uint256,uint256)
+          handler: handleLogAddCollateral
+        - event: LogBurn(indexed address,indexed uint256,uint256)
+          handler: handleLogBurn
+        - event: LogCreateVault(indexed address,indexed uint256)
+          handler: handleLogCreateVault
+        - event: LogLiquidateVault(indexed uint256,indexed address,uint256,uint256)
+          handler: handleLogLiquidateVault
+        - event: LogMint(indexed address,indexed uint256,uint256)
+          handler: handleLogMint
+        - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
+          handler: handleLogRemoveCollateral
+      file: WBTCVault/WBTCVault.wasm
+  - kind: ethereum/contract
+    name: ETHState
+    network: rinkeby
+    source:
+      address: "0xB6428Cdb64b028e504767E7E279AD63d5bc43e05"
+      abi: ETHVault
+      startBlock: 7500000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: ETHVault
+          file: ETHState/abis/ETHVault.json
+      eventHandlers:
+        - event: LogInitializeVault(uint256,uint256,uint256,uint256,address,address,address,address,address)
+          handler: handleLogInitializeVault
+        - event: LogRetrieveFees(indexed address,uint256)
+          handler: handleLogRetrieveFees
+        - event: LogSetBurnFee(indexed address,uint256)
+          handler: handleLogSetBurnFee
+        - event: LogSetLiquidationPenalty(indexed address,uint256)
+          handler: handleLogSetLiquidationPenalty
+        - event: LogSetRatio(indexed address,uint256)
+          handler: handleLogSetRatio
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: State/State.wasm
+  - kind: ethereum/contract
+    name: TCAP
+    network: rinkeby
+    source:
+      address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
+      abi: Oracle
+      startBlock: 7500000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Oracle
+      abis:
+        - name: Oracle
+          file: TCAP/abis/Oracle.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdated
+      file: TCAP/TCAP.wasm

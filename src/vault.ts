@@ -1,24 +1,28 @@
 import { dataSource } from "@graphprotocol/graph-ts";
 import {
-  Contract,
+  ERC20Vault,
   LogAddCollateral,
   LogBurn,
   LogCreateVault,
   LogLiquidateVault,
   LogMint,
   LogRemoveCollateral,
-} from "../generated/Contract/Contract";
-import { Vault, State } from "../generated/schema";
+} from "../generated/Vault/ERC20Vault";
+import { Vault } from "../generated/schema";
 
 export function handleLogAddCollateral(event: LogAddCollateral): void {
-  let vault = Vault.load(event.params._id.toString());
+  let vault = Vault.load(
+    `${dataSource.address()}-${event.params._id.toString()}`
+  );
 
   if (vault == null) {
-    vault = new Vault(event.params._id.toString());
+    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault.address = dataSource.address();
+    vault.vaultId = event.params._id;
   }
   vault.collateral = vault.collateral.plus(event.params._amount);
 
-  let contract = Contract.bind(dataSource.address());
+  let contract = ERC20Vault.bind(dataSource.address());
   let currentRatio = contract.getVaultRatio(event.params._id);
   vault.currentRatio = currentRatio;
 
@@ -69,14 +73,18 @@ export function handleLogAddCollateral(event: LogAddCollateral): void {
 }
 
 export function handleLogBurn(event: LogBurn): void {
-  let vault = Vault.load(event.params._id.toString());
+  let vault = Vault.load(
+    `${dataSource.address()}-${event.params._id.toString()}`
+  );
 
   if (vault == null) {
-    vault = new Vault(event.params._id.toString());
+    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault.address = dataSource.address();
+    vault.vaultId = event.params._id;
   }
   vault.debt = vault.debt.minus(event.params._amount);
 
-  let contract = Contract.bind(dataSource.address());
+  let contract = ERC20Vault.bind(dataSource.address());
   let currentRatio = contract.getVaultRatio(event.params._id);
   vault.currentRatio = currentRatio;
 
@@ -87,23 +95,33 @@ export function handleLogBurn(event: LogBurn): void {
 }
 
 export function handleLogCreateVault(event: LogCreateVault): void {
-  let vault = new Vault(event.params._id.toString());
+  let vault = new Vault(
+    `${dataSource.address()}-${event.params._id.toString()}`
+  );
   vault.owner = event.params._owner;
+  vault.address = dataSource.address();
+  vault.vaultId = event.params._id;
 
   // Entities can be written to the store with `.save()`
   vault.save();
 }
 
 export function handleLogLiquidateVault(event: LogLiquidateVault): void {
-  let vault = Vault.load(event.params._vaultId.toString());
+  let vault = Vault.load(
+    `${dataSource.address()}-${event.params._vaultId.toString()}`
+  );
 
   if (vault == null) {
-    vault = new Vault(event.params._vaultId.toString());
+    vault = new Vault(
+      `${dataSource.address()}-${event.params._vaultId.toString()}`
+    );
+    vault.vaultId = event.params._vaultId;
+    vault.address = dataSource.address();
   }
   vault.debt = vault.debt.minus(event.params._liquidationCollateral);
   vault.collateral = vault.collateral.minus(event.params._reward);
 
-  let contract = Contract.bind(dataSource.address());
+  let contract = ERC20Vault.bind(dataSource.address());
   let currentRatio = contract.getVaultRatio(event.params._vaultId);
   vault.currentRatio = currentRatio;
 
@@ -114,14 +132,18 @@ export function handleLogLiquidateVault(event: LogLiquidateVault): void {
 }
 
 export function handleLogMint(event: LogMint): void {
-  let vault = Vault.load(event.params._id.toString());
+  let vault = Vault.load(
+    `${dataSource.address()}-${event.params._id.toString()}`
+  );
 
   if (vault == null) {
-    vault = new Vault(event.params._id.toString());
+    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault.address = dataSource.address();
+    vault.vaultId = event.params._id;
   }
   vault.debt = vault.debt.plus(event.params._amount);
 
-  let contract = Contract.bind(dataSource.address());
+  let contract = ERC20Vault.bind(dataSource.address());
   let currentRatio = contract.getVaultRatio(event.params._id);
   vault.currentRatio = currentRatio;
   // Entities can be written to the store with `.save()`
@@ -129,14 +151,18 @@ export function handleLogMint(event: LogMint): void {
 }
 
 export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
-  let vault = Vault.load(event.params._id.toString());
+  let vault = Vault.load(
+    `${dataSource.address()}-${event.params._id.toString()}`
+  );
 
   if (vault == null) {
-    vault = new Vault(event.params._id.toString());
+    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault.address = dataSource.address();
+    vault.vaultId = event.params._id;
   }
   vault.collateral = vault.collateral.minus(event.params._amount);
 
-  let contract = Contract.bind(dataSource.address());
+  let contract = ERC20Vault.bind(dataSource.address());
   let currentRatio = contract.getVaultRatio(event.params._id);
   vault.currentRatio = currentRatio;
   // Entities can be written to the store with `.save()`

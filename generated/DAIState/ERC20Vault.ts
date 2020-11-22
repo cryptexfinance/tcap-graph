@@ -84,25 +84,53 @@ export class LogCreateVault__Params {
   }
 }
 
-export class LogEnableWhitelist extends ethereum.Event {
-  get params(): LogEnableWhitelist__Params {
-    return new LogEnableWhitelist__Params(this);
+export class LogInitializeVault extends ethereum.Event {
+  get params(): LogInitializeVault__Params {
+    return new LogInitializeVault__Params(this);
   }
 }
 
-export class LogEnableWhitelist__Params {
-  _event: LogEnableWhitelist;
+export class LogInitializeVault__Params {
+  _event: LogInitializeVault;
 
-  constructor(event: LogEnableWhitelist) {
+  constructor(event: LogInitializeVault) {
     this._event = event;
   }
 
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
+  get _divisor(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 
-  get _enable(): boolean {
-    return this._event.parameters[1].value.toBoolean();
+  get _ratio(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _burnFee(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get _liquidationPenalty(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get _tcapOracle(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
+
+  get _tcapAddress(): Address {
+    return this._event.parameters[5].value.toAddress();
+  }
+
+  get _collateralAddress(): Address {
+    return this._event.parameters[6].value.toAddress();
+  }
+
+  get _collateralOracle(): Address {
+    return this._event.parameters[7].value.toAddress();
+  }
+
+  get _ethOracle(): Address {
+    return this._event.parameters[8].value.toAddress();
   }
 }
 
@@ -232,72 +260,6 @@ export class LogSetBurnFee__Params {
   }
 }
 
-export class LogSetCollateralContract extends ethereum.Event {
-  get params(): LogSetCollateralContract__Params {
-    return new LogSetCollateralContract__Params(this);
-  }
-}
-
-export class LogSetCollateralContract__Params {
-  _event: LogSetCollateralContract;
-
-  constructor(event: LogSetCollateralContract) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _collateralContract(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-}
-
-export class LogSetCollateralPriceOracle extends ethereum.Event {
-  get params(): LogSetCollateralPriceOracle__Params {
-    return new LogSetCollateralPriceOracle__Params(this);
-  }
-}
-
-export class LogSetCollateralPriceOracle__Params {
-  _event: LogSetCollateralPriceOracle;
-
-  constructor(event: LogSetCollateralPriceOracle) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _priceOracle(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-}
-
-export class LogSetDivisor extends ethereum.Event {
-  get params(): LogSetDivisor__Params {
-    return new LogSetDivisor__Params(this);
-  }
-}
-
-export class LogSetDivisor__Params {
-  _event: LogSetDivisor;
-
-  constructor(event: LogSetDivisor) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _divisor(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
 export class LogSetLiquidationPenalty extends ethereum.Event {
   get params(): LogSetLiquidationPenalty__Params {
     return new LogSetLiquidationPenalty__Params(this);
@@ -342,50 +304,6 @@ export class LogSetRatio__Params {
   }
 }
 
-export class LogSetTCAPOracle extends ethereum.Event {
-  get params(): LogSetTCAPOracle__Params {
-    return new LogSetTCAPOracle__Params(this);
-  }
-}
-
-export class LogSetTCAPOracle__Params {
-  _event: LogSetTCAPOracle;
-
-  constructor(event: LogSetTCAPOracle) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _oracle(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-}
-
-export class LogSetTCAPXContract extends ethereum.Event {
-  get params(): LogSetTCAPXContract__Params {
-    return new LogSetTCAPXContract__Params(this);
-  }
-}
-
-export class LogSetTCAPXContract__Params {
-  _event: LogSetTCAPXContract;
-
-  constructor(event: LogSetTCAPXContract) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _token(): Address {
-    return this._event.parameters[1].value.toAddress();
-  }
-}
-
 export class OwnershipTransferred extends ethereum.Event {
   get params(): OwnershipTransferred__Params {
     return new OwnershipTransferred__Params(this);
@@ -423,6 +341,32 @@ export class Paused__Params {
 
   get account(): Address {
     return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class RoleAdminChanged extends ethereum.Event {
+  get params(): RoleAdminChanged__Params {
+    return new RoleAdminChanged__Params(this);
+  }
+}
+
+export class RoleAdminChanged__Params {
+  _event: RoleAdminChanged;
+
+  constructor(event: RoleAdminChanged) {
+    this._event = event;
+  }
+
+  get role(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get previousAdminRole(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get newAdminRole(): Bytes {
+    return this._event.parameters[2].value.toBytes();
   }
 }
 
@@ -496,7 +440,7 @@ export class Unpaused__Params {
   }
 }
 
-export class Contract__getVaultResult {
+export class ERC20Vault__getVaultResult {
   value0: BigInt;
   value1: BigInt;
   value2: Address;
@@ -519,7 +463,7 @@ export class Contract__getVaultResult {
   }
 }
 
-export class Contract__vaultsResult {
+export class ERC20Vault__vaultsResult {
   value0: BigInt;
   value1: BigInt;
   value2: BigInt;
@@ -542,9 +486,9 @@ export class Contract__vaultsResult {
   }
 }
 
-export class Contract extends ethereum.SmartContract {
-  static bind(address: Address): Contract {
-    return new Contract("Contract", address);
+export class ERC20Vault extends ethereum.SmartContract {
+  static bind(address: Address): ERC20Vault {
+    return new ERC20Vault("ERC20Vault", address);
   }
 
   DEFAULT_ADMIN_ROLE(): Bytes {
@@ -570,33 +514,33 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  INVESTOR_ROLE(): Bytes {
-    let result = super.call("INVESTOR_ROLE", "INVESTOR_ROLE():(bytes32)", []);
+  ETHPriceOracle(): Address {
+    let result = super.call("ETHPriceOracle", "ETHPriceOracle():(address)", []);
 
-    return result[0].toBytes();
+    return result[0].toAddress();
   }
 
-  try_INVESTOR_ROLE(): ethereum.CallResult<Bytes> {
+  try_ETHPriceOracle(): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "INVESTOR_ROLE",
-      "INVESTOR_ROLE():(bytes32)",
+      "ETHPriceOracle",
+      "ETHPriceOracle():(address)",
       []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBytes());
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  TCAPXPrice(): BigInt {
-    let result = super.call("TCAPXPrice", "TCAPXPrice():(uint256)", []);
+  TCAPPrice(): BigInt {
+    let result = super.call("TCAPPrice", "TCAPPrice():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_TCAPXPrice(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("TCAPXPrice", "TCAPXPrice():(uint256)", []);
+  try_TCAPPrice(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("TCAPPrice", "TCAPPrice():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -604,14 +548,14 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  TCAPXToken(): Address {
-    let result = super.call("TCAPXToken", "TCAPXToken():(address)", []);
+  TCAPToken(): Address {
+    let result = super.call("TCAPToken", "TCAPToken():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_TCAPXToken(): ethereum.CallResult<Address> {
-    let result = super.tryCall("TCAPXToken", "TCAPXToken():(address)", []);
+  try_TCAPToken(): ethereum.CallResult<Address> {
+    let result = super.tryCall("TCAPToken", "TCAPToken():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -680,6 +624,21 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  counter(): BigInt {
+    let result = super.call("counter", "counter():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_counter(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("counter", "counter():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   divisor(): BigInt {
     let result = super.call("divisor", "divisor():(uint256)", []);
 
@@ -707,6 +666,29 @@ export class Contract extends ethereum.SmartContract {
     let result = super.tryCall("getFee", "getFee(uint256):(uint256)", [
       ethereum.Value.fromUnsignedBigInt(_amount)
     ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getOraclePrice(_oracle: Address): BigInt {
+    let result = super.call(
+      "getOraclePrice",
+      "getOraclePrice(address):(uint256)",
+      [ethereum.Value.fromAddress(_oracle)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getOraclePrice(_oracle: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getOraclePrice",
+      "getOraclePrice(address):(uint256)",
+      [ethereum.Value.fromAddress(_oracle)]
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -787,14 +769,14 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getVault(_id: BigInt): Contract__getVaultResult {
+  getVault(_id: BigInt): ERC20Vault__getVaultResult {
     let result = super.call(
       "getVault",
       "getVault(uint256):(uint256,uint256,address,uint256)",
       [ethereum.Value.fromUnsignedBigInt(_id)]
     );
 
-    return new Contract__getVaultResult(
+    return new ERC20Vault__getVaultResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toAddress(),
@@ -802,7 +784,7 @@ export class Contract extends ethereum.SmartContract {
     );
   }
 
-  try_getVault(_id: BigInt): ethereum.CallResult<Contract__getVaultResult> {
+  try_getVault(_id: BigInt): ethereum.CallResult<ERC20Vault__getVaultResult> {
     let result = super.tryCall(
       "getVault",
       "getVault(uint256):(uint256,uint256,address,uint256)",
@@ -813,7 +795,7 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Contract__getVaultResult(
+      new ERC20Vault__getVaultResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toAddress(),
@@ -866,6 +848,21 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
+  isInitialized(): boolean {
+    let result = super.call("isInitialized", "isInitialized():(bool)", []);
+
+    return result[0].toBoolean();
+  }
+
+  try_isInitialized(): ethereum.CallResult<boolean> {
+    let result = super.tryCall("isInitialized", "isInitialized():(bool)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
   liquidationPenalty(): BigInt {
     let result = super.call(
       "liquidationPenalty",
@@ -905,6 +902,21 @@ export class Contract extends ethereum.SmartContract {
       "liquidationReward(uint256):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(_vaultId)]
     );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  oracleDigits(): BigInt {
+    let result = super.call("oracleDigits", "oracleDigits():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_oracleDigits(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("oracleDigits", "oracleDigits():(uint256)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -980,22 +992,20 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  requiredLiquidationCollateral(_vaultId: BigInt): BigInt {
+  requiredLiquidationTCAP(_vaultId: BigInt): BigInt {
     let result = super.call(
-      "requiredLiquidationCollateral",
-      "requiredLiquidationCollateral(uint256):(uint256)",
+      "requiredLiquidationTCAP",
+      "requiredLiquidationTCAP(uint256):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(_vaultId)]
     );
 
     return result[0].toBigInt();
   }
 
-  try_requiredLiquidationCollateral(
-    _vaultId: BigInt
-  ): ethereum.CallResult<BigInt> {
+  try_requiredLiquidationTCAP(_vaultId: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "requiredLiquidationCollateral",
-      "requiredLiquidationCollateral(uint256):(uint256)",
+      "requiredLiquidationTCAP",
+      "requiredLiquidationTCAP(uint256):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(_vaultId)]
     );
     if (result.reverted) {
@@ -1003,6 +1013,29 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  supportsInterface(interfaceId: Bytes): boolean {
+    let result = super.call(
+      "supportsInterface",
+      "supportsInterface(bytes4):(bool)",
+      [ethereum.Value.fromFixedBytes(interfaceId)]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_supportsInterface(interfaceId: Bytes): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "supportsInterface",
+      "supportsInterface(bytes4):(bool)",
+      [ethereum.Value.fromFixedBytes(interfaceId)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   tcapOracle(): Address {
@@ -1020,18 +1053,18 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  vaultToUser(param0: Address): BigInt {
-    let result = super.call("vaultToUser", "vaultToUser(address):(uint256)", [
+  userToVault(param0: Address): BigInt {
+    let result = super.call("userToVault", "userToVault(address):(uint256)", [
       ethereum.Value.fromAddress(param0)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_vaultToUser(param0: Address): ethereum.CallResult<BigInt> {
+  try_userToVault(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "vaultToUser",
-      "vaultToUser(address):(uint256)",
+      "userToVault",
+      "userToVault(address):(uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -1041,14 +1074,14 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  vaults(param0: BigInt): Contract__vaultsResult {
+  vaults(param0: BigInt): ERC20Vault__vaultsResult {
     let result = super.call(
       "vaults",
       "vaults(uint256):(uint256,uint256,uint256,address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
-    return new Contract__vaultsResult(
+    return new ERC20Vault__vaultsResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
       result[2].toBigInt(),
@@ -1056,7 +1089,7 @@ export class Contract extends ethereum.SmartContract {
     );
   }
 
-  try_vaults(param0: BigInt): ethereum.CallResult<Contract__vaultsResult> {
+  try_vaults(param0: BigInt): ethereum.CallResult<ERC20Vault__vaultsResult> {
     let result = super.tryCall(
       "vaults",
       "vaults(uint256):(uint256,uint256,uint256,address)",
@@ -1067,7 +1100,7 @@ export class Contract extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Contract__vaultsResult(
+      new ERC20Vault__vaultsResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
         value[2].toBigInt(),
@@ -1075,28 +1108,35 @@ export class Contract extends ethereum.SmartContract {
       )
     );
   }
+}
 
-  whitelistEnabled(): boolean {
-    let result = super.call(
-      "whitelistEnabled",
-      "whitelistEnabled():(bool)",
-      []
-    );
-
-    return result[0].toBoolean();
+export class ConstructorCall extends ethereum.Call {
+  get inputs(): ConstructorCall__Inputs {
+    return new ConstructorCall__Inputs(this);
   }
 
-  try_whitelistEnabled(): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "whitelistEnabled",
-      "whitelistEnabled():(bool)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  get outputs(): ConstructorCall__Outputs {
+    return new ConstructorCall__Outputs(this);
+  }
+}
+
+export class ConstructorCall__Inputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+
+  get orchestrator(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class ConstructorCall__Outputs {
+  _call: ConstructorCall;
+
+  constructor(call: ConstructorCall) {
+    this._call = call;
   }
 }
 
@@ -1126,36 +1166,6 @@ export class AddCollateralCall__Outputs {
   _call: AddCollateralCall;
 
   constructor(call: AddCollateralCall) {
-    this._call = call;
-  }
-}
-
-export class AddInvestorCall extends ethereum.Call {
-  get inputs(): AddInvestorCall__Inputs {
-    return new AddInvestorCall__Inputs(this);
-  }
-
-  get outputs(): AddInvestorCall__Outputs {
-    return new AddInvestorCall__Outputs(this);
-  }
-}
-
-export class AddInvestorCall__Inputs {
-  _call: AddInvestorCall;
-
-  constructor(call: AddInvestorCall) {
-    this._call = call;
-  }
-
-  get _investor(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class AddInvestorCall__Outputs {
-  _call: AddInvestorCall;
-
-  constructor(call: AddInvestorCall) {
     this._call = call;
   }
 }
@@ -1216,36 +1226,6 @@ export class CreateVaultCall__Outputs {
   }
 }
 
-export class EnableWhitelistCall extends ethereum.Call {
-  get inputs(): EnableWhitelistCall__Inputs {
-    return new EnableWhitelistCall__Inputs(this);
-  }
-
-  get outputs(): EnableWhitelistCall__Outputs {
-    return new EnableWhitelistCall__Outputs(this);
-  }
-}
-
-export class EnableWhitelistCall__Inputs {
-  _call: EnableWhitelistCall;
-
-  constructor(call: EnableWhitelistCall) {
-    this._call = call;
-  }
-
-  get _enable(): boolean {
-    return this._call.inputValues[0].value.toBoolean();
-  }
-}
-
-export class EnableWhitelistCall__Outputs {
-  _call: EnableWhitelistCall;
-
-  constructor(call: EnableWhitelistCall) {
-    this._call = call;
-  }
-}
-
 export class GrantRoleCall extends ethereum.Call {
   get inputs(): GrantRoleCall__Inputs {
     return new GrantRoleCall__Inputs(this);
@@ -1280,6 +1260,68 @@ export class GrantRoleCall__Outputs {
   }
 }
 
+export class InitializeCall extends ethereum.Call {
+  get inputs(): InitializeCall__Inputs {
+    return new InitializeCall__Inputs(this);
+  }
+
+  get outputs(): InitializeCall__Outputs {
+    return new InitializeCall__Outputs(this);
+  }
+}
+
+export class InitializeCall__Inputs {
+  _call: InitializeCall;
+
+  constructor(call: InitializeCall) {
+    this._call = call;
+  }
+
+  get _divisor(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _ratio(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get _burnFee(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get _liquidationPenalty(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get _tcapOracle(): Address {
+    return this._call.inputValues[4].value.toAddress();
+  }
+
+  get _tcapAddress(): Address {
+    return this._call.inputValues[5].value.toAddress();
+  }
+
+  get _collateralAddress(): Address {
+    return this._call.inputValues[6].value.toAddress();
+  }
+
+  get _collateralOracle(): Address {
+    return this._call.inputValues[7].value.toAddress();
+  }
+
+  get _ethOracle(): Address {
+    return this._call.inputValues[8].value.toAddress();
+  }
+}
+
+export class InitializeCall__Outputs {
+  _call: InitializeCall;
+
+  constructor(call: InitializeCall) {
+    this._call = call;
+  }
+}
+
 export class LiquidateVaultCall extends ethereum.Call {
   get inputs(): LiquidateVaultCall__Inputs {
     return new LiquidateVaultCall__Inputs(this);
@@ -1301,7 +1343,7 @@ export class LiquidateVaultCall__Inputs {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get requiredCollateral(): BigInt {
+  get _requiredTCAP(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1396,36 +1438,6 @@ export class RemoveCollateralCall__Outputs {
   _call: RemoveCollateralCall;
 
   constructor(call: RemoveCollateralCall) {
-    this._call = call;
-  }
-}
-
-export class RemoveInvestorCall extends ethereum.Call {
-  get inputs(): RemoveInvestorCall__Inputs {
-    return new RemoveInvestorCall__Inputs(this);
-  }
-
-  get outputs(): RemoveInvestorCall__Outputs {
-    return new RemoveInvestorCall__Outputs(this);
-  }
-}
-
-export class RemoveInvestorCall__Inputs {
-  _call: RemoveInvestorCall;
-
-  constructor(call: RemoveInvestorCall) {
-    this._call = call;
-  }
-
-  get _investor(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class RemoveInvestorCall__Outputs {
-  _call: RemoveInvestorCall;
-
-  constructor(call: RemoveInvestorCall) {
     this._call = call;
   }
 }
@@ -1580,96 +1592,6 @@ export class SetBurnFeeCall__Outputs {
   }
 }
 
-export class SetCollateralContractCall extends ethereum.Call {
-  get inputs(): SetCollateralContractCall__Inputs {
-    return new SetCollateralContractCall__Inputs(this);
-  }
-
-  get outputs(): SetCollateralContractCall__Outputs {
-    return new SetCollateralContractCall__Outputs(this);
-  }
-}
-
-export class SetCollateralContractCall__Inputs {
-  _call: SetCollateralContractCall;
-
-  constructor(call: SetCollateralContractCall) {
-    this._call = call;
-  }
-
-  get _collateralContract(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class SetCollateralContractCall__Outputs {
-  _call: SetCollateralContractCall;
-
-  constructor(call: SetCollateralContractCall) {
-    this._call = call;
-  }
-}
-
-export class SetCollateralPriceOracleCall extends ethereum.Call {
-  get inputs(): SetCollateralPriceOracleCall__Inputs {
-    return new SetCollateralPriceOracleCall__Inputs(this);
-  }
-
-  get outputs(): SetCollateralPriceOracleCall__Outputs {
-    return new SetCollateralPriceOracleCall__Outputs(this);
-  }
-}
-
-export class SetCollateralPriceOracleCall__Inputs {
-  _call: SetCollateralPriceOracleCall;
-
-  constructor(call: SetCollateralPriceOracleCall) {
-    this._call = call;
-  }
-
-  get _collateral(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class SetCollateralPriceOracleCall__Outputs {
-  _call: SetCollateralPriceOracleCall;
-
-  constructor(call: SetCollateralPriceOracleCall) {
-    this._call = call;
-  }
-}
-
-export class SetDivisorCall extends ethereum.Call {
-  get inputs(): SetDivisorCall__Inputs {
-    return new SetDivisorCall__Inputs(this);
-  }
-
-  get outputs(): SetDivisorCall__Outputs {
-    return new SetDivisorCall__Outputs(this);
-  }
-}
-
-export class SetDivisorCall__Inputs {
-  _call: SetDivisorCall;
-
-  constructor(call: SetDivisorCall) {
-    this._call = call;
-  }
-
-  get _divisor(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class SetDivisorCall__Outputs {
-  _call: SetDivisorCall;
-
-  constructor(call: SetDivisorCall) {
-    this._call = call;
-  }
-}
-
 export class SetLiquidationPenaltyCall extends ethereum.Call {
   get inputs(): SetLiquidationPenaltyCall__Inputs {
     return new SetLiquidationPenaltyCall__Inputs(this);
@@ -1726,66 +1648,6 @@ export class SetRatioCall__Outputs {
   _call: SetRatioCall;
 
   constructor(call: SetRatioCall) {
-    this._call = call;
-  }
-}
-
-export class SetTCAPOracleCall extends ethereum.Call {
-  get inputs(): SetTCAPOracleCall__Inputs {
-    return new SetTCAPOracleCall__Inputs(this);
-  }
-
-  get outputs(): SetTCAPOracleCall__Outputs {
-    return new SetTCAPOracleCall__Outputs(this);
-  }
-}
-
-export class SetTCAPOracleCall__Inputs {
-  _call: SetTCAPOracleCall;
-
-  constructor(call: SetTCAPOracleCall) {
-    this._call = call;
-  }
-
-  get _oracle(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class SetTCAPOracleCall__Outputs {
-  _call: SetTCAPOracleCall;
-
-  constructor(call: SetTCAPOracleCall) {
-    this._call = call;
-  }
-}
-
-export class SetTCAPXContractCall extends ethereum.Call {
-  get inputs(): SetTCAPXContractCall__Inputs {
-    return new SetTCAPXContractCall__Inputs(this);
-  }
-
-  get outputs(): SetTCAPXContractCall__Outputs {
-    return new SetTCAPXContractCall__Outputs(this);
-  }
-}
-
-export class SetTCAPXContractCall__Inputs {
-  _call: SetTCAPXContractCall;
-
-  constructor(call: SetTCAPXContractCall) {
-    this._call = call;
-  }
-
-  get _TCAPXToken(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class SetTCAPXContractCall__Outputs {
-  _call: SetTCAPXContractCall;
-
-  constructor(call: SetTCAPXContractCall) {
     this._call = call;
   }
 }

@@ -1,5 +1,16 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "contract Orchestrator",
+        "name": "orchestrator",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -72,19 +83,61 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_divisor",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_ratio",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_burnFee",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_liquidationPenalty",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "address",
-        "name": "_owner",
+        "name": "_tcapOracle",
         "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "_enable",
-        "type": "bool"
+        "internalType": "contract TCAP",
+        "name": "_tcapAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_collateralAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_collateralOracle",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_ethOracle",
+        "type": "address"
       }
     ],
-    "name": "LogEnableWhitelist",
+    "name": "LogInitializeVault",
     "type": "event"
   },
   {
@@ -217,63 +270,6 @@
       },
       {
         "indexed": false,
-        "internalType": "contract ERC20",
-        "name": "_collateralContract",
-        "type": "address"
-      }
-    ],
-    "name": "LogSetCollateralContract",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract ChainlinkOracle",
-        "name": "_priceOracle",
-        "type": "address"
-      }
-    ],
-    "name": "LogSetCollateralPriceOracle",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_divisor",
-        "type": "uint256"
-      }
-    ],
-    "name": "LogSetDivisor",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "_liquidationPenalty",
         "type": "uint256"
@@ -307,44 +303,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract TcapOracle",
-        "name": "_oracle",
-        "type": "address"
-      }
-    ],
-    "name": "LogSetTCAPOracle",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "contract TCAPX",
-        "name": "_token",
-        "type": "address"
-      }
-    ],
-    "name": "LogSetTCAPXContract",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "previousOwner",
         "type": "address"
       },
@@ -369,6 +327,31 @@
       }
     ],
     "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "previousAdminRole",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "newAdminRole",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RoleAdminChanged",
     "type": "event"
   },
   {
@@ -449,12 +432,12 @@
   },
   {
     "inputs": [],
-    "name": "INVESTOR_ROLE",
+    "name": "ETHPriceOracle",
     "outputs": [
       {
-        "internalType": "bytes32",
+        "internalType": "contract ChainlinkOracle",
         "name": "",
-        "type": "bytes32"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -462,7 +445,7 @@
   },
   {
     "inputs": [],
-    "name": "TCAPXPrice",
+    "name": "TCAPPrice",
     "outputs": [
       {
         "internalType": "uint256",
@@ -475,10 +458,10 @@
   },
   {
     "inputs": [],
-    "name": "TCAPXToken",
+    "name": "TCAPToken",
     "outputs": [
       {
-        "internalType": "contract TCAPX",
+        "internalType": "contract TCAP",
         "name": "",
         "type": "address"
       }
@@ -500,16 +483,10 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_investor",
-        "type": "address"
-      }
-    ],
-    "name": "addInvestor",
+    "inputs": [],
+    "name": "addCollateralETH",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -543,7 +520,7 @@
     "name": "collateralContract",
     "outputs": [
       {
-        "internalType": "contract ERC20",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -559,6 +536,19 @@
         "internalType": "contract ChainlinkOracle",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "counter",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_value",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -587,19 +577,6 @@
   {
     "inputs": [
       {
-        "internalType": "bool",
-        "name": "_enable",
-        "type": "bool"
-      }
-    ],
-    "name": "enableWhitelist",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_amount",
         "type": "uint256"
@@ -610,6 +587,25 @@
       {
         "internalType": "uint256",
         "name": "fee",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract ChainlinkOracle",
+        "name": "_oracle",
+        "type": "address"
+      }
+    ],
+    "name": "getOraclePrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
         "type": "uint256"
       }
     ],
@@ -777,12 +773,78 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "_divisor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_ratio",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_burnFee",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liquidationPenalty",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_tcapOracle",
+        "type": "address"
+      },
+      {
+        "internalType": "contract TCAP",
+        "name": "_tcapAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_collateralAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_collateralOracle",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_ethOracle",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isInitialized",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "_vaultId",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "requiredCollateral",
+        "name": "_requiredTCAP",
         "type": "uint256"
       }
     ],
@@ -834,6 +896,19 @@
     "name": "mint",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "oracleDigits",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -898,12 +973,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_investor",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
       }
     ],
-    "name": "removeInvestor",
+    "name": "removeCollateralETH",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -960,11 +1035,11 @@
         "type": "uint256"
       }
     ],
-    "name": "requiredLiquidationCollateral",
+    "name": "requiredLiquidationTCAP",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "collateral",
+        "name": "amount",
         "type": "uint256"
       }
     ],
@@ -1012,45 +1087,6 @@
   {
     "inputs": [
       {
-        "internalType": "contract ERC20",
-        "name": "_collateralContract",
-        "type": "address"
-      }
-    ],
-    "name": "setCollateralContract",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "contract ChainlinkOracle",
-        "name": "_collateral",
-        "type": "address"
-      }
-    ],
-    "name": "setCollateralPriceOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_divisor",
-        "type": "uint256"
-      }
-    ],
-    "name": "setDivisor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "uint256",
         "name": "_liquidationPenalty",
         "type": "uint256"
@@ -1077,27 +1113,20 @@
   {
     "inputs": [
       {
-        "internalType": "contract TcapOracle",
-        "name": "_oracle",
-        "type": "address"
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
       }
     ],
-    "name": "setTCAPOracle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+    "name": "supportsInterface",
+    "outputs": [
       {
-        "internalType": "contract TCAPX",
-        "name": "_TCAPXToken",
-        "type": "address"
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
-    "name": "setTCAPXContract",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1105,7 +1134,7 @@
     "name": "tcapOracle",
     "outputs": [
       {
-        "internalType": "contract TcapOracle",
+        "internalType": "contract ChainlinkOracle",
         "name": "",
         "type": "address"
       }
@@ -1141,7 +1170,7 @@
         "type": "address"
       }
     ],
-    "name": "vaultToUser",
+    "name": "userToVault",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1187,16 +1216,7 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "whitelistEnabled",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

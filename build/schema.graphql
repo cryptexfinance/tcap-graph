@@ -1,22 +1,32 @@
 type Vault @entity {
   id: ID!
-  owner: Bytes #address
+  vaultId: BigInt
+  owner: Bytes! #address
   collateral: BigInt
   debt: BigInt
   currentRatio: BigInt
+  address: Bytes #address
 }
 
 type State @entity {
   id: ID!
   owner: Bytes #address
   isPaused: Boolean
-  hasWishlist: Boolean
   tcapContract: Bytes #address
   collateralContract: Bytes #address
+  collateralOracle: Bytes #address
   ethContract: Bytes #address
   tcapOracle: Bytes #address
   burnFee: BigInt
   liquidationPenalty: BigInt
   ratio: BigInt
   divisor: BigInt
+}
+
+type Oracle @entity {
+  id: ID!
+  address: Bytes #address
+  answer: BigInt
+  updatedAt: BigInt
+  roundId: BigInt
 }
