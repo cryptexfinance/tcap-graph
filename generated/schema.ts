@@ -68,40 +68,72 @@ export class Vault extends Entity {
     this.set("owner", Value.fromBytes(value));
   }
 
-  get collateral(): BigInt {
+  get collateral(): BigInt | null {
     let value = this.get("collateral");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set collateral(value: BigInt) {
-    this.set("collateral", Value.fromBigInt(value));
+  set collateral(value: BigInt | null) {
+    if (value === null) {
+      this.unset("collateral");
+    } else {
+      this.set("collateral", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get debt(): BigInt {
+  get debt(): BigInt | null {
     let value = this.get("debt");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set debt(value: BigInt) {
-    this.set("debt", Value.fromBigInt(value));
+  set debt(value: BigInt | null) {
+    if (value === null) {
+      this.unset("debt");
+    } else {
+      this.set("debt", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get currentRatio(): BigInt {
+  get currentRatio(): BigInt | null {
     let value = this.get("currentRatio");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set currentRatio(value: BigInt) {
-    this.set("currentRatio", Value.fromBigInt(value));
+  set currentRatio(value: BigInt | null) {
+    if (value === null) {
+      this.unset("currentRatio");
+    } else {
+      this.set("currentRatio", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get address(): Bytes {
+  get address(): Bytes | null {
     let value = this.get("address");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set address(value: Bytes) {
-    this.set("address", Value.fromBytes(value));
+  set address(value: Bytes | null) {
+    if (value === null) {
+      this.unset("address");
+    } else {
+      this.set("address", Value.fromBytes(value as Bytes));
+    }
   }
 }
 
@@ -135,13 +167,21 @@ export class State extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get owner(): Bytes {
+  get owner(): Bytes | null {
     let value = this.get("owner");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set owner(value: Bytes) {
-    this.set("owner", Value.fromBytes(value));
+  set owner(value: Bytes | null) {
+    if (value === null) {
+      this.unset("owner");
+    } else {
+      this.set("owner", Value.fromBytes(value as Bytes));
+    }
   }
 
   get isPaused(): boolean {
@@ -153,85 +193,157 @@ export class State extends Entity {
     this.set("isPaused", Value.fromBoolean(value));
   }
 
-  get tcapContract(): Bytes {
+  get tcapContract(): Bytes | null {
     let value = this.get("tcapContract");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set tcapContract(value: Bytes) {
-    this.set("tcapContract", Value.fromBytes(value));
+  set tcapContract(value: Bytes | null) {
+    if (value === null) {
+      this.unset("tcapContract");
+    } else {
+      this.set("tcapContract", Value.fromBytes(value as Bytes));
+    }
   }
 
-  get collateralContract(): Bytes {
+  get collateralContract(): Bytes | null {
     let value = this.get("collateralContract");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set collateralContract(value: Bytes) {
-    this.set("collateralContract", Value.fromBytes(value));
+  set collateralContract(value: Bytes | null) {
+    if (value === null) {
+      this.unset("collateralContract");
+    } else {
+      this.set("collateralContract", Value.fromBytes(value as Bytes));
+    }
   }
 
-  get collateralOracle(): Bytes {
+  get collateralOracle(): Bytes | null {
     let value = this.get("collateralOracle");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set collateralOracle(value: Bytes) {
-    this.set("collateralOracle", Value.fromBytes(value));
+  set collateralOracle(value: Bytes | null) {
+    if (value === null) {
+      this.unset("collateralOracle");
+    } else {
+      this.set("collateralOracle", Value.fromBytes(value as Bytes));
+    }
   }
 
-  get ethContract(): Bytes {
+  get ethContract(): Bytes | null {
     let value = this.get("ethContract");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set ethContract(value: Bytes) {
-    this.set("ethContract", Value.fromBytes(value));
+  set ethContract(value: Bytes | null) {
+    if (value === null) {
+      this.unset("ethContract");
+    } else {
+      this.set("ethContract", Value.fromBytes(value as Bytes));
+    }
   }
 
-  get tcapOracle(): Bytes {
+  get tcapOracle(): Bytes | null {
     let value = this.get("tcapOracle");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set tcapOracle(value: Bytes) {
-    this.set("tcapOracle", Value.fromBytes(value));
+  set tcapOracle(value: Bytes | null) {
+    if (value === null) {
+      this.unset("tcapOracle");
+    } else {
+      this.set("tcapOracle", Value.fromBytes(value as Bytes));
+    }
   }
 
-  get burnFee(): BigInt {
+  get burnFee(): BigInt | null {
     let value = this.get("burnFee");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set burnFee(value: BigInt) {
-    this.set("burnFee", Value.fromBigInt(value));
+  set burnFee(value: BigInt | null) {
+    if (value === null) {
+      this.unset("burnFee");
+    } else {
+      this.set("burnFee", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get liquidationPenalty(): BigInt {
+  get liquidationPenalty(): BigInt | null {
     let value = this.get("liquidationPenalty");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set liquidationPenalty(value: BigInt) {
-    this.set("liquidationPenalty", Value.fromBigInt(value));
+  set liquidationPenalty(value: BigInt | null) {
+    if (value === null) {
+      this.unset("liquidationPenalty");
+    } else {
+      this.set("liquidationPenalty", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get ratio(): BigInt {
+  get ratio(): BigInt | null {
     let value = this.get("ratio");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set ratio(value: BigInt) {
-    this.set("ratio", Value.fromBigInt(value));
+  set ratio(value: BigInt | null) {
+    if (value === null) {
+      this.unset("ratio");
+    } else {
+      this.set("ratio", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get divisor(): BigInt {
+  get divisor(): BigInt | null {
     let value = this.get("divisor");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set divisor(value: BigInt) {
-    this.set("divisor", Value.fromBigInt(value));
+  set divisor(value: BigInt | null) {
+    if (value === null) {
+      this.unset("divisor");
+    } else {
+      this.set("divisor", Value.fromBigInt(value as BigInt));
+    }
   }
 }
 
@@ -265,39 +377,71 @@ export class Oracle extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get address(): Bytes {
+  get address(): Bytes | null {
     let value = this.get("address");
-    return value.toBytes();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
   }
 
-  set address(value: Bytes) {
-    this.set("address", Value.fromBytes(value));
+  set address(value: Bytes | null) {
+    if (value === null) {
+      this.unset("address");
+    } else {
+      this.set("address", Value.fromBytes(value as Bytes));
+    }
   }
 
-  get answer(): BigInt {
+  get answer(): BigInt | null {
     let value = this.get("answer");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set answer(value: BigInt) {
-    this.set("answer", Value.fromBigInt(value));
+  set answer(value: BigInt | null) {
+    if (value === null) {
+      this.unset("answer");
+    } else {
+      this.set("answer", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get updatedAt(): BigInt {
+  get updatedAt(): BigInt | null {
     let value = this.get("updatedAt");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set updatedAt(value: BigInt) {
-    this.set("updatedAt", Value.fromBigInt(value));
+  set updatedAt(value: BigInt | null) {
+    if (value === null) {
+      this.unset("updatedAt");
+    } else {
+      this.set("updatedAt", Value.fromBigInt(value as BigInt));
+    }
   }
 
-  get roundId(): BigInt {
+  get roundId(): BigInt | null {
     let value = this.get("roundId");
-    return value.toBigInt();
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
   }
 
-  set roundId(value: BigInt) {
-    this.set("roundId", Value.fromBigInt(value));
+  set roundId(value: BigInt | null) {
+    if (value === null) {
+      this.unset("roundId");
+    } else {
+      this.set("roundId", Value.fromBigInt(value as BigInt));
+    }
   }
 }

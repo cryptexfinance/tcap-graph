@@ -33,7 +33,7 @@ dataSources:
           handler: handleLogMint
         - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
           handler: handleLogRemoveCollateral
-      file: ./src/vault.ts
+      file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: State
     network: rinkeby
@@ -97,7 +97,7 @@ dataSources:
           handler: handleLogMint
         - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
           handler: handleLogRemoveCollateral
-      file: ./src/vault.ts
+      file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: DAIState
     network: rinkeby
@@ -161,7 +161,7 @@ dataSources:
           handler: handleLogMint
         - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
           handler: handleLogRemoveCollateral
-      file: ./src/vault.ts
+      file: ./src/ethvault.ts
   - kind: ethereum/contract
     name: ETHState
     network: rinkeby

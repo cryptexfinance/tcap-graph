@@ -1,4 +1,4 @@
-import { dataSource } from "@graphprotocol/graph-ts";
+import { dataSource, log, BigInt } from "@graphprotocol/graph-ts";
 import {
   ERC20Vault,
   LogAddCollateral,
@@ -11,30 +11,37 @@ import {
 import { Vault } from "../generated/schema";
 
 export function handleLogAddCollateral(event: LogAddCollateral): void {
-  let vault = Vault.load(
-    `${dataSource.address()}-${event.params._id.toString()}`
-  );
+  log.debug("ENTRE", []);
+  let id = dataSource
+    .address()
+    .toHex()
+    .concat("-")
+    .concat(event.params._id.toString());
+  log.debug("ID: {}", [id]);
+  let vault = Vault.load(id);
 
   if (vault == null) {
-    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault = new Vault(id);
     vault.address = dataSource.address();
     vault.vaultId = event.params._id;
   }
-  vault.collateral = vault.collateral.plus(event.params._amount);
+  log.debug("Vault: id: {}, col: {}", [vault.id, vault.collateral.toString()]);
+  if (vault.collateral) {
+    vault.collateral = vault.collateral.plus(event.params._amount);
+  } else {
+    vault.collateral = event.params._amount;
+  }
 
   let contract = ERC20Vault.bind(dataSource.address());
   let currentRatio = contract.getVaultRatio(event.params._id);
   vault.currentRatio = currentRatio;
-
   // Entities can be written to the store with `.save()`
   vault.save();
-
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with
   // `new Entity(...)`, set the fields that should be updated and save the
   // entity back to the store. Fields that were not set or unset remain
   // unchanged, allowing for partial updates to be applied.
-
   // It is also possible to access smart contracts from mappings. For
   // example, the contract that has emitted the event can be connected to
   // with:
@@ -73,12 +80,15 @@ export function handleLogAddCollateral(event: LogAddCollateral): void {
 }
 
 export function handleLogBurn(event: LogBurn): void {
-  let vault = Vault.load(
-    `${dataSource.address()}-${event.params._id.toString()}`
-  );
+  let id = dataSource
+    .address()
+    .toHex()
+    .concat("-")
+    .concat(event.params._id.toString());
+  let vault = Vault.load(id);
 
   if (vault == null) {
-    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault = new Vault(id);
     vault.address = dataSource.address();
     vault.vaultId = event.params._id;
   }
@@ -95,26 +105,33 @@ export function handleLogBurn(event: LogBurn): void {
 }
 
 export function handleLogCreateVault(event: LogCreateVault): void {
-  let vault = new Vault(
-    `${dataSource.address()}-${event.params._id.toString()}`
-  );
+  let id = dataSource
+    .address()
+    .toHex()
+    .concat("-")
+    .concat(event.params._id.toString());
+  let vault = new Vault(id);
   vault.owner = event.params._owner;
   vault.address = dataSource.address();
   vault.vaultId = event.params._id;
+  vault.collateral = new BigInt(0);
+  vault.debt = new BigInt(0);
+  vault.currentRatio = new BigInt(0);
 
   // Entities can be written to the store with `.save()`
   vault.save();
 }
 
 export function handleLogLiquidateVault(event: LogLiquidateVault): void {
-  let vault = Vault.load(
-    `${dataSource.address()}-${event.params._vaultId.toString()}`
-  );
+  let id = dataSource
+    .address()
+    .toHex()
+    .concat("-")
+    .concat(event.params._vaultId.toString());
+  let vault = Vault.load(id);
 
   if (vault == null) {
-    vault = new Vault(
-      `${dataSource.address()}-${event.params._vaultId.toString()}`
-    );
+    vault = new Vault(id);
     vault.vaultId = event.params._vaultId;
     vault.address = dataSource.address();
   }
@@ -132,12 +149,15 @@ export function handleLogLiquidateVault(event: LogLiquidateVault): void {
 }
 
 export function handleLogMint(event: LogMint): void {
-  let vault = Vault.load(
-    `${dataSource.address()}-${event.params._id.toString()}`
-  );
+  let id = dataSource
+    .address()
+    .toHex()
+    .concat("-")
+    .concat(event.params._id.toString());
+  let vault = Vault.load(id);
 
   if (vault == null) {
-    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault = new Vault(id);
     vault.address = dataSource.address();
     vault.vaultId = event.params._id;
   }
@@ -151,12 +171,15 @@ export function handleLogMint(event: LogMint): void {
 }
 
 export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
-  let vault = Vault.load(
-    `${dataSource.address()}-${event.params._id.toString()}`
-  );
+  let id = dataSource
+    .address()
+    .toHex()
+    .concat("-")
+    .concat(event.params._id.toString());
+  let vault = Vault.load(id);
 
   if (vault == null) {
-    vault = new Vault(`${dataSource.address()}-${event.params._id.toString()}`);
+    vault = new Vault(id);
     vault.address = dataSource.address();
     vault.vaultId = event.params._id;
   }

@@ -160,7 +160,7 @@ dataSources:
           handler: handleLogMint
         - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
           handler: handleLogRemoveCollateral
-      file: WBTCVault/WBTCVault.wasm
+      file: ETHVault/ETHVault.wasm
   - kind: ethereum/contract
     name: ETHState
     network: rinkeby
