@@ -8,9 +8,9 @@ dataSources:
     name: WBTCVault
     network: rinkeby
     source:
-      address: "0x2F11442b356adbD3C7EDfbf7110b2BD6e6b7eB9e"
+      address: "0xBE3b292a121d1fBbe63fDA6F0a7C18e5c403a36f"
       abi: ERC20Vault
-      startBlock: 7500000
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -35,18 +35,18 @@ dataSources:
           handler: handleLogRemoveCollateral
       file: ./src/ercvault.ts
   - kind: ethereum/contract
-    name: State
+    name: WBTCState
     network: rinkeby
     source:
-      address: "0x2F11442b356adbD3C7EDfbf7110b2BD6e6b7eB9e"
+      address: "0xBE3b292a121d1fBbe63fDA6F0a7C18e5c403a36f"
       abi: ERC20Vault
-      startBlock: 7500000
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - WBTCState
+        - State
       abis:
         - name: ERC20Vault
           file: ./abis/ERC20Vault.json
@@ -74,7 +74,7 @@ dataSources:
     source:
       address: "0xdB92F6de9F93465a9de8F9c63F15c9BA3A0d0962"
       abi: ERC20Vault
-      startBlock: 7500000
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -104,7 +104,7 @@ dataSources:
     source:
       address: "0xdB92F6de9F93465a9de8F9c63F15c9BA3A0d0962"
       abi: ERC20Vault
-      startBlock: 7500000
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -138,7 +138,7 @@ dataSources:
     source:
       address: "0xB6428Cdb64b028e504767E7E279AD63d5bc43e05"
       abi: ETHVault
-      startBlock: 7500000
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -168,7 +168,7 @@ dataSources:
     source:
       address: "0xB6428Cdb64b028e504767E7E279AD63d5bc43e05"
       abi: ETHVault
-      startBlock: 7500000
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -203,7 +203,7 @@ dataSources:
     source:
       address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
       abi: Oracle
-      startBlock: 7500000
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

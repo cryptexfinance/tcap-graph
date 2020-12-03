@@ -21,6 +21,7 @@ type State @entity {
   liquidationPenalty: BigInt
   ratio: BigInt
   divisor: BigInt
+  amountStaked: BigInt
 }
 
 type Oracle @entity {

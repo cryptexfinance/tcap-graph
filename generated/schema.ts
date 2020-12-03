@@ -345,6 +345,23 @@ export class State extends Entity {
       this.set("divisor", Value.fromBigInt(value as BigInt));
     }
   }
+
+  get amountStaked(): BigInt | null {
+    let value = this.get("amountStaked");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set amountStaked(value: BigInt | null) {
+    if (value === null) {
+      this.unset("amountStaked");
+    } else {
+      this.set("amountStaked", Value.fromBigInt(value as BigInt));
+    }
+  }
 }
 
 export class Oracle extends Entity {
