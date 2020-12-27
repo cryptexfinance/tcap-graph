@@ -8,7 +8,7 @@ import {
   LogMint,
   LogRemoveCollateral,
 } from "../generated/ETHVault/ETHVault";
-import { Vault, State } from "../generated/schema";
+import { Vault, State, Protocol } from "../generated/schema";
 
 export function handleLogAddCollateral(event: LogAddCollateral): void {
   let id = dataSource
@@ -28,9 +28,7 @@ export function handleLogAddCollateral(event: LogAddCollateral): void {
   } else {
     vault.collateral = event.params._amount;
   }
-  let contract = ETHVault.bind(dataSource.address());
-  let currentRatio = contract.getVaultRatio(event.params._id);
-  vault.currentRatio = currentRatio;
+  vault.currentRatio = getRatio(event.params._id);
   vault.save();
 
   //State Update
@@ -58,9 +56,7 @@ export function handleLogBurn(event: LogBurn): void {
   }
   if (vault.debt) vault.debt = vault.debt.minus(event.params._amount);
 
-  let contract = ETHVault.bind(dataSource.address());
-  let currentRatio = contract.getVaultRatio(event.params._id);
-  vault.currentRatio = currentRatio;
+  vault.currentRatio = getRatio(event.params._id);
 
   // Entities can be written to the store with `.save()`
   vault.save();
@@ -81,6 +77,23 @@ export function handleLogCreateVault(event: LogCreateVault): void {
   vault.collateral = new BigInt(0);
   vault.debt = new BigInt(0);
   vault.currentRatio = new BigInt(0);
+
+  let protocol = Protocol.load("1");
+
+  if (protocol == null) {
+    protocol = new Protocol("1");
+  }
+  if (protocol.vaults) {
+    protocol.vaults = protocol.vaults + 1;
+  } else {
+    protocol.vaults = 1;
+  }
+  if (protocol.transactions) {
+    protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  } else {
+    protocol.transactions = new BigInt(1);
+  }
+  protocol.save();
 
   // Entities can be written to the store with `.save()`
   vault.save();
@@ -118,6 +131,10 @@ export function handleLogLiquidateVault(event: LogLiquidateVault): void {
   }
   state.save();
 
+  let protocol = Protocol.load("1");
+  protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  protocol.save();
+
   //TODO: Calculate burn fee
 }
 
@@ -140,11 +157,13 @@ export function handleLogMint(event: LogMint): void {
     vault.debt = event.params._amount;
   }
 
-  let contract = ETHVault.bind(dataSource.address());
-  let currentRatio = contract.getVaultRatio(event.params._id);
-  vault.currentRatio = currentRatio;
+  vault.currentRatio = getRatio(event.params._id);
   // Entities can be written to the store with `.save()`
   vault.save();
+
+  let protocol = Protocol.load("1");
+  protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  protocol.save();
 }
 
 export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
@@ -163,9 +182,7 @@ export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
   if (vault.collateral)
     vault.collateral = vault.collateral.minus(event.params._amount);
 
-  let contract = ETHVault.bind(dataSource.address());
-  let currentRatio = contract.getVaultRatio(event.params._id);
-  vault.currentRatio = currentRatio;
+  vault.currentRatio = getRatio(event.params._id);
   // Entities can be written to the store with `.save()`
   vault.save();
 
@@ -175,4 +192,14 @@ export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
     state.amountStaked = state.amountStaked.minus(event.params._amount);
   }
   state.save();
+
+  let protocol = Protocol.load("1");
+  protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  protocol.save();
+}
+
+function getRatio(id: BigInt): BigInt {
+  let contract = ETHVault.bind(dataSource.address());
+  let currentRatio = contract.getVaultRatio(id);
+  return currentRatio;
 }
