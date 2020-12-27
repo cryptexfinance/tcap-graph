@@ -7,7 +7,7 @@ dataSources:
     name: WBTCVault
     network: rinkeby
     source:
-      address: "0xBE3b292a121d1fBbe63fDA6F0a7C18e5c403a36f"
+      address: "0x661b59E286B4fe1F04920223AF161E62fFECCE5c"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -37,7 +37,7 @@ dataSources:
     name: WBTCState
     network: rinkeby
     source:
-      address: "0xBE3b292a121d1fBbe63fDA6F0a7C18e5c403a36f"
+      address: "0x661b59E286B4fe1F04920223AF161E62fFECCE5c"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -71,7 +71,7 @@ dataSources:
     name: DAIVault
     network: rinkeby
     source:
-      address: "0xdB92F6de9F93465a9de8F9c63F15c9BA3A0d0962"
+      address: "0x32AB377d1E855335244E25EDCEd2b941B96e2607"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -101,7 +101,7 @@ dataSources:
     name: DAIState
     network: rinkeby
     source:
-      address: "0xdB92F6de9F93465a9de8F9c63F15c9BA3A0d0962"
+      address: "0x32AB377d1E855335244E25EDCEd2b941B96e2607"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -135,7 +135,7 @@ dataSources:
     name: ETHVault
     network: rinkeby
     source:
-      address: "0xB6428Cdb64b028e504767E7E279AD63d5bc43e05"
+      address: "0xbB1FbBcE70De4AFe5F80C75C9e13E8e8C4f776f3"
       abi: ETHVault
       startBlock: 7000000
     mapping:
@@ -165,7 +165,7 @@ dataSources:
     name: ETHState
     network: rinkeby
     source:
-      address: "0xB6428Cdb64b028e504767E7E279AD63d5bc43e05"
+      address: "0xbB1FbBcE70De4AFe5F80C75C9e13E8e8C4f776f3"
       abi: ETHVault
       startBlock: 7000000
     mapping:

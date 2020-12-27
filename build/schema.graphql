@@ -31,3 +31,9 @@ type Oracle @entity {
   updatedAt: BigInt
   roundId: BigInt
 }
+
+type Protocol @entity {
+  id: ID!
+  vaults: Int
+  transactions: BigInt
+}
