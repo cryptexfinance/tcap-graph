@@ -493,17 +493,8 @@ export class Protocol extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get vaults(): i32 {
-    let value = this.get("vaults");
-    return value.toI32();
-  }
-
-  set vaults(value: i32) {
-    this.set("vaults", Value.fromI32(value));
-  }
-
-  get transactions(): BigInt | null {
-    let value = this.get("transactions");
+  get createdVaults(): BigInt | null {
+    let value = this.get("createdVaults");
     if (value === null) {
       return null;
     } else {
@@ -511,11 +502,28 @@ export class Protocol extends Entity {
     }
   }
 
-  set transactions(value: BigInt | null) {
+  set createdVaults(value: BigInt | null) {
     if (value === null) {
-      this.unset("transactions");
+      this.unset("createdVaults");
     } else {
-      this.set("transactions", Value.fromBigInt(value as BigInt));
+      this.set("createdVaults", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get totalTransactions(): BigInt | null {
+    let value = this.get("totalTransactions");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalTransactions(value: BigInt | null) {
+    if (value === null) {
+      this.unset("totalTransactions");
+    } else {
+      this.set("totalTransactions", Value.fromBigInt(value as BigInt));
     }
   }
 }

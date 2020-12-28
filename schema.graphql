@@ -34,6 +34,6 @@ type Oracle @entity {
 
 type Protocol @entity {
   id: ID!
-  vaults: Int
-  transactions: BigInt
+  createdVaults: BigInt
+  totalTransactions: BigInt
 }

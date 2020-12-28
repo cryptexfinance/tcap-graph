@@ -39,6 +39,19 @@ export function handleLogAddCollateral(event: LogAddCollateral): void {
     state.amountStaked = event.params._amount;
   }
   state.save();
+
+  let protocol = Protocol.load("1");
+  if (protocol == null) {
+    protocol = new Protocol("1");
+  }
+  if (protocol.totalTransactions) {
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions = BigInt.fromI32(1);
+  }
+  protocol.save();
 }
 
 export function handleLogBurn(event: LogBurn): void {
@@ -60,6 +73,19 @@ export function handleLogBurn(event: LogBurn): void {
 
   // Entities can be written to the store with `.save()`
   vault.save();
+
+  let protocol = Protocol.load("1");
+  if (protocol == null) {
+    protocol = new Protocol("1");
+  }
+  if (protocol.totalTransactions) {
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions = BigInt.fromI32(1);
+  }
+  protocol.save();
 
   //TODO: Calculate burn fee
 }
@@ -83,15 +109,17 @@ export function handleLogCreateVault(event: LogCreateVault): void {
   if (protocol == null) {
     protocol = new Protocol("1");
   }
-  if (protocol.vaults) {
-    protocol.vaults = protocol.vaults + 1;
+  if (protocol.createdVaults) {
+    protocol.createdVaults = protocol.createdVaults.plus(BigInt.fromI32(1));
   } else {
-    protocol.vaults = 1;
+    protocol.createdVaults = BigInt.fromI32(1);
   }
-  if (protocol.transactions) {
-    protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  if (protocol.totalTransactions) {
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
   } else {
-    protocol.transactions = new BigInt(1);
+    protocol.totalTransactions = BigInt.fromI32(1);
   }
   protocol.save();
 
@@ -132,7 +160,16 @@ export function handleLogLiquidateVault(event: LogLiquidateVault): void {
   state.save();
 
   let protocol = Protocol.load("1");
-  protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  if (protocol == null) {
+    protocol = new Protocol("1");
+  }
+  if (protocol.totalTransactions) {
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions = BigInt.fromI32(1);
+  }
   protocol.save();
 
   //TODO: Calculate burn fee
@@ -162,7 +199,13 @@ export function handleLogMint(event: LogMint): void {
   vault.save();
 
   let protocol = Protocol.load("1");
-  protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  if (protocol.totalTransactions) {
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions = BigInt.fromI32(1);
+  }
   protocol.save();
 }
 
@@ -194,7 +237,16 @@ export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
   state.save();
 
   let protocol = Protocol.load("1");
-  protocol.transactions = protocol.transactions.plus(new BigInt(1));
+  if (protocol == null) {
+    protocol = new Protocol("1");
+  }
+  if (protocol.totalTransactions) {
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions = BigInt.fromI32(1);
+  }
   protocol.save();
 }
 
