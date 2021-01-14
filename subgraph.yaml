@@ -224,7 +224,7 @@ dataSources:
     source:
       address: "0x3297d634Cab4434afdFaDFfcE6dA5a19B9460Bcf"
       abi: GovernorAlpha
-      startBlock: 9601459
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -256,7 +256,7 @@ dataSources:
     source:
       address: "0xa471798a4dC1D784a04a227226E194FF4e9F7bf8"
       abi: Ctx
-      startBlock: 9601359
+      startBlock: 7000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
