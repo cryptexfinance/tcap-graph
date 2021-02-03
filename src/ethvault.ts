@@ -1,16 +1,16 @@
 import { dataSource, log, BigInt } from "@graphprotocol/graph-ts";
 import {
   ETHVault,
-  LogAddCollateral,
-  LogBurn,
-  LogCreateVault,
-  LogLiquidateVault,
-  LogMint,
-  LogRemoveCollateral,
+  CollateralAdded,
+  TokensBurned,
+  VaultCreated,
+  VaultLiquidated,
+  TokensMinted,
+  CollateralRemoved,
 } from "../generated/ETHVault/ETHVault";
 import { Vault, State, Protocol } from "../generated/schema";
 
-export function handleLogAddCollateral(event: LogAddCollateral): void {
+export function handleCollateralAdded(event: CollateralAdded): void {
   let id = dataSource
     .address()
     .toHex()
@@ -54,7 +54,7 @@ export function handleLogAddCollateral(event: LogAddCollateral): void {
   protocol.save();
 }
 
-export function handleLogBurn(event: LogBurn): void {
+export function handleTokensBurned(event: TokensBurned): void {
   let id = dataSource
     .address()
     .toHex()
@@ -90,7 +90,7 @@ export function handleLogBurn(event: LogBurn): void {
   //TODO: Calculate burn fee
 }
 
-export function handleLogCreateVault(event: LogCreateVault): void {
+export function handleVaultCreated(event: VaultCreated): void {
   let id = dataSource
     .address()
     .toHex()
@@ -127,7 +127,7 @@ export function handleLogCreateVault(event: LogCreateVault): void {
   vault.save();
 }
 
-export function handleLogLiquidateVault(event: LogLiquidateVault): void {
+export function handleVaultLiquidated(event: VaultLiquidated): void {
   let id = dataSource
     .address()
     .toHex()
@@ -175,7 +175,7 @@ export function handleLogLiquidateVault(event: LogLiquidateVault): void {
   //TODO: Calculate burn fee
 }
 
-export function handleLogMint(event: LogMint): void {
+export function handleTokensMinted(event: TokensMinted): void {
   let id = dataSource
     .address()
     .toHex()
@@ -209,7 +209,7 @@ export function handleLogMint(event: LogMint): void {
   protocol.save();
 }
 
-export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
+export function handleCollateralRemoved(event: CollateralRemoved): void {
   let id = dataSource
     .address()
     .toHex()

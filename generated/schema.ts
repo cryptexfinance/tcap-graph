@@ -362,6 +362,40 @@ export class State extends Entity {
       this.set("amountStaked", Value.fromBigInt(value as BigInt));
     }
   }
+
+  get rewardContract(): Bytes | null {
+    let value = this.get("rewardContract");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set rewardContract(value: Bytes | null) {
+    if (value === null) {
+      this.unset("rewardContract");
+    } else {
+      this.set("rewardContract", Value.fromBytes(value as Bytes));
+    }
+  }
+
+  get treasuryContract(): Bytes | null {
+    let value = this.get("treasuryContract");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set treasuryContract(value: Bytes | null) {
+    if (value === null) {
+      this.unset("treasuryContract");
+    } else {
+      this.set("treasuryContract", Value.fromBytes(value as Bytes));
+    }
+  }
 }
 
 export class Oracle extends Entity {

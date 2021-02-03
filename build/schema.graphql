@@ -22,6 +22,8 @@ type State @entity {
   ratio: BigInt
   divisor: BigInt
   amountStaked: BigInt
+  rewardContract: Bytes #3
+  treasuryContract: Bytes #address
 }
 
 type Oracle @entity {
@@ -46,25 +48,25 @@ enum ProposalStatus {
   EXECUTED
 }
 
-# Compound Governance Graph
+# Ctx Governance Graph
 
 type TokenHolder @entity {
-  "A TokenHolder is any address that holds any amount of Compound Tokens, the id used is the blockchain address."
+  "A TokenHolder is any address that holds any amount of Ctx Tokens, the id used is the blockchain address."
   id: ID!
 
   "Delegate address of the token holder which will participate in votings. Delegates don't need to hold any tokens and can even be the token holder itself."
   delegate: Delegate
 
-  "Compound Token balance of this address expressed in the smallest unit of the CompoundToken"
+  "Ctx Token balance of this address expressed in the smallest unit of the CtxToken"
   tokenBalanceRaw: BigInt!
 
-  "Compound Token balance of this address expressed as a BigDecimal normalized value for the Compound Token"
+  "Ctx Token balance of this address expressed as a BigDecimal normalized value for the Ctx Token"
   tokenBalance: BigDecimal!
 
-  "Total amount of Compound Token ever held by this address expressed in the smallest unit of the CompoundToken"
+  "Total amount of Ctx Token ever held by this address expressed in the smallest unit of the CtxToken"
   totalTokensHeldRaw: BigInt!
 
-  "Total amount of Compound Token ever held by this address expressed as a BigDecimal normalized value for the Compound Token"
+  "Total amount of Ctx Token ever held by this address expressed as a BigDecimal normalized value for the Ctx Token"
   totalTokensHeld: BigDecimal!
 }
 
@@ -72,10 +74,10 @@ type Delegate @entity {
   "A Delegate is any address that has been delegated with voting tokens by a token holder, id is the blockchain address of said delegate"
   id: ID!
 
-  "Amount of votes delegated to this delegate to be used on proposal votings expressed in the smallest unit of the CompoundToken"
+  "Amount of votes delegated to this delegate to be used on proposal votings expressed in the smallest unit of the CtxToken"
   delegatedVotesRaw: BigInt!
 
-  "Amount of votes delegated to this delegate to be used on proposal votings expressed as a BigDecimal normalized value for the Compound Token"
+  "Amount of votes delegated to this delegate to be used on proposal votings expressed as a BigDecimal normalized value for the Ctx Token"
   delegatedVotes: BigDecimal!
 
   tokenHoldersRepresentedAmount: Int!
@@ -135,10 +137,10 @@ type Vote @entity {
   "Whether the vote is in favour or against the proposal"
   support: Boolean!
 
-  "Amount of votes in favour or against expressed in the smallest unit of the CompoundToken"
+  "Amount of votes in favour or against expressed in the smallest unit of the CtxToken"
   votesRaw: BigInt!
 
-  "Amount of votes in favour or against expressed as a BigDecimal normalized value for the Compound Token"
+  "Amount of votes in favour or against expressed as a BigDecimal normalized value for the Ctx Token"
   votes: BigDecimal!
 
   "Delegate that emitted the vote"
@@ -167,10 +169,10 @@ type Governance @entity {
   "Total number of delegates that held delegated votes"
   totalDelegates: BigInt!
 
-  "Total number of votes delegated expressed in the smallest unit of the Compound Token"
+  "Total number of votes delegated expressed in the smallest unit of the Ctx Token"
   delegatedVotesRaw: BigInt!
 
-  "Total number of votes delegated expressed as a BigDecimal normalized value for the Compound Token"
+  "Total number of votes delegated expressed as a BigDecimal normalized value for the Ctx Token"
   delegatedVotes: BigDecimal!
 
   "Number of proposals currently queued for execution"
