@@ -8,7 +8,7 @@ dataSources:
     name: WBTCVault
     network: rinkeby
     source:
-      address: "0xD4298F33E6060d605b1ce43DA14fFba7C349BD7D"
+      address: "0x8bbd9328d8b749beA3f5A890Fd676C9D5952E271"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -38,7 +38,7 @@ dataSources:
     name: WBTCState
     network: rinkeby
     source:
-      address: "0xD4298F33E6060d605b1ce43DA14fFba7C349BD7D"
+      address: "0x8bbd9328d8b749beA3f5A890Fd676C9D5952E271"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -72,7 +72,7 @@ dataSources:
     name: DAIVault
     network: rinkeby
     source:
-      address: "0x3B9Ca7F2e49ef728738ecA87D2EddE3b4e0a8449"
+      address: "0xf92F422eFCbDd1416475a41A8CF26a80C332F2cB"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -102,7 +102,7 @@ dataSources:
     name: DAIState
     network: rinkeby
     source:
-      address: "0x3B9Ca7F2e49ef728738ecA87D2EddE3b4e0a8449"
+      address: "0xf92F422eFCbDd1416475a41A8CF26a80C332F2cB"
       abi: ERC20Vault
       startBlock: 7000000
     mapping:
@@ -136,7 +136,7 @@ dataSources:
     name: ETHVault
     network: rinkeby
     source:
-      address: "0xDd1718D4E9f42333aBe0F796830191059cE252D8"
+      address: "0x9725dE67CfD6641D3faE9fFAE409E04f78477eB1"
       abi: ETHVault
       startBlock: 7000000
     mapping:
@@ -166,7 +166,7 @@ dataSources:
     name: ETHState
     network: rinkeby
     source:
-      address: "0xDd1718D4E9f42333aBe0F796830191059cE252D8"
+      address: "0x9725dE67CfD6641D3faE9fFAE409E04f78477eB1"
       abi: ETHVault
       startBlock: 7000000
     mapping:
@@ -201,7 +201,7 @@ dataSources:
     name: TCAP
     network: rinkeby
     source:
-      address: "0xd8a06b99ec178517A6eBC3BA4EbAe857D64Cc7aE"
+      address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
       abi: Oracle
       startBlock: 7000000
     mapping:
@@ -222,7 +222,7 @@ dataSources:
     name: GovernorAlpha
     network: rinkeby
     source:
-      address: "0xc524F5E75e22Ac57973fddC4D7AAABE9e9825B37"
+      address: "0x04c0Cc51ee83fd94C4260B508e28A2901B98A5C5"
       abi: GovernorAlpha
       startBlock: 7000000
     mapping:
@@ -254,7 +254,7 @@ dataSources:
     name: Ctx
     network: rinkeby
     source:
-      address: "0x0C179472D1619aC65811bfeCc76F993710265a95"
+      address: "0x37578bd77AFAEc43Bfb1720B2a0Ad06C3De3af1B"
       abi: Ctx
       startBlock: 7000000
     mapping:
