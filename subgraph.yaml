@@ -8,9 +8,9 @@ dataSources:
     name: WBTCVault
     network: rinkeby
     source:
-      address: "0x8bbd9328d8b749beA3f5A890Fd676C9D5952E271"
+      address: "0x82658c3a6a264E18B477cFe07e73423eaa147214"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -38,9 +38,9 @@ dataSources:
     name: WBTCState
     network: rinkeby
     source:
-      address: "0x8bbd9328d8b749beA3f5A890Fd676C9D5952E271"
+      address: "0x82658c3a6a264E18B477cFe07e73423eaa147214"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -72,9 +72,9 @@ dataSources:
     name: DAIVault
     network: rinkeby
     source:
-      address: "0xf92F422eFCbDd1416475a41A8CF26a80C332F2cB"
+      address: "0x8eD3A1A6221c9B6DA1Af4F21dD98646137bCa5ad"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -102,9 +102,9 @@ dataSources:
     name: DAIState
     network: rinkeby
     source:
-      address: "0xf92F422eFCbDd1416475a41A8CF26a80C332F2cB"
+      address: "0x8eD3A1A6221c9B6DA1Af4F21dD98646137bCa5ad"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -136,9 +136,9 @@ dataSources:
     name: ETHVault
     network: rinkeby
     source:
-      address: "0x9725dE67CfD6641D3faE9fFAE409E04f78477eB1"
+      address: "0x16Ab98d9B7753D6c5da7c29Db6E3d51Abc76BE35"
       abi: ETHVault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -166,9 +166,9 @@ dataSources:
     name: ETHState
     network: rinkeby
     source:
-      address: "0x9725dE67CfD6641D3faE9fFAE409E04f78477eB1"
+      address: "0x16Ab98d9B7753D6c5da7c29Db6E3d51Abc76BE35"
       abi: ETHVault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -203,7 +203,7 @@ dataSources:
     source:
       address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
       abi: Oracle
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -222,9 +222,9 @@ dataSources:
     name: GovernorAlpha
     network: rinkeby
     source:
-      address: "0x04c0Cc51ee83fd94C4260B508e28A2901B98A5C5"
+      address: "0x0f046390E99e7FDb6fF9d7335B6FE6378C835bd1"
       abi: GovernorAlpha
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -254,9 +254,9 @@ dataSources:
     name: Ctx
     network: rinkeby
     source:
-      address: "0x37578bd77AFAEc43Bfb1720B2a0Ad06C3De3af1B"
+      address: "0x78a6a1Cee9027fFf464b61Afacc9f3F3ff0c7D74"
       abi: Ctx
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
