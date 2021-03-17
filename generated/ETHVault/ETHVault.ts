@@ -10,16 +10,16 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class LogAddCollateral extends ethereum.Event {
-  get params(): LogAddCollateral__Params {
-    return new LogAddCollateral__Params(this);
+export class CollateralAdded extends ethereum.Event {
+  get params(): CollateralAdded__Params {
+    return new CollateralAdded__Params(this);
   }
 }
 
-export class LogAddCollateral__Params {
-  _event: LogAddCollateral;
+export class CollateralAdded__Params {
+  _event: CollateralAdded;
 
-  constructor(event: LogAddCollateral) {
+  constructor(event: CollateralAdded) {
     this._event = event;
   }
 
@@ -36,16 +36,16 @@ export class LogAddCollateral__Params {
   }
 }
 
-export class LogBurn extends ethereum.Event {
-  get params(): LogBurn__Params {
-    return new LogBurn__Params(this);
+export class CollateralRemoved extends ethereum.Event {
+  get params(): CollateralRemoved__Params {
+    return new CollateralRemoved__Params(this);
   }
 }
 
-export class LogBurn__Params {
-  _event: LogBurn;
+export class CollateralRemoved__Params {
+  _event: CollateralRemoved;
 
-  constructor(event: LogBurn) {
+  constructor(event: CollateralRemoved) {
     this._event = event;
   }
 
@@ -62,16 +62,16 @@ export class LogBurn__Params {
   }
 }
 
-export class LogCreateVault extends ethereum.Event {
-  get params(): LogCreateVault__Params {
-    return new LogCreateVault__Params(this);
+export class NewBurnFee extends ethereum.Event {
+  get params(): NewBurnFee__Params {
+    return new NewBurnFee__Params(this);
   }
 }
 
-export class LogCreateVault__Params {
-  _event: LogCreateVault;
+export class NewBurnFee__Params {
+  _event: NewBurnFee;
 
-  constructor(event: LogCreateVault) {
+  constructor(event: NewBurnFee) {
     this._event = event;
   }
 
@@ -79,101 +79,87 @@ export class LogCreateVault__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get _id(): BigInt {
+  get _burnFee(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 }
 
-export class LogInitializeVault extends ethereum.Event {
-  get params(): LogInitializeVault__Params {
-    return new LogInitializeVault__Params(this);
+export class NewLiquidationPenalty extends ethereum.Event {
+  get params(): NewLiquidationPenalty__Params {
+    return new NewLiquidationPenalty__Params(this);
   }
 }
 
-export class LogInitializeVault__Params {
-  _event: LogInitializeVault;
+export class NewLiquidationPenalty__Params {
+  _event: NewLiquidationPenalty;
 
-  constructor(event: LogInitializeVault) {
+  constructor(event: NewLiquidationPenalty) {
     this._event = event;
   }
 
-  get _divisor(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+  get _owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _liquidationPenalty(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class NewRatio extends ethereum.Event {
+  get params(): NewRatio__Params {
+    return new NewRatio__Params(this);
+  }
+}
+
+export class NewRatio__Params {
+  _event: NewRatio;
+
+  constructor(event: NewRatio) {
+    this._event = event;
+  }
+
+  get _owner(): Address {
+    return this._event.parameters[0].value.toAddress();
   }
 
   get _ratio(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
+}
 
-  get _burnFee(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get _liquidationPenalty(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get _tcapOracle(): Address {
-    return this._event.parameters[4].value.toAddress();
-  }
-
-  get _tcapAddress(): Address {
-    return this._event.parameters[5].value.toAddress();
-  }
-
-  get _collateralAddress(): Address {
-    return this._event.parameters[6].value.toAddress();
-  }
-
-  get _collateralOracle(): Address {
-    return this._event.parameters[7].value.toAddress();
-  }
-
-  get _ethOracle(): Address {
-    return this._event.parameters[8].value.toAddress();
+export class NewRewardHandler extends ethereum.Event {
+  get params(): NewRewardHandler__Params {
+    return new NewRewardHandler__Params(this);
   }
 }
 
-export class LogLiquidateVault extends ethereum.Event {
-  get params(): LogLiquidateVault__Params {
-    return new LogLiquidateVault__Params(this);
-  }
-}
+export class NewRewardHandler__Params {
+  _event: NewRewardHandler;
 
-export class LogLiquidateVault__Params {
-  _event: LogLiquidateVault;
-
-  constructor(event: LogLiquidateVault) {
+  constructor(event: NewRewardHandler) {
     this._event = event;
   }
 
-  get _vaultId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+  get _owner(): Address {
+    return this._event.parameters[0].value.toAddress();
   }
 
-  get _liquidator(): Address {
+  get _rewardHandler(): Address {
     return this._event.parameters[1].value.toAddress();
   }
+}
 
-  get _liquidationCollateral(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get _reward(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+export class NewTreasury extends ethereum.Event {
+  get params(): NewTreasury__Params {
+    return new NewTreasury__Params(this);
   }
 }
 
-export class LogMint extends ethereum.Event {
-  get params(): LogMint__Params {
-    return new LogMint__Params(this);
-  }
-}
+export class NewTreasury__Params {
+  _event: NewTreasury;
 
-export class LogMint__Params {
-  _event: LogMint;
-
-  constructor(event: LogMint) {
+  constructor(event: NewTreasury) {
     this._event = event;
   }
 
@@ -181,126 +167,8 @@ export class LogMint__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get _id(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get _amount(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-}
-
-export class LogRemoveCollateral extends ethereum.Event {
-  get params(): LogRemoveCollateral__Params {
-    return new LogRemoveCollateral__Params(this);
-  }
-}
-
-export class LogRemoveCollateral__Params {
-  _event: LogRemoveCollateral;
-
-  constructor(event: LogRemoveCollateral) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _id(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get _amount(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-}
-
-export class LogRetrieveFees extends ethereum.Event {
-  get params(): LogRetrieveFees__Params {
-    return new LogRetrieveFees__Params(this);
-  }
-}
-
-export class LogRetrieveFees__Params {
-  _event: LogRetrieveFees;
-
-  constructor(event: LogRetrieveFees) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _amount(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class LogSetBurnFee extends ethereum.Event {
-  get params(): LogSetBurnFee__Params {
-    return new LogSetBurnFee__Params(this);
-  }
-}
-
-export class LogSetBurnFee__Params {
-  _event: LogSetBurnFee;
-
-  constructor(event: LogSetBurnFee) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _burnFee(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class LogSetLiquidationPenalty extends ethereum.Event {
-  get params(): LogSetLiquidationPenalty__Params {
-    return new LogSetLiquidationPenalty__Params(this);
-  }
-}
-
-export class LogSetLiquidationPenalty__Params {
-  _event: LogSetLiquidationPenalty;
-
-  constructor(event: LogSetLiquidationPenalty) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _liquidationPenalty(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class LogSetRatio extends ethereum.Event {
-  get params(): LogSetRatio__Params {
-    return new LogSetRatio__Params(this);
-  }
-}
-
-export class LogSetRatio__Params {
-  _event: LogSetRatio;
-
-  constructor(event: LogSetRatio) {
-    this._event = event;
-  }
-
-  get _owner(): Address {
-    return this._event.parameters[0].value.toAddress();
-  }
-
-  get _ratio(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+  get _tresury(): Address {
+    return this._event.parameters[1].value.toAddress();
   }
 }
 
@@ -341,6 +209,28 @@ export class Paused__Params {
 
   get account(): Address {
     return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class Recovered extends ethereum.Event {
+  get params(): Recovered__Params {
+    return new Recovered__Params(this);
+  }
+}
+
+export class Recovered__Params {
+  _event: Recovered;
+
+  constructor(event: Recovered) {
+    this._event = event;
+  }
+
+  get _token(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _amount(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -422,6 +312,58 @@ export class RoleRevoked__Params {
   }
 }
 
+export class TokensBurned extends ethereum.Event {
+  get params(): TokensBurned__Params {
+    return new TokensBurned__Params(this);
+  }
+}
+
+export class TokensBurned__Params {
+  _event: TokensBurned;
+
+  constructor(event: TokensBurned) {
+    this._event = event;
+  }
+
+  get _owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _id(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class TokensMinted extends ethereum.Event {
+  get params(): TokensMinted__Params {
+    return new TokensMinted__Params(this);
+  }
+}
+
+export class TokensMinted__Params {
+  _event: TokensMinted;
+
+  constructor(event: TokensMinted) {
+    this._event = event;
+  }
+
+  get _owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _id(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
 export class Unpaused extends ethereum.Event {
   get params(): Unpaused__Params {
     return new Unpaused__Params(this);
@@ -437,6 +379,58 @@ export class Unpaused__Params {
 
   get account(): Address {
     return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class VaultCreated extends ethereum.Event {
+  get params(): VaultCreated__Params {
+    return new VaultCreated__Params(this);
+  }
+}
+
+export class VaultCreated__Params {
+  _event: VaultCreated;
+
+  constructor(event: VaultCreated) {
+    this._event = event;
+  }
+
+  get _owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get _id(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class VaultLiquidated extends ethereum.Event {
+  get params(): VaultLiquidated__Params {
+    return new VaultLiquidated__Params(this);
+  }
+}
+
+export class VaultLiquidated__Params {
+  _event: VaultLiquidated;
+
+  constructor(event: VaultLiquidated) {
+    this._event = event;
+  }
+
+  get _vaultId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get _liquidator(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get _liquidationCollateral(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get _reward(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 
@@ -848,21 +842,6 @@ export class ETHVault extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  isInitialized(): boolean {
-    let result = super.call("isInitialized", "isInitialized():(bool)", []);
-
-    return result[0].toBoolean();
-  }
-
-  try_isInitialized(): ethereum.CallResult<boolean> {
-    let result = super.tryCall("isInitialized", "isInitialized():(bool)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
   liquidationPenalty(): BigInt {
     let result = super.call(
       "liquidationPenalty",
@@ -1015,21 +994,40 @@ export class ETHVault extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  supportsInterface(interfaceId: Bytes): boolean {
+  rewardHandler(): Address {
+    let result = super.call("rewardHandler", "rewardHandler():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_rewardHandler(): ethereum.CallResult<Address> {
+    let result = super.tryCall(
+      "rewardHandler",
+      "rewardHandler():(address)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  supportsInterface(_interfaceId: Bytes): boolean {
     let result = super.call(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(_interfaceId)]
     );
 
     return result[0].toBoolean();
   }
 
-  try_supportsInterface(interfaceId: Bytes): ethereum.CallResult<boolean> {
+  try_supportsInterface(_interfaceId: Bytes): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(_interfaceId)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1046,6 +1044,21 @@ export class ETHVault extends ethereum.SmartContract {
 
   try_tcapOracle(): ethereum.CallResult<Address> {
     let result = super.tryCall("tcapOracle", "tcapOracle():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  treasury(): Address {
+    let result = super.call("treasury", "treasury():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_treasury(): ethereum.CallResult<Address> {
+    let result = super.tryCall("treasury", "treasury():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1127,8 +1140,52 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get orchestrator(): Address {
+  get _orchestrator(): Address {
     return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _divisor(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get _ratio(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get _burnFee(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get _liquidationPenalty(): BigInt {
+    return this._call.inputValues[4].value.toBigInt();
+  }
+
+  get _tcapOracle(): Address {
+    return this._call.inputValues[5].value.toAddress();
+  }
+
+  get _tcapAddress(): Address {
+    return this._call.inputValues[6].value.toAddress();
+  }
+
+  get _collateralAddress(): Address {
+    return this._call.inputValues[7].value.toAddress();
+  }
+
+  get _collateralOracle(): Address {
+    return this._call.inputValues[8].value.toAddress();
+  }
+
+  get _ethOracle(): Address {
+    return this._call.inputValues[9].value.toAddress();
+  }
+
+  get _rewardHandler(): Address {
+    return this._call.inputValues[10].value.toAddress();
+  }
+
+  get _treasury(): Address {
+    return this._call.inputValues[11].value.toAddress();
   }
 }
 
@@ -1286,68 +1343,6 @@ export class GrantRoleCall__Outputs {
   }
 }
 
-export class InitializeCall extends ethereum.Call {
-  get inputs(): InitializeCall__Inputs {
-    return new InitializeCall__Inputs(this);
-  }
-
-  get outputs(): InitializeCall__Outputs {
-    return new InitializeCall__Outputs(this);
-  }
-}
-
-export class InitializeCall__Inputs {
-  _call: InitializeCall;
-
-  constructor(call: InitializeCall) {
-    this._call = call;
-  }
-
-  get _divisor(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _ratio(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get _burnFee(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get _liquidationPenalty(): BigInt {
-    return this._call.inputValues[3].value.toBigInt();
-  }
-
-  get _tcapOracle(): Address {
-    return this._call.inputValues[4].value.toAddress();
-  }
-
-  get _tcapAddress(): Address {
-    return this._call.inputValues[5].value.toAddress();
-  }
-
-  get _collateralAddress(): Address {
-    return this._call.inputValues[6].value.toAddress();
-  }
-
-  get _collateralOracle(): Address {
-    return this._call.inputValues[7].value.toAddress();
-  }
-
-  get _ethOracle(): Address {
-    return this._call.inputValues[8].value.toAddress();
-  }
-}
-
-export class InitializeCall__Outputs {
-  _call: InitializeCall;
-
-  constructor(call: InitializeCall) {
-    this._call = call;
-  }
-}
-
 export class LiquidateVaultCall extends ethereum.Call {
   get inputs(): LiquidateVaultCall__Inputs {
     return new LiquidateVaultCall__Inputs(this);
@@ -1434,6 +1429,40 @@ export class PauseCall__Outputs {
   _call: PauseCall;
 
   constructor(call: PauseCall) {
+    this._call = call;
+  }
+}
+
+export class RecoverERC20Call extends ethereum.Call {
+  get inputs(): RecoverERC20Call__Inputs {
+    return new RecoverERC20Call__Inputs(this);
+  }
+
+  get outputs(): RecoverERC20Call__Outputs {
+    return new RecoverERC20Call__Outputs(this);
+  }
+}
+
+export class RecoverERC20Call__Inputs {
+  _call: RecoverERC20Call;
+
+  constructor(call: RecoverERC20Call) {
+    this._call = call;
+  }
+
+  get _tokenAddress(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _tokenAmount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class RecoverERC20Call__Outputs {
+  _call: RecoverERC20Call;
+
+  constructor(call: RecoverERC20Call) {
     this._call = call;
   }
 }
@@ -1558,32 +1587,6 @@ export class RenounceRoleCall__Outputs {
   }
 }
 
-export class RetrieveFeesCall extends ethereum.Call {
-  get inputs(): RetrieveFeesCall__Inputs {
-    return new RetrieveFeesCall__Inputs(this);
-  }
-
-  get outputs(): RetrieveFeesCall__Outputs {
-    return new RetrieveFeesCall__Outputs(this);
-  }
-}
-
-export class RetrieveFeesCall__Inputs {
-  _call: RetrieveFeesCall;
-
-  constructor(call: RetrieveFeesCall) {
-    this._call = call;
-  }
-}
-
-export class RetrieveFeesCall__Outputs {
-  _call: RetrieveFeesCall;
-
-  constructor(call: RetrieveFeesCall) {
-    this._call = call;
-  }
-}
-
 export class RevokeRoleCall extends ethereum.Call {
   get inputs(): RevokeRoleCall__Inputs {
     return new RevokeRoleCall__Inputs(this);
@@ -1704,6 +1707,66 @@ export class SetRatioCall__Outputs {
   _call: SetRatioCall;
 
   constructor(call: SetRatioCall) {
+    this._call = call;
+  }
+}
+
+export class SetRewardHandlerCall extends ethereum.Call {
+  get inputs(): SetRewardHandlerCall__Inputs {
+    return new SetRewardHandlerCall__Inputs(this);
+  }
+
+  get outputs(): SetRewardHandlerCall__Outputs {
+    return new SetRewardHandlerCall__Outputs(this);
+  }
+}
+
+export class SetRewardHandlerCall__Inputs {
+  _call: SetRewardHandlerCall;
+
+  constructor(call: SetRewardHandlerCall) {
+    this._call = call;
+  }
+
+  get _rewardHandler(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetRewardHandlerCall__Outputs {
+  _call: SetRewardHandlerCall;
+
+  constructor(call: SetRewardHandlerCall) {
+    this._call = call;
+  }
+}
+
+export class SetTreasuryCall extends ethereum.Call {
+  get inputs(): SetTreasuryCall__Inputs {
+    return new SetTreasuryCall__Inputs(this);
+  }
+
+  get outputs(): SetTreasuryCall__Outputs {
+    return new SetTreasuryCall__Outputs(this);
+  }
+}
+
+export class SetTreasuryCall__Inputs {
+  _call: SetTreasuryCall;
+
+  constructor(call: SetTreasuryCall) {
+    this._call = call;
+  }
+
+  get _treasury(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetTreasuryCall__Outputs {
+  _call: SetTreasuryCall;
+
+  constructor(call: SetTreasuryCall) {
     this._call = call;
   }
 }

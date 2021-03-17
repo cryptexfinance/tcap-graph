@@ -8,9 +8,9 @@ dataSources:
     name: WBTCVault
     network: rinkeby
     source:
-      address: "0x661b59E286B4fe1F04920223AF161E62fFECCE5c"
+      address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -21,26 +21,26 @@ dataSources:
         - name: ERC20Vault
           file: ./abis/ERC20Vault.json
       eventHandlers:
-        - event: LogAddCollateral(indexed address,indexed uint256,uint256)
-          handler: handleLogAddCollateral
-        - event: LogBurn(indexed address,indexed uint256,uint256)
-          handler: handleLogBurn
-        - event: LogCreateVault(indexed address,indexed uint256)
-          handler: handleLogCreateVault
-        - event: LogLiquidateVault(indexed uint256,indexed address,uint256,uint256)
-          handler: handleLogLiquidateVault
-        - event: LogMint(indexed address,indexed uint256,uint256)
-          handler: handleLogMint
-        - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
-          handler: handleLogRemoveCollateral
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
       file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: WBTCState
     network: rinkeby
     source:
-      address: "0x661b59E286B4fe1F04920223AF161E62fFECCE5c"
+      address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -51,16 +51,16 @@ dataSources:
         - name: ERC20Vault
           file: ./abis/ERC20Vault.json
       eventHandlers:
-        - event: LogInitializeVault(uint256,uint256,uint256,uint256,address,address,address,address,address)
-          handler: handleLogInitializeVault
-        - event: LogRetrieveFees(indexed address,uint256)
-          handler: handleLogRetrieveFees
-        - event: LogSetBurnFee(indexed address,uint256)
-          handler: handleLogSetBurnFee
-        - event: LogSetLiquidationPenalty(indexed address,uint256)
-          handler: handleLogSetLiquidationPenalty
-        - event: LogSetRatio(indexed address,uint256)
-          handler: handleLogSetRatio
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: NewRewardHandler(indexed address,address)
+          handler: handleNewRewardHandler
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: Paused(address)
@@ -72,9 +72,9 @@ dataSources:
     name: DAIVault
     network: rinkeby
     source:
-      address: "0x32AB377d1E855335244E25EDCEd2b941B96e2607"
+      address: "0x8eD3A1A6221c9B6DA1Af4F21dD98646137bCa5ad"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -85,26 +85,26 @@ dataSources:
         - name: ERC20Vault
           file: ./abis/ERC20Vault.json
       eventHandlers:
-        - event: LogAddCollateral(indexed address,indexed uint256,uint256)
-          handler: handleLogAddCollateral
-        - event: LogBurn(indexed address,indexed uint256,uint256)
-          handler: handleLogBurn
-        - event: LogCreateVault(indexed address,indexed uint256)
-          handler: handleLogCreateVault
-        - event: LogLiquidateVault(indexed uint256,indexed address,uint256,uint256)
-          handler: handleLogLiquidateVault
-        - event: LogMint(indexed address,indexed uint256,uint256)
-          handler: handleLogMint
-        - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
-          handler: handleLogRemoveCollateral
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
       file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: DAIState
     network: rinkeby
     source:
-      address: "0x32AB377d1E855335244E25EDCEd2b941B96e2607"
+      address: "0x8eD3A1A6221c9B6DA1Af4F21dD98646137bCa5ad"
       abi: ERC20Vault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -115,16 +115,16 @@ dataSources:
         - name: ERC20Vault
           file: ./abis/ERC20Vault.json
       eventHandlers:
-        - event: LogInitializeVault(uint256,uint256,uint256,uint256,address,address,address,address,address)
-          handler: handleLogInitializeVault
-        - event: LogRetrieveFees(indexed address,uint256)
-          handler: handleLogRetrieveFees
-        - event: LogSetBurnFee(indexed address,uint256)
-          handler: handleLogSetBurnFee
-        - event: LogSetLiquidationPenalty(indexed address,uint256)
-          handler: handleLogSetLiquidationPenalty
-        - event: LogSetRatio(indexed address,uint256)
-          handler: handleLogSetRatio
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: NewRewardHandler(indexed address,address)
+          handler: handleNewRewardHandler
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: Paused(address)
@@ -136,9 +136,9 @@ dataSources:
     name: ETHVault
     network: rinkeby
     source:
-      address: "0xbB1FbBcE70De4AFe5F80C75C9e13E8e8C4f776f3"
+      address: "0xe10e6c0a3067697dbE388f4F5Fb4E8e7e78E29dE"
       abi: ETHVault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -149,26 +149,26 @@ dataSources:
         - name: ETHVault
           file: ./abis/ETHVault.json
       eventHandlers:
-        - event: LogAddCollateral(indexed address,indexed uint256,uint256)
-          handler: handleLogAddCollateral
-        - event: LogBurn(indexed address,indexed uint256,uint256)
-          handler: handleLogBurn
-        - event: LogCreateVault(indexed address,indexed uint256)
-          handler: handleLogCreateVault
-        - event: LogLiquidateVault(indexed uint256,indexed address,uint256,uint256)
-          handler: handleLogLiquidateVault
-        - event: LogMint(indexed address,indexed uint256,uint256)
-          handler: handleLogMint
-        - event: LogRemoveCollateral(indexed address,indexed uint256,uint256)
-          handler: handleLogRemoveCollateral
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
       file: ./src/ethvault.ts
   - kind: ethereum/contract
     name: ETHState
     network: rinkeby
     source:
-      address: "0xbB1FbBcE70De4AFe5F80C75C9e13E8e8C4f776f3"
+      address: "0xe10e6c0a3067697dbE388f4F5Fb4E8e7e78E29dE"
       abi: ETHVault
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -179,16 +179,16 @@ dataSources:
         - name: ETHVault
           file: ./abis/ETHVault.json
       eventHandlers:
-        - event: LogInitializeVault(uint256,uint256,uint256,uint256,address,address,address,address,address)
-          handler: handleLogInitializeVault
-        - event: LogRetrieveFees(indexed address,uint256)
-          handler: handleLogRetrieveFees
-        - event: LogSetBurnFee(indexed address,uint256)
-          handler: handleLogSetBurnFee
-        - event: LogSetLiquidationPenalty(indexed address,uint256)
-          handler: handleLogSetLiquidationPenalty
-        - event: LogSetRatio(indexed address,uint256)
-          handler: handleLogSetRatio
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: NewRewardHandler(indexed address,address)
+          handler: handleNewRewardHandler
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
         - event: Paused(address)
@@ -203,7 +203,7 @@ dataSources:
     source:
       address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
       abi: Oracle
-      startBlock: 7000000
+      startBlock: 8000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -217,3 +217,61 @@ dataSources:
         - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
           handler: handleAnswerUpdated
       file: ./src/oracle.ts
+      # Governance
+  - kind: ethereum/contract
+    name: GovernorAlpha
+    network: rinkeby
+    source:
+      address: "0x9cee79Aa6d13F6391A3b8E00C5a81CC1D7FE744b"
+      abi: GovernorAlpha
+      startBlock: 8000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/governance.ts
+      entities:
+        - Delegate
+        - TokenHolder
+        - Proposal
+        - Vote
+        - Governance
+      abis:
+        - name: GovernorAlpha
+          file: ./abis/GovernorAlpha.json
+      eventHandlers:
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
+          handler: handleProposalCreated
+        - event: ProposalCanceled(uint256)
+          handler: handleProposalCanceled
+        - event: ProposalQueued(uint256,uint256)
+          handler: handleProposalQueued
+        - event: ProposalExecuted(uint256)
+          handler: handleProposalExecuted
+        - event: VoteCast(address,uint256,bool,uint256)
+          handler: handleVoteCast
+  - kind: ethereum/contract
+    name: Ctx
+    network: rinkeby
+    source:
+      address: "0x63D3e2aFE4069923d18527cCa0c21F26038e594d"
+      abi: Ctx
+      startBlock: 8000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/governance.ts
+      entities:
+        - Delegate
+        - TokenHolder
+      abis:
+        - name: Ctx
+          file: ./abis/Ctx.json
+      eventHandlers:
+        - event: DelegateChanged(indexed address,indexed address,indexed address)
+          handler: handleDelegateChanged
+        - event: DelegateVotesChanged(indexed address,uint256,uint256)
+          handler: handleDelegateVotesChanged
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer

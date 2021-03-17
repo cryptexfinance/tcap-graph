@@ -1,35 +1,16 @@
 import {
-  LogInitializeVault,
-  LogSetBurnFee,
-  LogSetLiquidationPenalty,
-  LogSetRatio,
+  NewBurnFee,
+  NewLiquidationPenalty,
+  NewRatio,
+  NewTreasury,
+  NewRewardHandler,
   OwnershipTransferred,
   Paused,
 } from "../generated/State/ERC20Vault";
 import { State } from "../generated/schema";
 import { dataSource } from "@graphprotocol/graph-ts";
 
-export function handleLogInitializeVault(event: LogInitializeVault): void {
-  let state = State.load(dataSource.address().toHex());
-
-  if (state == null) {
-    state = new State(dataSource.address().toHex());
-  }
-  state.collateralContract = event.params._collateralAddress;
-  state.collateralOracle = event.params._collateralOracle;
-  state.divisor = event.params._divisor;
-  state.ethContract = event.params._ethOracle;
-  state.liquidationPenalty = event.params._liquidationPenalty;
-  state.tcapContract = event.params._tcapAddress;
-  state.tcapOracle = event.params._tcapOracle;
-  state.ratio = event.params._ratio;
-  state.burnFee = event.params._burnFee;
-  state.isPaused = false;
-  // Entities can be written to the store with `.save()`
-  state.save();
-}
-
-export function handleLogSetBurnFee(event: LogSetBurnFee): void {
+export function handleNewBurnFee(event: NewBurnFee): void {
   let state = State.load(dataSource.address().toHex());
 
   if (state == null) {
@@ -41,8 +22,8 @@ export function handleLogSetBurnFee(event: LogSetBurnFee): void {
   state.save();
 }
 
-export function handleLogSetLiquidationPenalty(
-  event: LogSetLiquidationPenalty
+export function handleNewLiquidationPenalty(
+  event: NewLiquidationPenalty
 ): void {
   let state = State.load(dataSource.address().toHex());
 
@@ -55,7 +36,7 @@ export function handleLogSetLiquidationPenalty(
   state.save();
 }
 
-export function handleLogSetRatio(event: LogSetRatio): void {
+export function handleNewRatio(event: NewRatio): void {
   let state = State.load(dataSource.address().toHex());
 
   if (state == null) {
@@ -63,6 +44,30 @@ export function handleLogSetRatio(event: LogSetRatio): void {
     state.owner = event.params._owner;
   }
   state.ratio = event.params._ratio;
+  // Entities can be written to the store with `.save()`
+  state.save();
+}
+
+export function handleNewTreasury(event: NewTreasury): void {
+  let state = State.load(dataSource.address().toHex());
+
+  if (state == null) {
+    state = new State(dataSource.address().toHex());
+    state.owner = event.params._owner;
+  }
+  state.treasuryContract = event.params._tresury;
+  // Entities can be written to the store with `.save()`
+  state.save();
+}
+
+export function handleNewRewardHandler(event: NewRewardHandler): void {
+  let state = State.load(dataSource.address().toHex());
+
+  if (state == null) {
+    state = new State(dataSource.address().toHex());
+    state.owner = event.params._owner;
+  }
+  state.rewardContract = event.params._rewardHandler;
   // Entities can be written to the store with `.save()`
   state.save();
 }
