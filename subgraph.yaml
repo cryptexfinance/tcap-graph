@@ -8,7 +8,7 @@ dataSources:
     name: WBTCVault
     network: rinkeby
     source:
-      address: "0x82658c3a6a264E18B477cFe07e73423eaa147214"
+      address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
       abi: ERC20Vault
       startBlock: 8000000
     mapping:
@@ -38,7 +38,7 @@ dataSources:
     name: WBTCState
     network: rinkeby
     source:
-      address: "0x82658c3a6a264E18B477cFe07e73423eaa147214"
+      address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
       abi: ERC20Vault
       startBlock: 8000000
     mapping:
@@ -136,7 +136,7 @@ dataSources:
     name: ETHVault
     network: rinkeby
     source:
-      address: "0x16Ab98d9B7753D6c5da7c29Db6E3d51Abc76BE35"
+      address: "0xe10e6c0a3067697dbE388f4F5Fb4E8e7e78E29dE"
       abi: ETHVault
       startBlock: 8000000
     mapping:
@@ -166,7 +166,7 @@ dataSources:
     name: ETHState
     network: rinkeby
     source:
-      address: "0x16Ab98d9B7753D6c5da7c29Db6E3d51Abc76BE35"
+      address: "0xe10e6c0a3067697dbE388f4F5Fb4E8e7e78E29dE"
       abi: ETHVault
       startBlock: 8000000
     mapping:
@@ -222,7 +222,7 @@ dataSources:
     name: GovernorAlpha
     network: rinkeby
     source:
-      address: "0x0f046390E99e7FDb6fF9d7335B6FE6378C835bd1"
+      address: "0x9cee79Aa6d13F6391A3b8E00C5a81CC1D7FE744b"
       abi: GovernorAlpha
       startBlock: 8000000
     mapping:
@@ -254,7 +254,7 @@ dataSources:
     name: Ctx
     network: rinkeby
     source:
-      address: "0x78a6a1Cee9027fFf464b61Afacc9f3F3ff0c7D74"
+      address: "0x63D3e2aFE4069923d18527cCa0c21F26038e594d"
       abi: Ctx
       startBlock: 8000000
     mapping:
