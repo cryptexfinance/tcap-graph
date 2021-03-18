@@ -71,7 +71,7 @@ dataSources:
     name: DAIVault
     network: rinkeby
     source:
-      address: "0x8eD3A1A6221c9B6DA1Af4F21dD98646137bCa5ad"
+      address: "0x22EA5AC5ab0640D890548EEe119d4889645a1f0D"
       abi: ERC20Vault
       startBlock: 8000000
     mapping:
@@ -101,7 +101,7 @@ dataSources:
     name: DAIState
     network: rinkeby
     source:
-      address: "0x8eD3A1A6221c9B6DA1Af4F21dD98646137bCa5ad"
+      address: "0x22EA5AC5ab0640D890548EEe119d4889645a1f0D"
       abi: ERC20Vault
       startBlock: 8000000
     mapping:
