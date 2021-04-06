@@ -5,11 +5,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: WBTCVault
-    network: rinkeby
+    network: mainnet
     source:
       address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
       abi: ERC20Vault
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -35,11 +35,11 @@ dataSources:
       file: WBTCVault/WBTCVault.wasm
   - kind: ethereum/contract
     name: WBTCState
-    network: rinkeby
+    network: mainnet
     source:
       address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
       abi: ERC20Vault
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -69,11 +69,11 @@ dataSources:
       file: WBTCState/WBTCState.wasm
   - kind: ethereum/contract
     name: DAIVault
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x22EA5AC5ab0640D890548EEe119d4889645a1f0D"
+      address: "0x443366a7a5821619D8d57405511E4fadD9964771"
       abi: ERC20Vault
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -99,11 +99,11 @@ dataSources:
       file: WBTCVault/WBTCVault.wasm
   - kind: ethereum/contract
     name: DAIState
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x22EA5AC5ab0640D890548EEe119d4889645a1f0D"
+      address: "0x443366a7a5821619D8d57405511E4fadD9964771"
       abi: ERC20Vault
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -133,11 +133,11 @@ dataSources:
       file: WBTCState/WBTCState.wasm
   - kind: ethereum/contract
     name: ETHVault
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0xe10e6c0a3067697dbE388f4F5Fb4E8e7e78E29dE"
+      address: "0x717170B66654292dFBd89c39F5aE6753D2aC1381"
       abi: ETHVault
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -163,11 +163,11 @@ dataSources:
       file: ETHVault/ETHVault.wasm
   - kind: ethereum/contract
     name: ETHState
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0xe10e6c0a3067697dbE388f4F5Fb4E8e7e78E29dE"
+      address: "0x717170B66654292dFBd89c39F5aE6753D2aC1381"
       abi: ETHVault
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -197,11 +197,11 @@ dataSources:
       file: WBTCState/WBTCState.wasm
   - kind: ethereum/contract
     name: TCAP
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
+      address: "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d"
       abi: Oracle
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -217,11 +217,11 @@ dataSources:
       file: TCAP/TCAP.wasm
   - kind: ethereum/contract
     name: GovernorAlpha
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x9cee79Aa6d13F6391A3b8E00C5a81CC1D7FE744b"
+      address: "0x271901c3268D0959bbc9543DE4f073D3708C88F7"
       abi: GovernorAlpha
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -249,11 +249,11 @@ dataSources:
           handler: handleVoteCast
   - kind: ethereum/contract
     name: Ctx
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x63D3e2aFE4069923d18527cCa0c21F26038e594d"
+      address: "0x321C2fE4446C7c963dc41Dd58879AF648838f98D"
       abi: Ctx
-      startBlock: 8000000
+      startBlock: 12000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
