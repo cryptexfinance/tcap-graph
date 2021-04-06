@@ -8,7 +8,7 @@ dataSources:
     name: WBTCVault
     network: mainnet
     source:
-      address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
+      address: "0x56549e2fE1D9f0a9556f92494d04F263A5011a00"
       abi: ERC20Vault
       startBlock: 12000000
     mapping:
@@ -38,7 +38,7 @@ dataSources:
     name: WBTCState
     network: mainnet
     source:
-      address: "0xC8f2369256AE589d4A0E95121fBB82AD7056cAAD"
+      address: "0x56549e2fE1D9f0a9556f92494d04F263A5011a00"
       abi: ERC20Vault
       startBlock: 12000000
     mapping:
