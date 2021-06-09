@@ -1,5 +1,5 @@
 specVersion: 0.0.2
-repository: https://github.com/cryptexglobal/tcap-graph
+repository: https://github.com/cryptexfinance/tcap-graph
 schema:
   file: ./schema.graphql
 dataSources:
