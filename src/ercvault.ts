@@ -86,9 +86,20 @@ export function handleTokensBurned(event: TokensBurned): void {
   } else {
     protocol.totalTransactions = BigInt.fromI32(1);
   }
-  protocol.save();
+  
+  //Get burn fee
+  let contract = ERC20Vault.bind(event.address);
+  let burnFee = contract.getFee(event.params._amount);
+  if (protocol.totalBurnFee) {
+    protocol.totalBurnFee = protocol.totalBurnFee.plus(
+      burnFee
+    );
+  }
+  else {
+    protocol.totalBurnFee = burnFee;
+  }
 
-  //TODO: Calculate burn fee
+  protocol.save();  
 }
 
 export function handleVaultCreated(event: VaultCreated): void {

@@ -560,6 +560,23 @@ export class Protocol extends Entity {
       this.set("totalTransactions", Value.fromBigInt(value as BigInt));
     }
   }
+
+  get totalBurnFee(): BigInt | null {
+    let value = this.get("totalBurnFee");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalBurnFee(value: BigInt | null) {
+    if (value === null) {
+      this.unset("totalBurnFee");
+    } else {
+      this.set("totalBurnFee", Value.fromBigInt(value as BigInt));
+    }
+  }
 }
 
 export class TokenHolder extends Entity {
