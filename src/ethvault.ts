@@ -85,9 +85,20 @@ export function handleTokensBurned(event: TokensBurned): void {
   } else {
     protocol.totalTransactions = BigInt.fromI32(1);
   }
-  protocol.save();
 
-  //TODO: Calculate burn fee
+  //Get burn fee
+  let contract = ETHVault.bind(event.address);
+  let burnFee = contract.getFee(event.params._amount);
+  if (protocol.totalBurnFee) {
+    protocol.totalBurnFee = protocol.totalBurnFee.plus(
+      burnFee
+    );
+  }
+  else {
+    protocol.totalBurnFee = burnFee;
+  }
+  protocol.save();  
+  
 }
 
 export function handleVaultCreated(event: VaultCreated): void {
