@@ -4,10 +4,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexfinance/tcap",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexfinance/tcap-graph",
     "create-local": "graph create --node http://localhost:8020/ cryptexfinance/tcap",
     "remove-local": "graph remove --node http://localhost:8020/ cryptexfinance/tcap",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 cryptexfinance/tcap"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 cryptexfinance/tcap-graph"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.18.0",
