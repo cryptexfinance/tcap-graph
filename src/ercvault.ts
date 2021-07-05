@@ -145,10 +145,13 @@ export function handleVaultLiquidated(event: VaultLiquidated): void {
   }
   state.save();
 
+  //Get burn fee
+  let burnFee = contract.getFee(event.params._liquidationCollateral);
+
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._reward, false);
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._reward, false);
-  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._liquidationCollateral, false, BigInt.fromI32(0))
-  updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._liquidationCollateral, false, BigInt.fromI32(0))
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._liquidationCollateral, false, burnFee)
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._liquidationCollateral, false, burnFee)
 }
 
 export function handleTokensMinted(event: TokensMinted): void {

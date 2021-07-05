@@ -42,18 +42,6 @@ export function handleCollateralAdded(event: CollateralAdded): void {
     state.amountStaked = event.params._amount;
   }
   state.save();
-  /*let protocol = Protocol.load("1");
-  if (protocol == null) {
-    protocol = new Protocol("1");
-  }
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-  }
-  protocol.save();*/
 
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, true);
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._amount, true);
@@ -137,10 +125,13 @@ export function handleVaultLiquidated(event: VaultLiquidated): void {
   }
   state.save();
 
+  //Get burn fee
+  let burnFee = contract.getFee(event.params._liquidationCollateral);
+
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._reward, false);
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._reward, false);
-  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._liquidationCollateral, false, BigInt.fromI32(0))
-  updateVaultDebtTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._liquidationCollateral, false, BigInt.fromI32(0))
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._liquidationCollateral, false, burnFee)
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._liquidationCollateral, false, burnFee)
 }
 
 export function handleTokensMinted(event: TokensMinted): void {
