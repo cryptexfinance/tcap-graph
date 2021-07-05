@@ -1,5 +1,5 @@
 specVersion: 0.0.2
-repository: https://github.com/cryptexfinance/tcap-graph
+repository: https://github.com/cryptexfinance/tcap-graph/tree/burnfee-constant
 schema:
   file: ./schema.graphql
 dataSources:

@@ -527,6 +527,74 @@ export class Protocol extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get address(): Bytes | null {
+    let value = this.get("address");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set address(value: Bytes | null) {
+    if (value === null) {
+      this.unset("address");
+    } else {
+      this.set("address", Value.fromBytes(value as Bytes));
+    }
+  }
+
+  get totalCollateral(): BigInt | null {
+    let value = this.get("totalCollateral");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalCollateral(value: BigInt | null) {
+    if (value === null) {
+      this.unset("totalCollateral");
+    } else {
+      this.set("totalCollateral", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get totalDebt(): BigInt | null {
+    let value = this.get("totalDebt");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalDebt(value: BigInt | null) {
+    if (value === null) {
+      this.unset("totalDebt");
+    } else {
+      this.set("totalDebt", Value.fromBigInt(value as BigInt));
+    }
+  }
+
+  get totalBurnFee(): BigInt | null {
+    let value = this.get("totalBurnFee");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set totalBurnFee(value: BigInt | null) {
+    if (value === null) {
+      this.unset("totalBurnFee");
+    } else {
+      this.set("totalBurnFee", Value.fromBigInt(value as BigInt));
+    }
+  }
+
   get createdVaults(): BigInt | null {
     let value = this.get("createdVaults");
     if (value === null) {
@@ -558,23 +626,6 @@ export class Protocol extends Entity {
       this.unset("totalTransactions");
     } else {
       this.set("totalTransactions", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get totalBurnFee(): BigInt | null {
-    let value = this.get("totalBurnFee");
-    if (value === null) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set totalBurnFee(value: BigInt | null) {
-    if (value === null) {
-      this.unset("totalBurnFee");
-    } else {
-      this.set("totalBurnFee", Value.fromBigInt(value as BigInt));
     }
   }
 }

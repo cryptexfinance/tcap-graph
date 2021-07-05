@@ -9,3 +9,6 @@ export const STATUS_CANCELLED = "CANCELLED";
 export const STATUS_EXECUTED = "EXECUTED";
 export const STATUS_QUEUED = "QUEUED";
 export const STATUS_ACTIVE = "ACTIVE";
+export const PROTOCOL_ENTITY_ALL_ID = "0"
+export const PROTOCOL_ENTITY_ETH_ID = "1"
+export const PROTOCOL_ENTITY_ERC_ID = "2"

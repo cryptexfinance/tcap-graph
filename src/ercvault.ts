@@ -9,6 +9,9 @@ import {
   CollateralRemoved,
 } from "../generated/Vault/ERC20Vault";
 import { Vault, State, Protocol } from "../generated/schema";
+import { updateVaultCreated, updateVaultCollateralTotals, updateVaultDebtTotals } from "./utils/helpers";
+import { PROTOCOL_ENTITY_ALL_ID, PROTOCOL_ENTITY_ERC_ID } from "./utils/constants";
+
 
 export function handleCollateralAdded(event: CollateralAdded): void {
   let id = dataSource
@@ -40,18 +43,8 @@ export function handleCollateralAdded(event: CollateralAdded): void {
   }
   state.save();
 
-  let protocol = Protocol.load("1");
-  if (protocol == null) {
-    protocol = new Protocol("1");
-  }
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-  }
-  protocol.save();
+  updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, true);
+  updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, true);
 }
 
 export function handleTokensBurned(event: TokensBurned): void {
@@ -90,16 +83,9 @@ export function handleTokensBurned(event: TokensBurned): void {
   //Get burn fee
   let contract = ERC20Vault.bind(event.address);
   let burnFee = contract.getFee(event.params._amount);
-  if (protocol.totalBurnFee) {
-    protocol.totalBurnFee = protocol.totalBurnFee.plus(
-      burnFee
-    );
-  }
-  else {
-    protocol.totalBurnFee = burnFee;
-  }
-
-  protocol.save();  
+  
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, false, burnFee);
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, false, burnFee);
 }
 
 export function handleVaultCreated(event: VaultCreated): void {
@@ -118,23 +104,9 @@ export function handleVaultCreated(event: VaultCreated): void {
 
   // Entities can be written to the store with `.save()`
   vault.save();
-  let protocol = Protocol.load("1");
-  if (protocol == null) {
-    protocol = new Protocol("1");
-  }
-  if (protocol.createdVaults) {
-    protocol.createdVaults = protocol.createdVaults.plus(BigInt.fromI32(1));
-  } else {
-    protocol.createdVaults = BigInt.fromI32(1);
-  }
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-  }
-  protocol.save();
+  
+  updateVaultCreated(PROTOCOL_ENTITY_ALL_ID, null);
+  updateVaultCreated(PROTOCOL_ENTITY_ERC_ID,  event.address);
 }
 
 export function handleVaultLiquidated(event: VaultLiquidated): void {
@@ -173,20 +145,10 @@ export function handleVaultLiquidated(event: VaultLiquidated): void {
   }
   state.save();
 
-  let protocol = Protocol.load("1");
-  if (protocol == null) {
-    protocol = new Protocol("1");
-  }
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-  }
-  protocol.save();
-
-  //TODO: Calculate burn fee
+  updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._reward, false);
+  updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._reward, false);
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._liquidationCollateral, false, BigInt.fromI32(0))
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._liquidationCollateral, false, BigInt.fromI32(0))
 }
 
 export function handleTokensMinted(event: TokensMinted): void {
@@ -211,18 +173,8 @@ export function handleTokensMinted(event: TokensMinted): void {
   // Entities can be written to the store with `.save()`
   vault.save();
 
-  let protocol = Protocol.load("1");
-  if (protocol == null) {
-    protocol = new Protocol("1");
-  }
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-  }
-  protocol.save();
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, true, BigInt.fromI32(0));
+  updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, true, BigInt.fromI32(0));
 }
 
 export function handleCollateralRemoved(event: CollateralRemoved): void {
@@ -253,15 +205,8 @@ export function handleCollateralRemoved(event: CollateralRemoved): void {
   }
   state.save();
 
-  let protocol = Protocol.load("1");
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-  }
-  protocol.save();
+  updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, false);
+  updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, false);
 }
 
 function getRatio(id: BigInt): BigInt {

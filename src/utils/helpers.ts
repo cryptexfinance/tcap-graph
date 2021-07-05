@@ -1,8 +1,10 @@
+import { Address, BigInt } from "@graphprotocol/graph-ts";
 import {
   TokenHolder,
   Delegate,
   Proposal,
   Governance,
+  Protocol,
   Vote,
 } from "../../generated/schema";
 import { DEFAULT_DECIMALS, toDecimal } from "./decimals";
@@ -11,6 +13,7 @@ import {
   BIGINT_ZERO,
   BIGINT_ONE,
   BIGDECIMAL_ZERO,
+  PROTOCOL_ENTITY_ALL_ID,
 } from "./constants";
 
 export function getOrCreateTokenHolder(
@@ -127,4 +130,82 @@ export function getGovernanceEntity(): Governance {
   }
 
   return governance as Governance;
+}
+
+
+export function updateVaultCreated(id: string, address: Address): void {
+  let protocol = Protocol.load(id);
+  if (protocol == null) {
+    protocol = new Protocol(id);
+    if (id != PROTOCOL_ENTITY_ALL_ID) {
+      protocol.address = address;
+    }
+    protocol.totalCollateral = BigInt.fromI32(0);
+    protocol.totalDebt = BigInt.fromI32(0);
+    protocol.totalBurnFee = BigInt.fromI32(0);
+  }
+  if (protocol.createdVaults) {
+    protocol.createdVaults = protocol.createdVaults.plus(BigInt.fromI32(1));
+  } else {
+    protocol.createdVaults = BigInt.fromI32(1);
+  }
+  if (protocol.totalTransactions) {
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions    
+  }
+  protocol.save();
+}
+
+export function updateVaultCollateralTotals(id: string, address: Address, collateral: BigInt, isAdding: boolean): void {
+  let protocol = Protocol.load(id);
+  if (protocol == null) {
+    protocol = new Protocol(id);
+    if (id != PROTOCOL_ENTITY_ALL_ID) {
+      protocol.address = address;
+    }
+  }
+  if (protocol.totalTransactions) {
+    if (isAdding) 
+      protocol.totalCollateral = protocol.totalCollateral.plus(collateral) 
+    else 
+      protocol.totalCollateral = protocol.totalCollateral.minus(collateral) 
+
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions = BigInt.fromI32(1);
+    protocol.totalCollateral = collateral;
+  }
+
+  protocol.save()
+}
+
+export function updateVaultDebtTotals(id: string, address: Address, debt: BigInt, minting: boolean, burnFee: BigInt): void {
+  let protocol = Protocol.load(id);
+  if (protocol == null) {
+    protocol = new Protocol(id);
+    if (id != PROTOCOL_ENTITY_ALL_ID) {
+      protocol.address = address;
+    }
+  }
+  if (protocol.totalTransactions) {
+    if (minting)
+      protocol.totalDebt = protocol.totalDebt.plus(debt);
+    else {
+      protocol.totalDebt = protocol.totalDebt.minus(debt);
+      protocol.totalBurnFee = protocol.totalBurnFee.plus(burnFee)
+    }
+    protocol.totalTransactions = protocol.totalTransactions.plus(
+      BigInt.fromI32(1)
+    );
+  } else {
+    protocol.totalTransactions = BigInt.fromI32(1);
+    protocol.totalDebt = debt;
+  }
+
+  protocol.save()
 }
