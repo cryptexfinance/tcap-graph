@@ -36,9 +36,12 @@ type Oracle @entity {
 
 type Protocol @entity {
 	id: ID!
+	address: Bytes #address
+	totalCollateral: BigInt
+	totalDebt: BigInt
+	totalBurnFee: BigInt
 	createdVaults: BigInt
 	totalTransactions: BigInt
-	totalBurnFee: BigInt
 }
 
 enum ProposalStatus {
