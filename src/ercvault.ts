@@ -8,7 +8,7 @@ import {
   TokensMinted,
   CollateralRemoved,
 } from "../generated/Vault/ERC20Vault";
-import { Vault, State, Protocol } from "../generated/schema";
+import { Vault, State } from "../generated/schema";
 import { updateVaultCreated, updateVaultCollateralTotals, updateVaultDebtTotals } from "./utils/helpers";
 import { PROTOCOL_ENTITY_ALL_ID, PROTOCOL_ENTITY_ERC_ID } from "./utils/constants";
 
@@ -68,18 +68,6 @@ export function handleTokensBurned(event: TokensBurned): void {
   // Entities can be written to the store with `.save()`
   vault.save();
 
-  let protocol = Protocol.load("1");
-  if (protocol == null) {
-    protocol = new Protocol("1");
-  }
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-  }
-  
   //Get burn fee
   let contract = ERC20Vault.bind(event.address);
   let burnFee = contract.getFee(event.params._amount);
