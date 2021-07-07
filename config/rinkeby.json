@@ -1,0 +1,10 @@
+{
+  "network": "rinkeby",
+  "wbtcvault-address": "0x5070ceb13f372b2F3496c643f87D23c01f106367",
+  "daivault-address": "0x7fF4580aD66a3C0F62DDa843674A3811ac062211",
+  "ethvault-address": "0x093f8F7C7fCC6edf991309A5056feB5cA9579292",
+  "chainlink-oracle-address": "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d",
+  "governor-address": "0x6f0663fb471c8329De64fb86a2c1b741bb02cB20",
+  "ctx-address": "0xAa715DbD2ED909B7B7727dC864F3B78276D14A19",
+  "start-block": "6000000"
+}

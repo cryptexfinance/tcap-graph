@@ -1,15 +1,16 @@
 specVersion: 0.0.2
 repository: https://github.com/cryptexfinance/tcap-graph
 schema:
-  file: schema.graphql
+  file: ./schema.graphql
 dataSources:
+  # Vaults
   - kind: ethereum/contract
     name: WBTCVault
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x5070ceb13f372b2F3496c643f87D23c01f106367"
+      address: "{{wbtcvault-address}}"
       abi: ERC20Vault
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -18,7 +19,7 @@ dataSources:
         - Vault
       abis:
         - name: ERC20Vault
-          file: WBTCVault/abis/ERC20Vault.json
+          file: ./abis/ERC20Vault.json
       eventHandlers:
         - event: CollateralAdded(indexed address,indexed uint256,uint256)
           handler: handleCollateralAdded
@@ -32,14 +33,14 @@ dataSources:
           handler: handleTokensMinted
         - event: CollateralRemoved(indexed address,indexed uint256,uint256)
           handler: handleCollateralRemoved
-      file: WBTCVault/WBTCVault.wasm
+      file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: WBTCState
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x5070ceb13f372b2F3496c643f87D23c01f106367"
+      address: "{{wbtcvault-address}}"
       abi: ERC20Vault
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -48,7 +49,7 @@ dataSources:
         - State
       abis:
         - name: ERC20Vault
-          file: WBTCState/abis/ERC20Vault.json
+          file: ./abis/ERC20Vault.json
       eventHandlers:
         - event: NewBurnFee(indexed address,uint256)
           handler: handleNewBurnFee
@@ -66,14 +67,14 @@ dataSources:
           handler: handlePaused
         - event: Unpaused(address)
           handler: handleUnpaused
-      file: WBTCState/WBTCState.wasm
+      file: ./src/state.ts
   - kind: ethereum/contract
     name: DAIVault
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
+      address: "{{daivault-address}}"
       abi: ERC20Vault
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -82,7 +83,7 @@ dataSources:
         - Vault
       abis:
         - name: ERC20Vault
-          file: DAIVault/abis/ERC20Vault.json
+          file: ./abis/ERC20Vault.json
       eventHandlers:
         - event: CollateralAdded(indexed address,indexed uint256,uint256)
           handler: handleCollateralAdded
@@ -96,14 +97,14 @@ dataSources:
           handler: handleTokensMinted
         - event: CollateralRemoved(indexed address,indexed uint256,uint256)
           handler: handleCollateralRemoved
-      file: WBTCVault/WBTCVault.wasm
+      file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: DAIState
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
+      address: "{{daivault-address}}"
       abi: ERC20Vault
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -112,7 +113,7 @@ dataSources:
         - State
       abis:
         - name: ERC20Vault
-          file: DAIState/abis/ERC20Vault.json
+          file: ./abis/ERC20Vault.json
       eventHandlers:
         - event: NewBurnFee(indexed address,uint256)
           handler: handleNewBurnFee
@@ -130,14 +131,14 @@ dataSources:
           handler: handlePaused
         - event: Unpaused(address)
           handler: handleUnpaused
-      file: WBTCState/WBTCState.wasm
+      file: ./src/state.ts
   - kind: ethereum/contract
     name: ETHVault
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
+      address: "{{ethvault-address}}"
       abi: ETHVault
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -146,7 +147,7 @@ dataSources:
         - Vault
       abis:
         - name: ETHVault
-          file: ETHVault/abis/ETHVault.json
+          file: ./abis/ETHVault.json
       eventHandlers:
         - event: CollateralAdded(indexed address,indexed uint256,uint256)
           handler: handleCollateralAdded
@@ -160,14 +161,14 @@ dataSources:
           handler: handleTokensMinted
         - event: CollateralRemoved(indexed address,indexed uint256,uint256)
           handler: handleCollateralRemoved
-      file: ETHVault/ETHVault.wasm
+      file: ./src/ethvault.ts
   - kind: ethereum/contract
     name: ETHState
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
+      address: "{{ethvault-address}}"
       abi: ETHVault
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -176,7 +177,7 @@ dataSources:
         - State
       abis:
         - name: ETHVault
-          file: ETHState/abis/ETHVault.json
+          file: ./abis/ETHVault.json
       eventHandlers:
         - event: NewBurnFee(indexed address,uint256)
           handler: handleNewBurnFee
@@ -194,14 +195,15 @@ dataSources:
           handler: handlePaused
         - event: Unpaused(address)
           handler: handleUnpaused
-      file: WBTCState/WBTCState.wasm
+      file: ./src/state.ts
+      #oracle
   - kind: ethereum/contract
     name: TCAP
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d"
+      address: "{{chainlink-oracle-address}}"
       abi: Oracle
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -210,23 +212,24 @@ dataSources:
         - Oracle
       abis:
         - name: Oracle
-          file: TCAP/abis/Oracle.json
+          file: ./abis/Oracle.json
       eventHandlers:
         - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
           handler: handleAnswerUpdated
-      file: TCAP/TCAP.wasm
+      file: ./src/oracle.ts
+      # Governance
   - kind: ethereum/contract
     name: GovernorAlpha
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0x6f0663fb471c8329De64fb86a2c1b741bb02cB20"
+      address: "{{governor-address}}"
       abi: GovernorAlpha
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: GovernorAlpha/GovernorAlpha.wasm
+      file: ./src/governance.ts
       entities:
         - Delegate
         - TokenHolder
@@ -235,7 +238,7 @@ dataSources:
         - Governance
       abis:
         - name: GovernorAlpha
-          file: GovernorAlpha/abis/GovernorAlpha.json
+          file: ./abis/GovernorAlpha.json
       eventHandlers:
         - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
           handler: handleProposalCreated
@@ -249,22 +252,22 @@ dataSources:
           handler: handleVoteCast
   - kind: ethereum/contract
     name: Ctx
-    network: rinkeby
+    network: {{network}}
     source:
-      address: "0xAa715DbD2ED909B7B7727dC864F3B78276D14A19"
+      address: "{{ctx-address}}"
       abi: Ctx
-      startBlock: 6000000
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: GovernorAlpha/GovernorAlpha.wasm
+      file: ./src/governance.ts
       entities:
         - Delegate
         - TokenHolder
       abis:
         - name: Ctx
-          file: Ctx/abis/Ctx.json
+          file: ./abis/Ctx.json
       eventHandlers:
         - event: DelegateChanged(indexed address,indexed address,indexed address)
           handler: handleDelegateChanged

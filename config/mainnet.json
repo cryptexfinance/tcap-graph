@@ -1,0 +1,10 @@
+{
+  "network": "mainnet",
+  "wbtcvault-address": "0x56549e2fE1D9f0a9556f92494d04F263A5011a00",
+  "daivault-address": "0x443366a7a5821619D8d57405511E4fadD9964771",
+  "ethvault-address": "0x717170B66654292dFBd89c39F5aE6753D2aC1381",
+  "chainlink-oracle-address": "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d",
+  "governor-address": "0x271901c3268D0959bbc9543DE4f073D3708C88F7",
+  "ctx-address": "0x321C2fE4446C7c963dc41Dd58879AF648838f98D",
+  "start-block": "12000000"
+}

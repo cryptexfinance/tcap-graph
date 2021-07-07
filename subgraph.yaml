@@ -10,7 +10,7 @@ dataSources:
     source:
       address: "0x5070ceb13f372b2F3496c643f87D23c01f106367"
       abi: ERC20Vault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -40,7 +40,7 @@ dataSources:
     source:
       address: "0x5070ceb13f372b2F3496c643f87D23c01f106367"
       abi: ERC20Vault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -74,7 +74,7 @@ dataSources:
     source:
       address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
       abi: ERC20Vault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -104,7 +104,7 @@ dataSources:
     source:
       address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
       abi: ERC20Vault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -138,7 +138,7 @@ dataSources:
     source:
       address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
       abi: ETHVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -168,7 +168,7 @@ dataSources:
     source:
       address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
       abi: ETHVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -203,7 +203,7 @@ dataSources:
     source:
       address: "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d"
       abi: Oracle
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -224,7 +224,7 @@ dataSources:
     source:
       address: "0x6f0663fb471c8329De64fb86a2c1b741bb02cB20"
       abi: GovernorAlpha
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -256,7 +256,7 @@ dataSources:
     source:
       address: "0xAa715DbD2ED909B7B7727dC864F3B78276D14A19"
       abi: Ctx
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
