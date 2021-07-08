@@ -4,70 +4,6 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: WBTCVault
-    network: mainnet
-    source:
-      address: "0x56549e2fE1D9f0a9556f92494d04F263A5011a00"
-      abi: ERC20Vault
-      startBlock: 12000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Vault
-      abis:
-        - name: ERC20Vault
-          file: WBTCVault/abis/ERC20Vault.json
-      eventHandlers:
-        - event: CollateralAdded(indexed address,indexed uint256,uint256)
-          handler: handleCollateralAdded
-        - event: TokensBurned(indexed address,indexed uint256,uint256)
-          handler: handleTokensBurned
-        - event: VaultCreated(indexed address,indexed uint256)
-          handler: handleVaultCreated
-        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
-          handler: handleVaultLiquidated
-        - event: TokensMinted(indexed address,indexed uint256,uint256)
-          handler: handleTokensMinted
-        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
-          handler: handleCollateralRemoved
-      file: WBTCVault/WBTCVault.wasm
-  - kind: ethereum/contract
-    name: WBTCState
-    network: mainnet
-    source:
-      address: "0x56549e2fE1D9f0a9556f92494d04F263A5011a00"
-      abi: ERC20Vault
-      startBlock: 12000000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - State
-      abis:
-        - name: ERC20Vault
-          file: WBTCState/abis/ERC20Vault.json
-      eventHandlers:
-        - event: NewBurnFee(indexed address,uint256)
-          handler: handleNewBurnFee
-        - event: NewLiquidationPenalty(indexed address,uint256)
-          handler: handleNewLiquidationPenalty
-        - event: NewRatio(indexed address,uint256)
-          handler: handleNewRatio
-        - event: NewTreasury(indexed address,address)
-          handler: handleNewTreasury
-        - event: NewRewardHandler(indexed address,address)
-          handler: handleNewRewardHandler
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: Paused(address)
-          handler: handlePaused
-        - event: Unpaused(address)
-          handler: handleUnpaused
-      file: WBTCState/WBTCState.wasm
-  - kind: ethereum/contract
     name: DAIVault
     network: mainnet
     source:
@@ -96,7 +32,7 @@ dataSources:
           handler: handleTokensMinted
         - event: CollateralRemoved(indexed address,indexed uint256,uint256)
           handler: handleCollateralRemoved
-      file: WBTCVault/WBTCVault.wasm
+      file: DAIVault/DAIVault.wasm
   - kind: ethereum/contract
     name: DAIState
     network: mainnet
@@ -130,7 +66,7 @@ dataSources:
           handler: handlePaused
         - event: Unpaused(address)
           handler: handleUnpaused
-      file: WBTCState/WBTCState.wasm
+      file: DAIState/DAIState.wasm
   - kind: ethereum/contract
     name: ETHVault
     network: mainnet
@@ -194,7 +130,7 @@ dataSources:
           handler: handlePaused
         - event: Unpaused(address)
           handler: handleUnpaused
-      file: WBTCState/WBTCState.wasm
+      file: DAIState/DAIState.wasm
   - kind: ethereum/contract
     name: TCAP
     network: mainnet

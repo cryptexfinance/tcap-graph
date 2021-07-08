@@ -1,4 +1,4 @@
-import { dataSource, BigInt } from "@graphprotocol/graph-ts";
+import { dataSource, BigInt, log } from "@graphprotocol/graph-ts";
 import {
   ETHVault,
   CollateralAdded,
@@ -10,7 +10,7 @@ import {
 } from "../generated/ETHVault/ETHVault";
 import { Vault, State } from "../generated/schema";
 import { updateVaultCreated, updateVaultCollateralTotals, updateVaultDebtTotals } from "./utils/helpers";
-import { PROTOCOL_ENTITY_ALL_ID, PROTOCOL_ENTITY_ETH_ID } from "./utils/constants";
+import { PROTOCOL_ENTITY_ETH_ID } from "./utils/constants";
 
 
 export function handleCollateralAdded(event: CollateralAdded): void {
@@ -43,7 +43,6 @@ export function handleCollateralAdded(event: CollateralAdded): void {
   }
   state.save();
 
-  updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, true);
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._amount, true);
 }
 
@@ -70,7 +69,6 @@ export function handleTokensBurned(event: TokensBurned): void {
   let contract = ETHVault.bind(event.address);
   let burnFee = contract.getFee(event.params._amount);
   
-  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, false, burnFee);
   updateVaultDebtTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._amount, false, burnFee);
 }
 
@@ -89,7 +87,6 @@ export function handleVaultCreated(event: VaultCreated): void {
   vault.currentRatio = new BigInt(0);
   vault.save();
 
-  updateVaultCreated(PROTOCOL_ENTITY_ALL_ID, null);
   updateVaultCreated(PROTOCOL_ENTITY_ETH_ID, event.address);  
 }
 
@@ -128,9 +125,7 @@ export function handleVaultLiquidated(event: VaultLiquidated): void {
   //Get burn fee
   let burnFee = contract.getFee(event.params._liquidationCollateral);
 
-  updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._reward, false);
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._reward, false);
-  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._liquidationCollateral, false, burnFee)
   updateVaultDebtTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._liquidationCollateral, false, burnFee)
 }
 
@@ -157,7 +152,6 @@ export function handleTokensMinted(event: TokensMinted): void {
   // Entities can be written to the store with `.save()`
   vault.save();
 
-  updateVaultDebtTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, true, BigInt.fromI32(0));
   updateVaultDebtTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._amount, true, BigInt.fromI32(0));
 }
 
@@ -188,7 +182,6 @@ export function handleCollateralRemoved(event: CollateralRemoved): void {
   }
   state.save();
 
-  updateVaultCollateralTotals(PROTOCOL_ENTITY_ALL_ID, null, event.params._amount, false);
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ETH_ID, event.address, event.params._amount, false);
 }
 
