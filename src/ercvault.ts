@@ -10,7 +10,7 @@ import {
 } from "../generated/Vault/ERC20Vault";
 import { Vault, State, Protocol } from "../generated/schema";
 import { updateVaultCreated, updateVaultCollateralTotals, updateVaultDebtTotals } from "./utils/helpers";
-import { PROTOCOL_ENTITY_ALL_ID, PROTOCOL_ENTITY_ERC_ID } from "./utils/constants";
+import { PROTOCOL_ENTITY_ALL_ID, PROTOCOL_ENTITY_ERC_ID, PROTOCOL_ENTITY_MATIC_ID } from "./utils/constants";
 
 
 export function handleCollateralAdded(event: CollateralAdded): void {
@@ -105,8 +105,10 @@ export function handleVaultCreated(event: VaultCreated): void {
   // Entities can be written to the store with `.save()`
   vault.save();
   
+  const protocol_id = (dataSource.network() == "matic" ? PROTOCOL_ENTITY_MATIC_ID : PROTOCOL_ENTITY_ERC_ID);
+
   updateVaultCreated(PROTOCOL_ENTITY_ALL_ID, null);
-  updateVaultCreated(PROTOCOL_ENTITY_ERC_ID,  event.address);
+  updateVaultCreated(protocol_id,  event.address);
 }
 
 export function handleVaultLiquidated(event: VaultLiquidated): void {
