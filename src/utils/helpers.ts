@@ -143,19 +143,14 @@ export function updateVaultCreated(id: string, address: Address): void {
     protocol.totalCollateral = BigInt.fromI32(0);
     protocol.totalDebt = BigInt.fromI32(0);
     protocol.totalBurnFee = BigInt.fromI32(0);
-  }
-  if (protocol.createdVaults) {
-    protocol.createdVaults = protocol.createdVaults.plus(BigInt.fromI32(1));
-  } else {
     protocol.createdVaults = BigInt.fromI32(1);
+    protocol.totalTransactions = BigInt.fromI32(1); 
   }
-  if (protocol.totalTransactions) {
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions    
+  else {
+    protocol.createdVaults = protocol.createdVaults.plus(BigInt.fromI32(1));
+    protocol.totalTransactions = protocol.totalTransactions.plus(BigInt.fromI32(1));
   }
+    
   protocol.save();
 }
 
@@ -167,19 +162,13 @@ export function updateVaultCollateralTotals(id: string, address: Address, collat
       protocol.address = address;
     }
   }
-  if (protocol.totalTransactions) {
-    if (isAdding) 
-      protocol.totalCollateral = protocol.totalCollateral.plus(collateral) 
-    else 
-      protocol.totalCollateral = protocol.totalCollateral.minus(collateral) 
-
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-    protocol.totalCollateral = collateral;
-  }
+  protocol.totalTransactions = protocol.totalTransactions.plus(
+    BigInt.fromI32(1)
+  );
+  if (isAdding) 
+    protocol.totalCollateral = protocol.totalCollateral.plus(collateral) 
+  else 
+    protocol.totalCollateral = protocol.totalCollateral.minus(collateral) 
 
   protocol.save()
 }
@@ -192,20 +181,15 @@ export function updateVaultDebtTotals(id: string, address: Address, debt: BigInt
       protocol.address = address;
     }
   }
-  if (protocol.totalTransactions) {
-    if (minting)
-      protocol.totalDebt = protocol.totalDebt.plus(debt);
-    else {
-      protocol.totalDebt = protocol.totalDebt.minus(debt);
-      protocol.totalBurnFee = protocol.totalBurnFee.plus(burnFee)
-    }
-    protocol.totalTransactions = protocol.totalTransactions.plus(
-      BigInt.fromI32(1)
-    );
-  } else {
-    protocol.totalTransactions = BigInt.fromI32(1);
-    protocol.totalDebt = debt;
+  protocol.totalTransactions = protocol.totalTransactions.plus(
+    BigInt.fromI32(1)
+  );
+  if (minting)
+    protocol.totalDebt = protocol.totalDebt.plus(debt);
+  else {
+    protocol.totalDebt = protocol.totalDebt.minus(debt);
+    protocol.totalBurnFee = protocol.totalBurnFee.plus(burnFee)
   }
-
+    
   protocol.save()
 }

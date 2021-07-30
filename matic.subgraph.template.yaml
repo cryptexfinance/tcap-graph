@@ -6,11 +6,11 @@ dataSources:
   # Vaults
   - kind: ethereum/contract
     name: MATICVault
-    network: matic
+    network: {{network}}
     source:
-      address: "0xEecF07643384C689C7AB804887ef2187cE75D5Ec"
+      address: "{{maticvault-address}}"
       abi: MATICVault
-      startBlock: 17372710
+      startBlock: {{start-block}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
