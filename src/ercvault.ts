@@ -1,4 +1,4 @@
-import { dataSource, log, BigInt } from "@graphprotocol/graph-ts";
+import { dataSource, BigInt } from "@graphprotocol/graph-ts";
 import {
   ERC20Vault,
   CollateralAdded,
@@ -91,7 +91,7 @@ export function handleVaultCreated(event: VaultCreated): void {
   // Entities can be written to the store with `.save()`
   vault.save();
   
-  updateVaultCreated(PROTOCOL_ENTITY_ERC_ID,  event.address);
+  updateVaultCreated(dataSource.network(), PROTOCOL_ENTITY_ERC_ID,  event.address);
 }
 
 export function handleVaultLiquidated(event: VaultLiquidated): void {

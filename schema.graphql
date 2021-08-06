@@ -1,3 +1,12 @@
+type Token @entity {
+	id: ID!
+	address: Bytes! #address
+	name: String!
+	symbol: String!
+	decimals: String!
+	protocol: Protocol
+}
+
 type Vault @entity {
 	id: ID!
 	vaultId: BigInt
@@ -42,6 +51,7 @@ type Protocol @entity {
 	totalBurnFee: BigInt
 	createdVaults: BigInt
 	totalTransactions: BigInt
+	underlyingToken: Token
 }
 
 enum ProposalStatus {

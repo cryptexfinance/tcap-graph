@@ -12,4 +12,3 @@ export const STATUS_ACTIVE = "ACTIVE";
 export const PROTOCOL_ENTITY_ALL_ID = "0"
 export const PROTOCOL_ENTITY_ETH_ID = "1"
 export const PROTOCOL_ENTITY_ERC_ID = "2"
-export const PROTOCOL_ENTITY_MATIC_ID = "3"

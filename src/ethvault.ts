@@ -87,7 +87,7 @@ export function handleVaultCreated(event: VaultCreated): void {
   vault.currentRatio = new BigInt(0);
   vault.save();
 
-  updateVaultCreated(PROTOCOL_ENTITY_ETH_ID, event.address);  
+  updateVaultCreated(dataSource.network(), PROTOCOL_ENTITY_ETH_ID, event.address);  
 }
 
 export function handleVaultLiquidated(event: VaultLiquidated): void {

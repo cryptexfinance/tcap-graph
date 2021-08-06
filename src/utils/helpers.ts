@@ -1,5 +1,6 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import {
+  Token,
   TokenHolder,
   Delegate,
   Proposal,
@@ -7,14 +8,19 @@ import {
   Protocol,
   Vote,
 } from "../../generated/schema";
-import { DEFAULT_DECIMALS, toDecimal } from "./decimals";
 import {
   ZERO_ADDRESS,
   BIGINT_ZERO,
   BIGINT_ONE,
   BIGDECIMAL_ZERO,
-  PROTOCOL_ENTITY_ALL_ID,
+  PROTOCOL_ENTITY_ETH_ID
 } from "./constants";
+import {
+  getTokenAddress,
+  getTokenName,
+  getTokenSymbol,
+  getTokenDecimals
+} from "./tokens"
 
 export function getOrCreateTokenHolder(
   id: string,
@@ -133,18 +139,28 @@ export function getGovernanceEntity(): Governance {
 }
 
 
-export function updateVaultCreated(id: string, address: Address): void {
+export function updateVaultCreated(network: string, id: string, address: Address): void {
   let protocol = Protocol.load(id);
   if (protocol == null) {
     protocol = new Protocol(id);
-    if (id != PROTOCOL_ENTITY_ALL_ID) {
-      protocol.address = address;
-    }
+    protocol.address = address;
     protocol.totalCollateral = BigInt.fromI32(0);
     protocol.totalDebt = BigInt.fromI32(0);
     protocol.totalBurnFee = BigInt.fromI32(0);
     protocol.createdVaults = BigInt.fromI32(1);
-    protocol.totalTransactions = BigInt.fromI32(1); 
+    protocol.totalTransactions = BigInt.fromI32(1);
+    
+    let token = Token.load(id);
+    if (token == null) {
+      token = new Token(id);
+      token.address = getTokenAddress(network, id);
+      token.name = getTokenName(id);
+      token.symbol = getTokenSymbol(id);
+      token.decimals = getTokenDecimals(id);
+      token.save()
+
+      protocol.underlyingToken = token.id;
+    }
   }
   else {
     protocol.createdVaults = protocol.createdVaults.plus(BigInt.fromI32(1));
@@ -158,9 +174,7 @@ export function updateVaultCollateralTotals(id: string, address: Address, collat
   let protocol = Protocol.load(id);
   if (protocol == null) {
     protocol = new Protocol(id);
-    if (id != PROTOCOL_ENTITY_ALL_ID) {
-      protocol.address = address;
-    }
+    protocol.address = address;    
   }
   protocol.totalTransactions = protocol.totalTransactions.plus(
     BigInt.fromI32(1)
@@ -177,9 +191,7 @@ export function updateVaultDebtTotals(id: string, address: Address, debt: BigInt
   let protocol = Protocol.load(id);
   if (protocol == null) {
     protocol = new Protocol(id);
-    if (id != PROTOCOL_ENTITY_ALL_ID) {
-      protocol.address = address;
-    }
+    protocol.address = address;
   }
   protocol.totalTransactions = protocol.totalTransactions.plus(
     BigInt.fromI32(1)
