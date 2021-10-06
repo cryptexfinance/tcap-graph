@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, Value, log } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes, log } from "@graphprotocol/graph-ts";
 import {
   ProposalCreated,
   ProposalCanceled,
@@ -7,10 +7,19 @@ import {
   VoteCast,
 } from "../generated/GovernorAlpha/GovernorAlpha";
 import {
+  DelegatorCreated,
+  Staked,
+  Withdrawn,
+} from "../generated/DelegatorFactory/DelegatorFactory";
+import {
   DelegateChanged,
   DelegateVotesChanged,
   Transfer,
 } from "../generated/Ctx/Ctx";
+import {
+  Delegator,
+  DelegatorTokenOwner,
+} from "../generated/schema";
 import {
   getOrCreateTokenHolder,
   getOrCreateDelegate,
@@ -22,6 +31,7 @@ import {
   ZERO_ADDRESS,
   BIGINT_ONE,
   BIGINT_ZERO,
+  BIGDECIMAL_ZERO,
   STATUS_ACTIVE,
   STATUS_QUEUED,
   STATUS_PENDING,
@@ -89,7 +99,7 @@ export function handleProposalQueued(event: ProposalQueued): void {
   proposal.save();
 
   governance.proposalsQueued = governance.proposalsQueued.plus(BIGINT_ONE);
-  governance.save();
+  governance.save(); 
 }
 
 // - event: ProposalExecuted(uint256)
@@ -104,7 +114,7 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
   proposal.save();
 
   governance.proposalsQueued = governance.proposalsQueued.minus(BIGINT_ONE);
-  governance.save();
+  governance.save(); 
 }
 
 // - event: VoteCast(address,uint256,bool,uint256)
@@ -271,3 +281,62 @@ export function handleTransfer(event: Transfer): void {
 
   toHolder.save();
 }
+
+export function handleDelegatorCreated(event: DelegatorCreated): void {
+  let delegator = new Delegator(event.params.delegator.toHexString());
+
+  delegator.delegatee = event.params.delegatee;
+  delegator.delegatedVotesRaw = BIGINT_ZERO;
+  delegator.delegatedVotes = BIGDECIMAL_ZERO;
+  delegator.totalHoldersRepresented = 0;
+  delegator.save();
+}
+
+export function handleStaked(event: Staked): void {
+  let delegator = Delegator.load(event.params.delegator.toHexString());
+  
+  if (delegator != null) {
+    delegator.delegatedVotesRaw = delegator.delegatedVotesRaw.plus(event.params.amount);
+    delegator.delegatedVotes = delegator.delegatedVotes.plus(toDecimal(event.params.amount));
+    
+    let tdId = event.params.delegator.toHexString() + "-" + event.params.delegatee.toHexString();
+    let delegatorTokenOwner = DelegatorTokenOwner.load(tdId);
+    if (delegatorTokenOwner != null) {
+      delegatorTokenOwner.stake = delegatorTokenOwner.stake.plus(toDecimal(event.params.amount));
+      delegatorTokenOwner.stakeRaw = delegatorTokenOwner.stakeRaw.plus(event.params.amount);
+    }
+    else {
+      delegatorTokenOwner = new DelegatorTokenOwner(tdId);
+      delegatorTokenOwner.tokenOwner = event.params.delegatee;
+      delegatorTokenOwner.delegator = delegator.id;
+      delegatorTokenOwner.stake = toDecimal(event.params.amount);
+      delegatorTokenOwner.stakeRaw = event.params.amount;
+      delegator.totalHoldersRepresented = delegator.totalHoldersRepresented + 1;
+    }
+    delegator.save();
+    delegatorTokenOwner.save();
+  }
+}
+
+export function handleWithdrawn(event: Withdrawn): void {
+  let delegator = Delegator.load(event.params.delegator.toHexString());
+
+  if (delegator != null) {
+    delegator.delegatedVotesRaw = delegator.delegatedVotesRaw.minus(event.params.amount);
+    delegator.delegatedVotes = delegator.delegatedVotes.minus(toDecimal(event.params.amount));
+    
+    let tdId = event.params.delegator.toHexString() + "-" + event.params.delegatee.toHexString();
+    let delegatorTokenOwner = DelegatorTokenOwner.load(tdId);
+    if (delegatorTokenOwner != null) {
+      delegatorTokenOwner.stake = delegatorTokenOwner.stake.minus(toDecimal(event.params.amount));
+      delegatorTokenOwner.stakeRaw = delegatorTokenOwner.stakeRaw.minus(event.params.amount);
+      delegatorTokenOwner.save();
+
+      if (delegatorTokenOwner.stakeRaw === BIGINT_ZERO) {
+        delegator.totalHoldersRepresented = delegator.totalHoldersRepresented  - 1;
+      }
+    }
+    delegator.save();
+  }
+}
+

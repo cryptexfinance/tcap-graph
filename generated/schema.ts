@@ -778,6 +778,23 @@ export class TokenHolder extends Entity {
     }
   }
 
+  get delegator(): string | null {
+    let value = this.get("delegator");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set delegator(value: string | null) {
+    if (value === null) {
+      this.unset("delegator");
+    } else {
+      this.set("delegator", Value.fromString(value as string));
+    }
+  }
+
   get tokenBalanceRaw(): BigInt {
     let value = this.get("tokenBalanceRaw");
     return value.toBigInt();
@@ -1246,5 +1263,148 @@ export class Governance extends Entity {
 
   set proposalsQueued(value: BigInt) {
     this.set("proposalsQueued", Value.fromBigInt(value));
+  }
+}
+
+export class Delegator extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Delegator entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Delegator entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Delegator", id.toString(), this);
+  }
+
+  static load(id: string): Delegator | null {
+    return store.get("Delegator", id) as Delegator | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get delegatee(): Bytes {
+    let value = this.get("delegatee");
+    return value.toBytes();
+  }
+
+  set delegatee(value: Bytes) {
+    this.set("delegatee", Value.fromBytes(value));
+  }
+
+  get delegatedVotesRaw(): BigInt {
+    let value = this.get("delegatedVotesRaw");
+    return value.toBigInt();
+  }
+
+  set delegatedVotesRaw(value: BigInt) {
+    this.set("delegatedVotesRaw", Value.fromBigInt(value));
+  }
+
+  get delegatedVotes(): BigDecimal {
+    let value = this.get("delegatedVotes");
+    return value.toBigDecimal();
+  }
+
+  set delegatedVotes(value: BigDecimal) {
+    this.set("delegatedVotes", Value.fromBigDecimal(value));
+  }
+
+  get totalHoldersRepresented(): i32 {
+    let value = this.get("totalHoldersRepresented");
+    return value.toI32();
+  }
+
+  set totalHoldersRepresented(value: i32) {
+    this.set("totalHoldersRepresented", Value.fromI32(value));
+  }
+
+  get tokenOwners(): Array<string> {
+    let value = this.get("tokenOwners");
+    return value.toStringArray();
+  }
+
+  set tokenOwners(value: Array<string>) {
+    this.set("tokenOwners", Value.fromStringArray(value));
+  }
+}
+
+export class DelegatorTokenOwner extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save DelegatorTokenOwner entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save DelegatorTokenOwner entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("DelegatorTokenOwner", id.toString(), this);
+  }
+
+  static load(id: string): DelegatorTokenOwner | null {
+    return store.get("DelegatorTokenOwner", id) as DelegatorTokenOwner | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get tokenOwner(): Bytes {
+    let value = this.get("tokenOwner");
+    return value.toBytes();
+  }
+
+  set tokenOwner(value: Bytes) {
+    this.set("tokenOwner", Value.fromBytes(value));
+  }
+
+  get delegator(): string {
+    let value = this.get("delegator");
+    return value.toString();
+  }
+
+  set delegator(value: string) {
+    this.set("delegator", Value.fromString(value));
+  }
+
+  get stake(): BigDecimal {
+    let value = this.get("stake");
+    return value.toBigDecimal();
+  }
+
+  set stake(value: BigDecimal) {
+    this.set("stake", Value.fromBigDecimal(value));
+  }
+
+  get stakeRaw(): BigInt {
+    let value = this.get("stakeRaw");
+    return value.toBigInt();
+  }
+
+  set stakeRaw(value: BigInt) {
+    this.set("stakeRaw", Value.fromBigInt(value));
   }
 }
