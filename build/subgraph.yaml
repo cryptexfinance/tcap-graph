@@ -132,10 +132,134 @@ dataSources:
           handler: handleUnpaused
       file: DAIState/DAIState.wasm
   - kind: ethereum/contract
+    name: AAVEVault
+    network: mainnet
+    source:
+      address: "0xada39d170551daf42822E1D3dA64efEBbD14d1D3"
+      abi: AAVEVault
+      startBlock: 12000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: AAVEVault
+          file: AAVEVault/abis/AAVEVault.json
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: AAVEVault/AAVEVault.wasm
+  - kind: ethereum/contract
+    name: AAVEState
+    network: mainnet
+    source:
+      address: "0xada39d170551daf42822E1D3dA64efEBbD14d1D3"
+      abi: AAVEVault
+      startBlock: 12000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: AAVEVault
+          file: AAVEState/abis/AAVEVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: DAIState/DAIState.wasm
+  - kind: ethereum/contract
+    name: LINKVault
+    network: mainnet
+    source:
+      address: "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba"
+      abi: LINKVault
+      startBlock: 12000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: LINKVault
+          file: LINKVault/abis/LINKVault.json
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: LINKVault/LINKVault.wasm
+  - kind: ethereum/contract
+    name: LINKState
+    network: mainnet
+    source:
+      address: "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba"
+      abi: LINKVault
+      startBlock: 12000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: LINKVault
+          file: LINKState/abis/LINKVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: DAIState/DAIState.wasm
+  - kind: ethereum/contract
     name: TCAP
     network: mainnet
     source:
-      address: "0x372226e23f02e3e7a9a7bf4bf48922a9915a598d"
+      address: "0x9257d83a0dda413ca24f66dd32a056bc2ebafd2e"
       abi: Oracle
       startBlock: 12000000
     mapping:
@@ -208,3 +332,27 @@ dataSources:
           handler: handleDelegateVotesChanged
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+  - kind: ethereum/contract
+    name: DelegatorFactory
+    network: mainnet
+    source:
+      address: "0x70236b36f86AB4bd557Fe9934E1246537B472918"
+      abi: DelegatorFactory
+      startBlock: 12000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: GovernorAlpha/GovernorAlpha.wasm
+      entities:
+        - Delegator
+      abis:
+        - name: DelegatorFactory
+          file: DelegatorFactory/abis/DelegatorFactory.json
+      eventHandlers:
+        - event: DelegatorCreated(indexed address,indexed address)
+          handler: handleDelegatorCreated
+        - event: Staked(indexed address,indexed address,uint256)
+          handler: handleStaked
+        - event: Withdrawn(indexed address,indexed address,uint256)
+          handler: handleWithdrawn

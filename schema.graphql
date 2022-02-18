@@ -1,3 +1,12 @@
+type Token @entity {
+	id: ID!
+	address: Bytes! #address
+	name: String!
+	symbol: String!
+	decimals: String!
+	protocol: Protocol
+}
+
 type Vault @entity {
 	id: ID!
 	vaultId: BigInt
@@ -42,6 +51,7 @@ type Protocol @entity {
 	totalBurnFee: BigInt
 	createdVaults: BigInt
 	totalTransactions: BigInt
+	underlyingToken: Token
 }
 
 enum ProposalStatus {
@@ -53,14 +63,13 @@ enum ProposalStatus {
 }
 
 # Ctx Governance Graph
-
 type TokenHolder @entity {
 	"A TokenHolder is any address that holds any amount of Ctx Tokens, the id used is the blockchain address."
 	id: ID!
 
 	"Delegate address of the token holder which will participate in votings. Delegates don't need to hold any tokens and can even be the token holder itself."
 	delegate: Delegate
-
+	delegator: Delegator
 	"Ctx Token balance of this address expressed in the smallest unit of the CtxToken"
 	tokenBalanceRaw: BigInt!
 
@@ -181,4 +190,24 @@ type Governance @entity {
 
 	"Number of proposals currently queued for execution"
 	proposalsQueued: BigInt!
+}
+
+type Delegator @entity {
+	"A Delegator is any contract address created by the DelegatorFactory."
+	id: ID!
+	delegatee: Bytes!
+	"Amount of votes delegated to this delegatee to be used on proposal votings expressed in the smallest unit of the CtxToken"
+	delegatedVotesRaw: BigInt!
+	"Amount of votes delegated to this delegatee to be used on proposal votings expressed as a BigDecimal normalized value for the Ctx Token"
+	delegatedVotes: BigDecimal!
+	totalHoldersRepresented: Int!
+	tokenOwners: [DelegatorTokenOwner!]! @derivedFrom(field: "delegator")
+}
+
+type DelegatorTokenOwner @entity {
+	id: ID!
+	tokenOwner: Bytes!
+	delegator: Delegator!
+	stake: BigDecimal!
+	stakeRaw: BigInt!
 }

@@ -1,4 +1,4 @@
-import { dataSource, log, BigInt } from "@graphprotocol/graph-ts";
+import { dataSource, BigInt, log } from "@graphprotocol/graph-ts";
 import {
   ERC20Vault,
   CollateralAdded,
@@ -91,7 +91,7 @@ export function handleVaultCreated(event: VaultCreated): void {
   // Entities can be written to the store with `.save()`
   vault.save();
   
-  updateVaultCreated(PROTOCOL_ENTITY_ERC_ID,  event.address);
+  updateVaultCreated(dataSource.network(), PROTOCOL_ENTITY_ERC_ID,  event.address);
 }
 
 export function handleVaultLiquidated(event: VaultLiquidated): void {
@@ -129,10 +129,10 @@ export function handleVaultLiquidated(event: VaultLiquidated): void {
     state.amountStaked = state.amountStaked.minus(event.params._reward);
   }
   state.save();
-
+  
   //Get burn fee
   let burnFee = contract.getFee(event.params._liquidationCollateral);
-
+  
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._reward, false);
   updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._liquidationCollateral, false, burnFee)
 }
@@ -189,7 +189,7 @@ export function handleCollateralRemoved(event: CollateralRemoved): void {
     state.amountStaked = state.amountStaked.minus(event.params._amount);
   }
   state.save();
-
+  
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, false);
 }
 
