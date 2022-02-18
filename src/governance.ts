@@ -328,11 +328,12 @@ export function handleWithdrawn(event: Withdrawn): void {
     let tdId = event.params.delegator.toHexString() + "-" + event.params.delegatee.toHexString();
     let delegatorTokenOwner = DelegatorTokenOwner.load(tdId);
     if (delegatorTokenOwner != null) {
+      let newStakeRaw = delegatorTokenOwner.stakeRaw.minus(event.params.amount);
       delegatorTokenOwner.stake = delegatorTokenOwner.stake.minus(toDecimal(event.params.amount));
-      delegatorTokenOwner.stakeRaw = delegatorTokenOwner.stakeRaw.minus(event.params.amount);
+      delegatorTokenOwner.stakeRaw = newStakeRaw;
       delegatorTokenOwner.save();
 
-      if (delegatorTokenOwner.stakeRaw === BIGINT_ZERO) {
+      if (newStakeRaw == BIGINT_ZERO) {
         delegator.totalHoldersRepresented = delegator.totalHoldersRepresented  - 1;
       }
     }

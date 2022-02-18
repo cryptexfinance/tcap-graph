@@ -7,13 +7,13 @@ import {
   Governance,
   Protocol,
   Vote,
+  State
 } from "../../generated/schema";
 import {
   ZERO_ADDRESS,
   BIGINT_ZERO,
   BIGINT_ONE,
   BIGDECIMAL_ZERO,
-  PROTOCOL_ENTITY_ETH_ID
 } from "./constants";
 import {
   getTokenAddress,
@@ -138,7 +138,6 @@ export function getGovernanceEntity(): Governance {
   return governance as Governance;
 }
 
-
 export function updateVaultCreated(network: string, id: string, address: Address): void {
   let protocol = Protocol.load(id);
   if (protocol == null) {
@@ -204,4 +203,22 @@ export function updateVaultDebtTotals(id: string, address: Address, debt: BigInt
   }
     
   protocol.save()
+}
+
+export function addToStateAmountStaked(address: Address, amount: BigInt): void {
+  let state = State.load(address.toHex());
+  if (state.amountStaked) {
+    state.amountStaked = state.amountStaked.plus(amount);
+  } else {
+    state.amountStaked = amount;
+  }
+  state.save();
+}
+
+export function substractFromStateAmountStaked(address: Address, amount: BigInt): void {
+  let state = State.load(address.toHex());
+  if (state.amountStaked) {
+    state.amountStaked = state.amountStaked.minus(amount);
+  }
+  state.save();
 }

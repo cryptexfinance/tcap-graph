@@ -8,6 +8,7 @@
     "build": "graph build",    
     "deploy-rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexfinance/tcap-rinkeby-two",
     "deploy-test-mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jdestephen/tcap-demo",
+    "deploy-test-mainnet2": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jdestephen/tcap-demo-2",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexfinance/tcap-graph",
     "create-local": "graph create --node http://localhost:8020/ cryptexfinance/tcap",
     "remove-local": "graph remove --node http://localhost:8020/ cryptexfinance/tcap",

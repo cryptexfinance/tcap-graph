@@ -3,6 +3,8 @@
   "wbtcvault-address": "0x56549e2fE1D9f0a9556f92494d04F263A5011a00",
   "daivault-address": "0x443366a7a5821619D8d57405511E4fadD9964771",
   "ethvault-address": "0x717170B66654292dFBd89c39F5aE6753D2aC1381",
+  "aavevault-address": "0xada39d170551daf42822E1D3dA64efEBbD14d1D3",
+  "linkvault-address": "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba",
   "chainlink-oracle-address": "0x9257d83a0dda413ca24f66dd32a056bc2ebafd2e",
   "governor-address": "0x271901c3268D0959bbc9543DE4f073D3708C88F7",
   "ctx-address": "0x321C2fE4446C7c963dc41Dd58879AF648838f98D",
