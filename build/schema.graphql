@@ -15,6 +15,9 @@ type Vault @entity {
 	debt: BigInt
 	currentRatio: BigInt
 	address: Bytes #address
+	tokenSymbol: String! 
+	underlyingProtocol: Protocol!
+	blockTS: BigInt!
 }
 
 type State @entity {
@@ -51,6 +54,23 @@ type Protocol @entity {
 	totalBurnFee: BigInt
 	createdVaults: BigInt
 	totalTransactions: BigInt
+	underlyingToken: Token
+}
+
+enum VaultStatus {
+	EMPTY
+	READY
+	ACTIVE
+}
+
+type VaultsSummary @entity {
+	id: ID!
+	symbol: String!
+	"Status of vaults, actives vaults include those liquidables"
+	status: VaultStatus!
+	vaultCount: Int!
+	totalCollateral: BigInt!
+	totalDebt: BigInt!
 	underlyingToken: Token
 }
 

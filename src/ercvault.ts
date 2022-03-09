@@ -11,7 +11,30 @@ import {
 import { Vault, State } from "../generated/schema";
 import { updateVaultCreated, updateVaultCollateralTotals, updateVaultDebtTotals } from "./utils/helpers";
 import { PROTOCOL_ENTITY_ERC_ID } from "./utils/constants";
+import { getTokenSymbol } from "./utils/tokens";
 
+export function handleVaultCreated(event: VaultCreated): void {
+  updateVaultCreated(dataSource.network(), PROTOCOL_ENTITY_ERC_ID,  event.address);
+  
+  let id = dataSource
+    .address()
+    .toHex()
+    .concat("-")
+    .concat(event.params._id.toString());
+  let vault = new Vault(id);
+  vault.owner = event.params._owner;
+  vault.address = dataSource.address();
+  vault.vaultId = event.params._id;
+  vault.collateral = new BigInt(0);
+  vault.debt = new BigInt(0);
+  vault.currentRatio = new BigInt(0);
+  vault.underlyingProtocol = PROTOCOL_ENTITY_ERC_ID;
+  vault.tokenSymbol = getTokenSymbol(PROTOCOL_ENTITY_ERC_ID);
+  vault.blockTS = event.block.timestamp;
+  
+  // Entities can be written to the store with `.save()`
+  vault.save();
+}
 
 export function handleCollateralAdded(event: CollateralAdded): void {
   let id = dataSource
@@ -72,26 +95,6 @@ export function handleTokensBurned(event: TokensBurned): void {
   let burnFee = contract.getFee(event.params._amount);
   
   updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, false, burnFee);
-}
-
-export function handleVaultCreated(event: VaultCreated): void {
-  let id = dataSource
-    .address()
-    .toHex()
-    .concat("-")
-    .concat(event.params._id.toString());
-  let vault = new Vault(id);
-  vault.owner = event.params._owner;
-  vault.address = dataSource.address();
-  vault.vaultId = event.params._id;
-  vault.collateral = new BigInt(0);
-  vault.debt = new BigInt(0);
-  vault.currentRatio = new BigInt(0);
-
-  // Entities can be written to the store with `.save()`
-  vault.save();
-  
-  updateVaultCreated(dataSource.network(), PROTOCOL_ENTITY_ERC_ID,  event.address);
 }
 
 export function handleVaultLiquidated(event: VaultLiquidated): void {

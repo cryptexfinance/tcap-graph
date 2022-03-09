@@ -6,6 +6,7 @@ import {
   Proposal,
   Governance,
   Protocol,
+  VaultsSummary,
   Vote,
   State
 } from "../../generated/schema";
@@ -14,6 +15,7 @@ import {
   BIGINT_ZERO,
   BIGINT_ONE,
   BIGDECIMAL_ZERO,
+  SUMMARY_STATUS_EMPTY,
 } from "./constants";
 import {
   getTokenAddress,
@@ -204,6 +206,44 @@ export function updateVaultDebtTotals(id: string, address: Address, debt: BigInt
     
   protocol.save()
 }
+
+export function updateCreatedVaultSummary(id: string, symbol: string,  tokenId: string): void {
+  let summary = VaultsSummary.load(id);
+  if (summary == null) {
+    summary = new VaultsSummary(id);
+    summary.status = SUMMARY_STATUS_EMPTY;
+    summary.symbol = symbol;
+    summary.totalCollateral = BigInt.fromI32(0);
+    summary.totalDebt = BigInt.fromI32(0);
+    summary.vaultCount = 1;
+    let token = Token.load(tokenId);
+    if (token != null) {
+      summary.underlyingToken = token.id;
+    }
+  } else {
+    summary.vaultCount = summary.vaultCount.plus(BigInt.fromI32(1));
+  }
+  summary.save();
+}
+
+/* export function updateVaultSummary(id: string, collateral: BigInt, addCollateral: boolean, debt: BigInt, addDebt: BigInt, vaultCount: number) {
+  let summary = VaultsSummary.load(id);
+  if (summary != null) {
+    if (addCollateral) {
+      summary.totalCollateral = summary.totalCollateral.plus(collateral);
+    } else {
+      summary.totalCollateral = summary.totalCollateral.minus(collateral);
+    }
+    if (addDebt) {
+      summary.totalDebt = summary.totalDebt.plus(debt);
+    } else {
+      summary.totalDebt = summary.totalDebt.minus(debt);
+    }
+    summary.vaultCount = summary.vaultCount + vaultCount;
+
+    summary.save();
+  }
+} */
 
 export function addToStateAmountStaked(address: Address, amount: BigInt): void {
   let state = State.load(address.toHex());

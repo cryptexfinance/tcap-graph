@@ -6,11 +6,11 @@ dataSources:
   # Vaults  
   - kind: ethereum/contract
     name: DAIVault
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x443366a7a5821619D8d57405511E4fadD9964771"
+      address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
       abi: ERC20Vault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -36,11 +36,11 @@ dataSources:
       file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: DAIState
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x443366a7a5821619D8d57405511E4fadD9964771"
+      address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
       abi: ERC20Vault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -70,11 +70,11 @@ dataSources:
       file: ./src/state.ts
   - kind: ethereum/contract
     name: ETHVault
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x717170B66654292dFBd89c39F5aE6753D2aC1381"
+      address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
       abi: ETHVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -100,11 +100,11 @@ dataSources:
       file: ./src/ethvault.ts
   - kind: ethereum/contract
     name: ETHState
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x717170B66654292dFBd89c39F5aE6753D2aC1381"
+      address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
       abi: ETHVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -134,11 +134,11 @@ dataSources:
       file: ./src/state.ts
   - kind: ethereum/contract
     name: AAVEVault
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0xada39d170551daf42822E1D3dA64efEBbD14d1D3"
+      address: "0x119D37aFc784C81626b08813D83598b8673EEE66"
       abi: AAVEVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -164,11 +164,11 @@ dataSources:
       file: ./src/aavevault.ts
   - kind: ethereum/contract
     name: AAVEState
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0xada39d170551daf42822E1D3dA64efEBbD14d1D3"
+      address: "0x119D37aFc784C81626b08813D83598b8673EEE66"
       abi: AAVEVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -196,11 +196,11 @@ dataSources:
       file: ./src/state.ts     
   - kind: ethereum/contract
     name: LINKVault
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba"
+      address: "0xBd4a21cC2D12157765a8861A83FC4cfd216630b1"
       abi: LINKVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -226,11 +226,11 @@ dataSources:
       file: ./src/linkvault.ts   
   - kind: ethereum/contract
     name: LINKState
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba"
+      address: "0xBd4a21cC2D12157765a8861A83FC4cfd216630b1"
       abi: LINKVault
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -259,11 +259,11 @@ dataSources:
   #oracle
   - kind: ethereum/contract
     name: TCAP
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x9257d83a0dda413ca24f66dd32a056bc2ebafd2e"
+      address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
       abi: Oracle
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -280,11 +280,11 @@ dataSources:
       # Governance
   - kind: ethereum/contract
     name: GovernorAlpha
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x271901c3268D0959bbc9543DE4f073D3708C88F7"
+      address: "0x6f0663fb471c8329De64fb86a2c1b741bb02cB20"
       abi: GovernorAlpha
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -312,11 +312,11 @@ dataSources:
           handler: handleVoteCast
   - kind: ethereum/contract
     name: Ctx
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x321C2fE4446C7c963dc41Dd58879AF648838f98D"
+      address: "0xAa715DbD2ED909B7B7727dC864F3B78276D14A19"
       abi: Ctx
-      startBlock: 12000000
+      startBlock: 6000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -337,11 +337,11 @@ dataSources:
           handler: handleTransfer
   - kind: ethereum/contract
     name: DelegatorFactory
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0x70236b36f86AB4bd557Fe9934E1246537B472918"
+      address: "0x0aafdB19021a3a87A510dD4db7dce62318b49Cd1"
       abi: DelegatorFactory
-      startBlock: 12000000  
+      startBlock: 6000000  
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
