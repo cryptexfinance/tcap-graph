@@ -219,6 +219,33 @@ export class Vault extends Entity {
       this.set("address", Value.fromBytes(value as Bytes));
     }
   }
+
+  get tokenSymbol(): string {
+    let value = this.get("tokenSymbol");
+    return value.toString();
+  }
+
+  set tokenSymbol(value: string) {
+    this.set("tokenSymbol", Value.fromString(value));
+  }
+
+  get underlyingProtocol(): string {
+    let value = this.get("underlyingProtocol");
+    return value.toString();
+  }
+
+  set underlyingProtocol(value: string) {
+    this.set("underlyingProtocol", Value.fromString(value));
+  }
+
+  get blockTS(): BigInt {
+    let value = this.get("blockTS");
+    return value.toBigInt();
+  }
+
+  set blockTS(value: BigInt) {
+    this.set("blockTS", Value.fromBigInt(value));
+  }
 }
 
 export class State extends Entity {
@@ -711,6 +738,99 @@ export class Protocol extends Entity {
     } else {
       this.set("totalTransactions", Value.fromBigInt(value as BigInt));
     }
+  }
+
+  get underlyingToken(): string | null {
+    let value = this.get("underlyingToken");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set underlyingToken(value: string | null) {
+    if (value === null) {
+      this.unset("underlyingToken");
+    } else {
+      this.set("underlyingToken", Value.fromString(value as string));
+    }
+  }
+}
+
+export class VaultsSummary extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save VaultsSummary entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save VaultsSummary entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("VaultsSummary", id.toString(), this);
+  }
+
+  static load(id: string): VaultsSummary | null {
+    return store.get("VaultsSummary", id) as VaultsSummary | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get symbol(): string {
+    let value = this.get("symbol");
+    return value.toString();
+  }
+
+  set symbol(value: string) {
+    this.set("symbol", Value.fromString(value));
+  }
+
+  get status(): string {
+    let value = this.get("status");
+    return value.toString();
+  }
+
+  set status(value: string) {
+    this.set("status", Value.fromString(value));
+  }
+
+  get vaultCount(): i32 {
+    let value = this.get("vaultCount");
+    return value.toI32();
+  }
+
+  set vaultCount(value: i32) {
+    this.set("vaultCount", Value.fromI32(value));
+  }
+
+  get totalCollateral(): BigInt {
+    let value = this.get("totalCollateral");
+    return value.toBigInt();
+  }
+
+  set totalCollateral(value: BigInt) {
+    this.set("totalCollateral", Value.fromBigInt(value));
+  }
+
+  get totalDebt(): BigInt {
+    let value = this.get("totalDebt");
+    return value.toBigInt();
+  }
+
+  set totalDebt(value: BigInt) {
+    this.set("totalDebt", Value.fromBigInt(value));
   }
 
   get underlyingToken(): string | null {
