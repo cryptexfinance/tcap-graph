@@ -1,4 +1,4 @@
-import { dataSource, BigInt, log } from "@graphprotocol/graph-ts";
+import { Address, dataSource, BigInt, log } from "@graphprotocol/graph-ts";
 import {
   ERC20Vault,
   CollateralAdded,
@@ -8,10 +8,25 @@ import {
   TokensMinted,
   CollateralRemoved,
 } from "../generated/Vault/ERC20Vault";
+import { HardDAIVault } from "../generated/HardDAIVault/HardDAIVault";
 import { Vault, State } from "../generated/schema";
-import { updateVaultCreated, updateVaultCollateralTotals, updateVaultDebtTotals } from "./utils/helpers";
-import { PROTOCOL_ENTITY_ERC_ID } from "./utils/constants";
+import {
+  updateVaultCreated,
+  updateVaultCollateralTotals,
+  updateVaultDebtTotals,
+  addToStateAmountStaked,
+  substractFromStateAmountStaked
+} from "./utils/helpers";
+import {
+  PROTOCOL_ENTITY_ERC_ID,
+  HARD_DAI_VAULT_ADDRESS,
+  BIGINT_ZERO
+} from "./utils/constants";
 import { getTokenSymbol } from "./utils/tokens";
+
+function isHardVault(): boolean {
+  return Address.fromHexString(HARD_DAI_VAULT_ADDRESS).equals(dataSource.address());
+}
 
 export function handleVaultCreated(event: VaultCreated): void {
   updateVaultCreated(dataSource.network(), PROTOCOL_ENTITY_ERC_ID,  event.address);
@@ -31,6 +46,7 @@ export function handleVaultCreated(event: VaultCreated): void {
   vault.underlyingProtocol = PROTOCOL_ENTITY_ERC_ID;
   vault.tokenSymbol = getTokenSymbol(PROTOCOL_ENTITY_ERC_ID);
   vault.blockTS = event.block.timestamp;
+  vault.hardVault = isHardVault();
   
   // Entities can be written to the store with `.save()`
   vault.save();
@@ -58,14 +74,8 @@ export function handleCollateralAdded(event: CollateralAdded): void {
   vault.save();
 
   //State Update
-  let state = State.load(dataSource.address().toHex());
-  if (state.amountStaked) {
-    state.amountStaked = state.amountStaked.plus(event.params._amount);
-  } else {
-    state.amountStaked = event.params._amount;
-  }
-  state.save();
-
+  addToStateAmountStaked(dataSource.address(), event.params._amount);
+  // Vault totals
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, true);
 }
 
@@ -91,9 +101,7 @@ export function handleTokensBurned(event: TokensBurned): void {
   vault.save();
 
   //Get burn fee
-  let contract = ERC20Vault.bind(event.address);
-  let burnFee = contract.getFee(event.params._amount);
-  
+  let burnFee = getFee(event.params._amount);
   updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, false, burnFee);
 }
 
@@ -119,22 +127,17 @@ export function handleVaultLiquidated(event: VaultLiquidated): void {
     vault.collateral = vault.collateral.minus(event.params._reward);
   }
 
-  let contract = ERC20Vault.bind(dataSource.address());
-  let currentRatio = contract.getVaultRatio(event.params._vaultId);
+  let currentRatio = getRatio(event.params._vaultId);
   vault.currentRatio = currentRatio;
 
   // Entities can be written to the store with `.save()`
   vault.save();
 
   //State Update
-  let state = State.load(dataSource.address().toHex());
-  if (state.amountStaked) {
-    state.amountStaked = state.amountStaked.minus(event.params._reward);
-  }
-  state.save();
+  substractFromStateAmountStaked(dataSource.address(), event.params._reward);
   
   //Get burn fee
-  let burnFee = contract.getFee(event.params._liquidationCollateral);
+  let burnFee = getFee(event.params._liquidationCollateral);
   
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._reward, false);
   updateVaultDebtTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._liquidationCollateral, false, burnFee)
@@ -187,17 +190,32 @@ export function handleCollateralRemoved(event: CollateralRemoved): void {
   vault.save();
 
   //State Update
-  let state = State.load(dataSource.address().toHex());
-  if (state.amountStaked) {
-    state.amountStaked = state.amountStaked.minus(event.params._amount);
-  }
-  state.save();
-  
+  substractFromStateAmountStaked(dataSource.address(), event.params._amount);
   updateVaultCollateralTotals(PROTOCOL_ENTITY_ERC_ID, event.address, event.params._amount, false);
 }
 
 function getRatio(id: BigInt): BigInt {
-  let contract = ERC20Vault.bind(dataSource.address());
-  let currentRatio = contract.getVaultRatio(id);
+  let currentRatio = BIGINT_ZERO;
+  if (isHardVault()) {
+    let contract = HardDAIVault.bind(dataSource.address());
+    currentRatio = contract.getVaultRatio(id);
+  } else {
+    let contract = ERC20Vault.bind(dataSource.address());
+    currentRatio = contract.getVaultRatio(id);
+  }
+  
   return currentRatio;
+}
+
+function getFee(amount: BigInt): BigInt {
+  let burnFee = BIGINT_ZERO;
+  if (isHardVault()) {
+    let contract = HardDAIVault.bind(dataSource.address());
+    burnFee = contract.getFee(amount);
+  } else {
+    let contract = ERC20Vault.bind(dataSource.address());
+    burnFee = contract.getFee(amount);
+  }
+
+  return burnFee;
 }

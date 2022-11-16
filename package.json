@@ -9,14 +9,15 @@
     "deploy-rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexfinance/tcap-rinkeby-two",
     "deploy-test-mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jdestephen/tcap-demo",
     "deploy-test-mainnet2": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jdestephen/tcap-demo-2",
+    "deploy-test-mainnet3": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jdestephen/tcap-demo-three",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ cryptexfinance/tcap-graph",
     "create-local": "graph create --node http://localhost:8020/ cryptexfinance/tcap",
     "remove-local": "graph remove --node http://localhost:8020/ cryptexfinance/tcap",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 cryptexfinance/tcap-graph"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "^0.18.0",
-    "@graphprotocol/graph-ts": "^0.18.0",
+    "@graphprotocol/graph-cli": "^0.30.4",
+    "@graphprotocol/graph-ts": "^0.27.0",
     "mustache": "^4.2.0"
   }
 }

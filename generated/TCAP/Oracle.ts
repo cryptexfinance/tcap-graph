@@ -396,6 +396,26 @@ export class Oracle__getRoundDataResult {
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
     return map;
   }
+
+  getRoundId(): BigInt {
+    return this.value0;
+  }
+
+  getAnswer(): BigInt {
+    return this.value1;
+  }
+
+  getStartedAt(): BigInt {
+    return this.value2;
+  }
+
+  getUpdatedAt(): BigInt {
+    return this.value3;
+  }
+
+  getAnsweredInRound(): BigInt {
+    return this.value4;
+  }
 }
 
 export class Oracle__latestRoundDataResult {
@@ -427,6 +447,26 @@ export class Oracle__latestRoundDataResult {
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
     return map;
+  }
+
+  getRoundId(): BigInt {
+    return this.value0;
+  }
+
+  getAnswer(): BigInt {
+    return this.value1;
+  }
+
+  getStartedAt(): BigInt {
+    return this.value2;
+  }
+
+  getUpdatedAt(): BigInt {
+    return this.value3;
+  }
+
+  getAnsweredInRound(): BigInt {
+    return this.value4;
   }
 }
 
@@ -474,6 +514,38 @@ export class Oracle__oracleRoundStateResult {
     );
     map.set("value7", ethereum.Value.fromUnsignedBigInt(this.value7));
     return map;
+  }
+
+  get_eligibleToSubmit(): boolean {
+    return this.value0;
+  }
+
+  get_roundId(): BigInt {
+    return this.value1;
+  }
+
+  get_latestSubmission(): BigInt {
+    return this.value2;
+  }
+
+  get_startedAt(): BigInt {
+    return this.value3;
+  }
+
+  get_timeout(): BigInt {
+    return this.value4;
+  }
+
+  get_availableFunds(): BigInt {
+    return this.value5;
+  }
+
+  get_oracleCount(): i32 {
+    return this.value6;
+  }
+
+  get_paymentAmount(): BigInt {
+    return this.value7;
   }
 }
 

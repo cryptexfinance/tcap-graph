@@ -1,4 +1,5 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
+description: Cryptex Graph
 repository: https://github.com/cryptexfinance/tcap-graph
 schema:
   file: ./schema.graphql
@@ -6,20 +7,22 @@ dataSources:
   # Vaults  
   - kind: ethereum/contract
     name: DAIVault
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
+      address: "0x443366a7a5821619D8d57405511E4fadD9964771"
       abi: ERC20Vault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Vault
       abis:
         - name: ERC20Vault
           file: ./abis/ERC20Vault.json
+        - name: HardDAIVault
+          file: ./abis/HardDAIVault.json  
       eventHandlers:
         - event: CollateralAdded(indexed address,indexed uint256,uint256)
           handler: handleCollateralAdded
@@ -36,14 +39,14 @@ dataSources:
       file: ./src/ercvault.ts
   - kind: ethereum/contract
     name: DAIState
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x7fF4580aD66a3C0F62DDa843674A3811ac062211"
+      address: "0x443366a7a5821619D8d57405511E4fadD9964771"
       abi: ERC20Vault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - State
@@ -70,20 +73,22 @@ dataSources:
       file: ./src/state.ts
   - kind: ethereum/contract
     name: ETHVault
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
+      address: "0x717170B66654292dFBd89c39F5aE6753D2aC1381"
       abi: ETHVault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Vault
       abis:
         - name: ETHVault
           file: ./abis/ETHVault.json
+        - name: HardETHVault
+          file: ./abis/HardETHVault.json  
       eventHandlers:
         - event: CollateralAdded(indexed address,indexed uint256,uint256)
           handler: handleCollateralAdded
@@ -100,14 +105,14 @@ dataSources:
       file: ./src/ethvault.ts
   - kind: ethereum/contract
     name: ETHState
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x093f8F7C7fCC6edf991309A5056feB5cA9579292"
+      address: "0x717170B66654292dFBd89c39F5aE6753D2aC1381"
       abi: ETHVault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - State
@@ -134,14 +139,14 @@ dataSources:
       file: ./src/state.ts
   - kind: ethereum/contract
     name: AAVEVault
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x119D37aFc784C81626b08813D83598b8673EEE66"
+      address: "0xada39d170551daf42822E1D3dA64efEBbD14d1D3"
       abi: AAVEVault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Vault
@@ -164,14 +169,14 @@ dataSources:
       file: ./src/aavevault.ts
   - kind: ethereum/contract
     name: AAVEState
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x119D37aFc784C81626b08813D83598b8673EEE66"
+      address: "0xada39d170551daf42822E1D3dA64efEBbD14d1D3"
       abi: AAVEVault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - State
@@ -196,14 +201,14 @@ dataSources:
       file: ./src/state.ts     
   - kind: ethereum/contract
     name: LINKVault
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0xBd4a21cC2D12157765a8861A83FC4cfd216630b1"
+      address: "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba"
       abi: LINKVault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Vault
@@ -226,14 +231,14 @@ dataSources:
       file: ./src/linkvault.ts   
   - kind: ethereum/contract
     name: LINKState
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0xBd4a21cC2D12157765a8861A83FC4cfd216630b1"
+      address: "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba"
       abi: LINKVault
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - State
@@ -255,18 +260,337 @@ dataSources:
           handler: handlePaused
         - event: Unpaused(address)
           handler: handleUnpaused
-      file: ./src/state.ts       
+      file: ./src/state.ts
+  - kind: ethereum/contract
+    name: WBTCVault
+    network: mainnet
+    source:
+      address: "0x56549e2fE1D9f0a9556f92494d04F263A5011a00"
+      abi: WBTCVault
+      startBlock: 12181000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: WBTCVault
+          file: ./abis/WBTCVault.json
+        - name: HardWBTCVault
+          file: ./abis/HardWBTCVault.json  
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: ./src/wbtcvault.ts      
+  - kind: ethereum/contract
+    name: WBTCState
+    network: mainnet
+    source:
+      address: "0x56549e2fE1D9f0a9556f92494d04F263A5011a00"
+      abi: WBTCVault
+      startBlock: 12181000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: WBTCVault
+          file: ./abis/WBTCVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/state.ts
+  # Hard mode vaults
+  - kind: ethereum/contract
+    name: HardETHVault
+    network: mainnet
+    source:
+      address: "0xc2Ba6B8E0EE3cf48B045D966F1dCda767df74833"
+      abi: HardETHVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: HardETHVault
+          file: ./abis/HardETHVault.json
+        - name: ETHVault
+          file: ./abis/ETHVault.json    
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: ./src/ethvault.ts
+  - kind: ethereum/contract
+    name: HardETHState
+    network: mainnet
+    source:
+      address: "0xc2Ba6B8E0EE3cf48B045D966F1dCda767df74833"
+      abi: HardETHVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: HardETHVault
+          file: ./abis/HardETHVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/state.ts
+  - kind: ethereum/contract
+    name: HardDAIVault
+    network: mainnet
+    source:
+      address: "0xA5b3Bb6e1f206624B3B8CE0c6A0f7614fd35Fa03"
+      abi: HardDAIVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: HardDAIVault
+          file: ./abis/HardDAIVault.json
+        - name: ERC20Vault
+          file: ./abis/ERC20Vault.json   
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: ./src/ercvault.ts
+  - kind: ethereum/contract
+    name: HardDAIState
+    network: mainnet
+    source:
+      address: "0xA5b3Bb6e1f206624B3B8CE0c6A0f7614fd35Fa03"
+      abi: HardDAIVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: HardDAIVault
+          file: ./abis/HardDAIVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/state.ts
+  - kind: ethereum/contract
+    name: HardUSDCVault
+    network: mainnet
+    source:
+      address: "0xa8CcA36A624215a39D5af6854ac24868559424d3"
+      abi: HardUSDCVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: HardUSDCVault
+          file: ./abis/HardUSDCVault.json  
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: ./src/usdcvault.ts
+  - kind: ethereum/contract
+    name: HardUSDCState
+    network: mainnet
+    source:
+      address: "0xa8CcA36A624215a39D5af6854ac24868559424d3"
+      abi: HardUSDCVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: HardUSDCVault
+          file: ./abis/HardUSDCVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/state.ts
+  - kind: ethereum/contract
+    name: HardWBTCVault
+    network: mainnet
+    source:
+      address: "0x2364536F4891Ed560A6728f4B36871de8176eE5c"
+      abi: HardWBTCVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+      abis:
+        - name: HardWBTCVault
+          file: ./abis/HardWBTCVault.json
+        - name: WBTCVault
+          file: ./abis/WBTCVault.json  
+      eventHandlers:
+        - event: CollateralAdded(indexed address,indexed uint256,uint256)
+          handler: handleCollateralAdded
+        - event: TokensBurned(indexed address,indexed uint256,uint256)
+          handler: handleTokensBurned
+        - event: VaultCreated(indexed address,indexed uint256)
+          handler: handleVaultCreated
+        - event: VaultLiquidated(indexed uint256,indexed address,uint256,uint256)
+          handler: handleVaultLiquidated
+        - event: TokensMinted(indexed address,indexed uint256,uint256)
+          handler: handleTokensMinted
+        - event: CollateralRemoved(indexed address,indexed uint256,uint256)
+          handler: handleCollateralRemoved
+      file: ./src/wbtcvault.ts
+  - kind: ethereum/contract
+    name: HardWBTCState
+    network: mainnet
+    source:
+      address: "0x2364536F4891Ed560A6728f4B36871de8176eE5c"
+      abi: HardWBTCVault
+      startBlock: 14757600
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - State
+      abis:
+        - name: HardWBTCVault
+          file: ./abis/HardWBTCVault.json
+      eventHandlers:
+        - event: NewBurnFee(indexed address,uint256)
+          handler: handleNewBurnFee
+        - event: NewLiquidationPenalty(indexed address,uint256)
+          handler: handleNewLiquidationPenalty
+        - event: NewRatio(indexed address,uint256)
+          handler: handleNewRatio
+        - event: NewTreasury(indexed address,address)
+          handler: handleNewTreasury
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/state.ts    
   #oracle
   - kind: ethereum/contract
     name: TCAP
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x4a00e4c96ce7da79096d92a69ca729493d664c59"
+      address: "0x9257d83a0dda413ca24f66dd32a056bc2ebafd2e"
       abi: Oracle
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - Oracle
@@ -280,14 +604,14 @@ dataSources:
       # Governance
   - kind: ethereum/contract
     name: GovernorAlpha
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x6f0663fb471c8329De64fb86a2c1b741bb02cB20"
+      address: "0x271901c3268D0959bbc9543DE4f073D3708C88F7"
       abi: GovernorAlpha
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/governance.ts
       entities:
@@ -312,14 +636,14 @@ dataSources:
           handler: handleVoteCast
   - kind: ethereum/contract
     name: Ctx
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0xAa715DbD2ED909B7B7727dC864F3B78276D14A19"
+      address: "0x321C2fE4446C7c963dc41Dd58879AF648838f98D"
       abi: Ctx
-      startBlock: 6000000
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/governance.ts
       entities:
@@ -337,14 +661,14 @@ dataSources:
           handler: handleTransfer
   - kind: ethereum/contract
     name: DelegatorFactory
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x0aafdB19021a3a87A510dD4db7dce62318b49Cd1"
+      address: "0x70236b36f86AB4bd557Fe9934E1246537B472918"
       abi: DelegatorFactory
-      startBlock: 6000000  
+      startBlock: 12181000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/governance.ts
       entities:
@@ -359,3 +683,104 @@ dataSources:
           handler: handleStaked
         - event: Withdrawn(indexed address,indexed address,uint256)
           handler: handleWithdrawn
+## UniV3
+  - kind: ethereum/contract
+    name: NonfungiblePositionManager
+    network: mainnet
+    source:
+      address: "0xC36442b4a4522E871399CD717aBDD847Ab11FE88"
+      abi: NonfungiblePositionManager
+      startBlock: 14715000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/univ3.ts
+      entities:
+        - Position
+      abis:
+        - name: NonfungiblePositionManager
+          file: ./abis/NonfungiblePositionManager.json
+        - name: UniswapV3Staker
+          file: ./abis/UniswapV3Staker.json
+        - name: Pool
+          file: ./abis/pool.json
+        - name: Factory
+          file: ./abis/factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleIncreaseLiquidity
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleDecreaseLiquidity
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer        
+  - kind: ethereum/contract
+    name: UniswapV3Staker
+    network: mainnet
+    source:
+      address: "0xe34139463bA50bD61336E0c446Bd8C0867c6fE65"
+      abi: UniswapV3Staker
+      startBlock: 14715000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/univ3.ts
+      entities:
+        - Position
+        - APR
+      abis:
+        - name: NonfungiblePositionManager
+          file: ./abis/NonfungiblePositionManager.json
+        - name: UniswapV3Staker
+          file: ./abis/UniswapV3Staker.json
+        - name: Pool
+          file: ./abis/pool.json
+        - name: Factory
+          file: ./abis/factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: TcapOracle
+          file: ./abis/TcapOracle.json
+        - name: WethOracle
+          file: ./abis/WethOracle.json   
+      eventHandlers:
+        - event: TokenStaked(indexed uint256,indexed bytes32,uint128)
+          handler: handleTokenStaked
+        - event: TokenUnstaked(indexed uint256,indexed bytes32)
+          handler: handleTokenUnstaked
+  - kind: ethereum/contract
+    name: UniswapV3Pool
+    network: mainnet
+    source:
+      address: "0x11456b3750E991383bB8943118ed79C1afdEE192"
+      abi: Pool
+      startBlock: 14715000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/univ3.ts
+      entities:
+        - Position
+        - APR
+      abis:
+        - name: NonfungiblePositionManager
+          file: ./abis/NonfungiblePositionManager.json
+        - name: UniswapV3Staker
+          file: ./abis/UniswapV3Staker.json
+        - name: Pool
+          file: ./abis/Pool.json
+        - name: Factory
+          file: ./abis/factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: TcapOracle
+          file: ./abis/TcapOracle.json
+        - name: WethOracle
+          file: ./abis/WethOracle.json   
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap

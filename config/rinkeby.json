@@ -1,13 +1,22 @@
 {
   "network": "rinkeby",
-  "wbtcvault-address": "0x5070ceb13f372b2F3496c643f87D23c01f106367",
+  "wbtcvault-address": "0x1b9cd5A9acC56405806D0E4618616f761001eB62",
   "daivault-address": "0x7fF4580aD66a3C0F62DDa843674A3811ac062211",
   "ethvault-address": "0x093f8F7C7fCC6edf991309A5056feB5cA9579292",
   "aavevault-address": "0x119D37aFc784C81626b08813D83598b8673EEE66",
   "linkvault-address": "0xBd4a21cC2D12157765a8861A83FC4cfd216630b1",
+  "hard-ethvault-address": "0x6E3B4E276f22C30085882dD1342995773AE76414",
+  "hard-daivault-address": "0x95ac341B6492954DF1341A33cAC9AB3273179232",
+  "hard-usdcvault-address": "0xB34756f8D9682ab6C26F77f9461207a65c52c8bC",
+  "hard-wbtcvault-address": "0x2364536F4891Ed560A6728f4B36871de8176eE5c",
   "chainlink-oracle-address": "0x4a00e4c96ce7da79096d92a69ca729493d664c59",
   "governor-address": "0x6f0663fb471c8329De64fb86a2c1b741bb02cB20",
   "ctx-address": "0xAa715DbD2ED909B7B7727dC864F3B78276D14A19",
   "delegator-factory-address": "0x0aafdB19021a3a87A510dD4db7dce62318b49Cd1",
-  "start-block": "6000000"
+  "v3staker-address": "0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d",
+  "nfpm-address": "0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+  "start-block": "6000000",
+  "hard-start-block": "10100000",
+  "pool-address": "0xfb7bdd5b703f57bc7807b9d731503050edc8c722",
+  "univ3-block": "9896637"
 }

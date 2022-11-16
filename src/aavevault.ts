@@ -38,6 +38,7 @@ export function handleVaultCreated(event: VaultCreated): void {
   vault.underlyingProtocol = PROTOCOL_ENTITY_AAVE_ID;
   vault.tokenSymbol = getTokenSymbol(PROTOCOL_ENTITY_AAVE_ID);
   vault.blockTS = event.block.timestamp;
+  vault.hardVault = false;
   
   // Entities can be written to the store with `.save()`
   vault.save();

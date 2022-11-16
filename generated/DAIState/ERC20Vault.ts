@@ -455,6 +455,22 @@ export class ERC20Vault__getVaultResult {
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     return map;
   }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): BigInt {
+    return this.value1;
+  }
+
+  getValue2(): Address {
+    return this.value2;
+  }
+
+  getValue3(): BigInt {
+    return this.value3;
+  }
 }
 
 export class ERC20Vault__vaultsResult {
@@ -477,6 +493,22 @@ export class ERC20Vault__vaultsResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     map.set("value3", ethereum.Value.fromAddress(this.value3));
     return map;
+  }
+
+  getId(): BigInt {
+    return this.value0;
+  }
+
+  getCollateral(): BigInt {
+    return this.value1;
+  }
+
+  getDebt(): BigInt {
+    return this.value2;
+  }
+
+  getOwner(): Address {
+    return this.value3;
   }
 }
 

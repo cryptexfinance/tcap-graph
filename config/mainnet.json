@@ -5,9 +5,18 @@
   "ethvault-address": "0x717170B66654292dFBd89c39F5aE6753D2aC1381",
   "aavevault-address": "0xada39d170551daf42822E1D3dA64efEBbD14d1D3",
   "linkvault-address": "0xbEB44Febc550f69Ff17f8Aa8eeC070B95eF369ba",
+  "hard-ethvault-address": "0xc2Ba6B8E0EE3cf48B045D966F1dCda767df74833",
+  "hard-daivault-address": "0xA5b3Bb6e1f206624B3B8CE0c6A0f7614fd35Fa03",
+  "hard-usdcvault-address": "0xa8CcA36A624215a39D5af6854ac24868559424d3",
+  "hard-wbtcvault-address": "0x2364536F4891Ed560A6728f4B36871de8176eE5c",
   "chainlink-oracle-address": "0x9257d83a0dda413ca24f66dd32a056bc2ebafd2e",
   "governor-address": "0x271901c3268D0959bbc9543DE4f073D3708C88F7",
   "ctx-address": "0x321C2fE4446C7c963dc41Dd58879AF648838f98D",
   "delegator-factory-address": "0x70236b36f86AB4bd557Fe9934E1246537B472918",
-  "start-block": "12000000"
+  "v3staker-address": "0x1f98407aaB862CdDeF78Ed252D6f557aA5b0f00d",
+  "nfpm-address": "0xC36442b4a4522E871399CD717aBDD847Ab11FE88",
+  "start-block": "12181000",
+  "hard-start-block": "14757600",
+  "pool-address": "0x11456b3750E991383bB8943118ed79C1afdEE192",
+  "univ3-block": "14715000"
 }

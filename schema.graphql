@@ -11,11 +11,12 @@ type Vault @entity {
 	id: ID!
 	vaultId: BigInt
 	owner: Bytes! #address
-	collateral: BigInt
-	debt: BigInt
+	collateral: BigInt!
+	debt: BigInt!
 	currentRatio: BigInt
 	address: Bytes #address
-	tokenSymbol: String! 
+	tokenSymbol: String!
+	hardVault: Boolean!
 	underlyingProtocol: Protocol!
 	blockTS: BigInt!
 }
@@ -33,7 +34,7 @@ type State @entity {
 	liquidationPenalty: BigInt
 	ratio: BigInt
 	divisor: BigInt
-	amountStaked: BigInt
+	amountStaked: BigInt!
 	rewardContract: Bytes #3
 	treasuryContract: Bytes #address
 }
@@ -49,28 +50,11 @@ type Oracle @entity {
 type Protocol @entity {
 	id: ID!
 	address: Bytes #address
-	totalCollateral: BigInt
-	totalDebt: BigInt
-	totalBurnFee: BigInt
-	createdVaults: BigInt
-	totalTransactions: BigInt
-	underlyingToken: Token
-}
-
-enum VaultStatus {
-	EMPTY
-	READY
-	ACTIVE
-}
-
-type VaultsSummary @entity {
-	id: ID!
-	symbol: String!
-	"Status of vaults, actives vaults include those liquidables"
-	status: VaultStatus!
-	vaultCount: Int!
 	totalCollateral: BigInt!
 	totalDebt: BigInt!
+	totalBurnFee: BigInt!
+	createdVaults: BigInt!
+	totalTransactions: BigInt!
 	underlyingToken: Token
 }
 
@@ -230,4 +214,49 @@ type DelegatorTokenOwner @entity {
 	delegator: Delegator!
 	stake: BigDecimal!
 	stakeRaw: BigInt!
+}
+
+# UniswapV3
+type Tick @entity {
+	# format: <pool address>#<tick index>
+	id: ID!
+	# pool address
+	poolAddress: String!
+	# tick index
+	tickIdx: BigInt!
+	# calculated price of token0 of tick within this pool - constant
+	price0: BigDecimal!
+	# calculated price of token1 of tick within this pool - constant
+	price1: BigDecimal!
+	createdAtTimestamp: BigInt!
+	# created block
+	createdAtBlockNumber: BigInt!
+}
+
+type Position @entity {
+	id: ID!
+	owner: String!
+	poolAddress: String!
+	staked: Boolean!
+	token0: Bytes!
+	token1: Bytes!
+	# lower tick of the position
+	tickLower: Tick!
+	# upper tick of the position
+	tickUpper: Tick!
+	liquidity: BigInt!
+	depositedToken0: BigInt!
+	depositedToken1: BigInt!
+	withdrawnToken0: BigInt!
+	withdrawnToken1: BigInt!
+}
+
+type APR @entity {
+	id: ID!
+	tvl: BigDecimal
+	totalAmount0: BigDecimal
+	totalAmount1: BigDecimal
+	tcapPrice: BigDecimal
+	wethPrice: BigDecimal
+	stakedPositions: [String!]!
 }

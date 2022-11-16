@@ -3,7 +3,9 @@ import {
   PROTOCOL_ENTITY_ETH_ID,
   PROTOCOL_ENTITY_ERC_ID,
   PROTOCOL_ENTITY_AAVE_ID,
-  PROTOCOL_ENTITY_LINK_ID
+  PROTOCOL_ENTITY_LINK_ID,
+  PROTOCOL_ENTITY_WBTC_ID,
+  PROTOCOL_ENTITY_USDC_ID
 } from "./constants";
 
 const WETH_ADDRESS_MAINNET = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
@@ -26,6 +28,16 @@ const LINK_ADDRESS_RINKEBY = "0x5717DC7Cc0489dCc00316bcDB7e752aec664673e";
 const LINK_NAME = "LINK";
 const LINK_SYMBOL = "LINK";
 const LINK_DECIMALS = "18";
+const WBTC_ADDRESS_MAINNET = "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599";
+const WBTC_ADDRESS_RINKEBY = "0x81A345e4627C614DaBA4E862A8c317023E935506";
+const WBTC_NAME = "Wrapped BTC";
+const WBTC_SYMBOL = "WBTC";
+const WBTC_DECIMALS = "8";
+const USDC_ADDRESS_MAINNET = "0xB34756f8D9682ab6C26F77f9461207a65c52c8bC";
+const USDC_ADDRESS_RINKEBY = "0xB34756f8D9682ab6C26F77f9461207a65c52c8bC";
+const USDC_NAME = "USDC";
+const USDC_SYMBOL = "USDC";
+const USDC_DECIMALS = "6";
 
 
 export function getProtocolId(network: string, contractAddress: string): string {
@@ -36,8 +48,12 @@ export function getProtocolId(network: string, contractAddress: string): string 
         return PROTOCOL_ENTITY_ERC_ID
       else if (contractAddress == AAVE_ADDRESS_MAINNET)
         return PROTOCOL_ENTITY_AAVE_ID
+      else if (contractAddress == LINK_ADDRESS_MAINNET)
+        return PROTOCOL_ENTITY_LINK_ID
+      else if (contractAddress == WBTC_ADDRESS_MAINNET)
+        return PROTOCOL_ENTITY_WBTC_ID
       else
-        return PROTOCOL_ENTITY_LINK_ID  
+        return PROTOCOL_ENTITY_USDC_ID    
     } else {
       if (contractAddress == WETH_ADDRESS_RINKEBY)
         return PROTOCOL_ENTITY_ETH_ID
@@ -45,8 +61,12 @@ export function getProtocolId(network: string, contractAddress: string): string 
         return PROTOCOL_ENTITY_ERC_ID
       else if (contractAddress == AAVE_ADDRESS_RINKEBY)
         return PROTOCOL_ENTITY_AAVE_ID
-      else
+      else if (contractAddress == LINK_ADDRESS_RINKEBY)
         return PROTOCOL_ENTITY_LINK_ID
+      else if (contractAddress == WBTC_ADDRESS_RINKEBY)
+        return PROTOCOL_ENTITY_WBTC_ID
+      else
+        return PROTOCOL_ENTITY_USDC_ID  
     }
 }
 
@@ -54,54 +74,74 @@ export function getTokenAddress(network: string, token_id: string): Address {
     if (network == "mainnet") {
         if (token_id == PROTOCOL_ENTITY_ETH_ID)
             return Address.fromString(WETH_ADDRESS_MAINNET);
-        if (token_id == PROTOCOL_ENTITY_AAVE_ID)
+        else if (token_id == PROTOCOL_ENTITY_AAVE_ID)
             return Address.fromString(AAVE_ADDRESS_MAINNET);
-        if (token_id == PROTOCOL_ENTITY_LINK_ID)
+        else if (token_id == PROTOCOL_ENTITY_LINK_ID)
             return Address.fromString(LINK_ADDRESS_MAINNET);
-        else
+        else if (token_id == PROTOCOL_ENTITY_ERC_ID)
             return Address.fromString(DAI_ADDRESS_MAINNET);
+        else if (token_id == PROTOCOL_ENTITY_WBTC_ID)
+            return Address.fromString(WBTC_ADDRESS_MAINNET);
+        else 
+            return Address.fromString(USDC_ADDRESS_MAINNET);
     }
     else {
         if (token_id == PROTOCOL_ENTITY_ETH_ID)
             return Address.fromString(WETH_ADDRESS_RINKEBY);
-        if (token_id == PROTOCOL_ENTITY_AAVE_ID)
+        else if (token_id == PROTOCOL_ENTITY_AAVE_ID)
             return Address.fromString(AAVE_ADDRESS_RINKEBY);
-        if (token_id == PROTOCOL_ENTITY_LINK_ID)
+        else if (token_id == PROTOCOL_ENTITY_LINK_ID)
             return Address.fromString(LINK_ADDRESS_RINKEBY);
-        else
+        else  if (token_id == PROTOCOL_ENTITY_ERC_ID)
             return Address.fromString(DAI_ADDRESS_RINKEBY);
+        else if (token_id == PROTOCOL_ENTITY_WBTC_ID)
+            return Address.fromString(WBTC_ADDRESS_RINKEBY);
+        else
+            return Address.fromString(USDC_ADDRESS_RINKEBY);
     }
 }
 
 export function getTokenName(token_id: string): string {
     if (token_id == PROTOCOL_ENTITY_ETH_ID)
         return WETH_NAME;
-    if (token_id == PROTOCOL_ENTITY_AAVE_ID)
+    else if (token_id == PROTOCOL_ENTITY_AAVE_ID)
         return AAVE_NAME;
-    if (token_id == PROTOCOL_ENTITY_LINK_ID)
+    else if (token_id == PROTOCOL_ENTITY_LINK_ID)
         return LINK_NAME;
-    else
+    else if (token_id == PROTOCOL_ENTITY_ERC_ID)
         return DAI_NAME;
+    else if (token_id == PROTOCOL_ENTITY_WBTC_ID)
+        return WBTC_NAME
+    else
+        return USDC_NAME
 }
 
 export function getTokenSymbol(token_id: string): string {
     if (token_id == PROTOCOL_ENTITY_ETH_ID)
         return WETH_SYMBOL;
-    if (token_id == PROTOCOL_ENTITY_AAVE_ID)
+    else if (token_id == PROTOCOL_ENTITY_AAVE_ID)
         return AAVE_SYMBOL;
-    if (token_id == PROTOCOL_ENTITY_LINK_ID)
+    else if (token_id == PROTOCOL_ENTITY_LINK_ID)
         return LINK_SYMBOL;
-    else
+    else if (token_id == PROTOCOL_ENTITY_ERC_ID)
         return DAI_SYMBOL;
+    else if (token_id == PROTOCOL_ENTITY_WBTC_ID)
+        return WBTC_SYMBOL
+    else
+        return USDC_SYMBOL
 }
 
 export function getTokenDecimals(token_id: string): string {
     if (token_id == PROTOCOL_ENTITY_ETH_ID)
         return WETH_DECIMALS;
-    if (token_id == PROTOCOL_ENTITY_AAVE_ID)
+    else if (token_id == PROTOCOL_ENTITY_AAVE_ID)
         return AAVE_DECIMALS;
-    if (token_id == PROTOCOL_ENTITY_LINK_ID)
+    else if (token_id == PROTOCOL_ENTITY_LINK_ID)
         return LINK_DECIMALS;
-    else
+    else if (token_id == PROTOCOL_ENTITY_ERC_ID)
         return DAI_DECIMALS;
+    else if (token_id == PROTOCOL_ENTITY_WBTC_ID)
+        return WBTC_DECIMALS;
+    else
+        return USDC_DECIMALS;
 }

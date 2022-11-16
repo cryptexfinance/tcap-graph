@@ -1,4 +1,4 @@
-import { BigInt, Bytes, log } from "@graphprotocol/graph-ts";
+import { Address, Bytes, log } from "@graphprotocol/graph-ts";
 import {
   ProposalCreated,
   ProposalCanceled,
@@ -63,18 +63,28 @@ export function handleProposalCreated(event: ProposalCreated): void {
   // Creating it anyway since we will want to account for this event data, even though it should've never happened
   proposer = getOrCreateDelegate(event.params.proposer.toHexString());
 
-  proposal.proposer = proposer.id;
-  proposal.targets = event.params.targets as Bytes[];
-  proposal.values = event.params.values;
-  proposal.signatures = event.params.signatures;
-  proposal.calldatas = event.params.calldatas;
-  proposal.startBlock = event.params.startBlock;
-  proposal.endBlock = event.params.endBlock;
-  proposal.description = event.params.description;
-  proposal.status = // @ts-ignore
-    event.block.number >= proposal.startBlock ? STATUS_ACTIVE : STATUS_PENDING;
+  let targetsAsBytes = new Array<Bytes>();
+  let targetsAsAddress = event.params.targets;
+  for (let i = 0; i < targetsAsAddress.length; i++) {
+    targetsAsBytes.push(
+      Bytes.fromHexString(targetsAsAddress[i].toHexString())
+    );
+  }
 
-  proposal.save();
+  if (proposer !== null) {
+    proposal.proposer = proposer.id;
+    proposal.targets = targetsAsBytes;
+    proposal.values = event.params.values;
+    proposal.signatures = event.params.signatures;
+    proposal.calldatas = event.params.calldatas;
+    proposal.startBlock = event.params.startBlock;
+    proposal.endBlock = event.params.endBlock;
+    proposal.description = event.params.description;
+    proposal.status = // @ts-ignore
+      event.block.number >= proposal.startBlock ? STATUS_ACTIVE : STATUS_PENDING;
+
+    proposal.save();
+  }
 }
 
 // - event: ProposalCanceled(uint256)
@@ -140,15 +150,15 @@ export function handleVoteCast(event: VoteCast): void {
 
   // Creating it anyway since we will want to account for this event data, even though it should've never happened
   voter = getOrCreateDelegate(event.params.voter.toHexString());
+  if (voter !== null) {
+    vote.proposal = proposal.id;
+    vote.voter = voter.id;
+    vote.votesRaw = event.params.votes;
+    vote.votes = toDecimal(event.params.votes);
+    vote.support = event.params.support;
 
-  vote.proposal = proposal.id;
-  vote.voter = voter.id;
-  vote.votesRaw = event.params.votes;
-  vote.votes = toDecimal(event.params.votes);
-  vote.support = event.params.support;
-
-  vote.save();
-
+    vote.save();
+  }
   if (proposal.status == STATUS_PENDING) {
     proposal.status = STATUS_ACTIVE;
     proposal.save();
@@ -166,16 +176,21 @@ export function handleDelegateChanged(event: DelegateChanged): void {
     event.params.fromDelegate.toHexString()
   );
   let newDelegate = getOrCreateDelegate(event.params.toDelegate.toHexString());
-
-  tokenHolder.delegate = newDelegate.id;
-  tokenHolder.save();
-
-  previousDelegate.tokenHoldersRepresentedAmount =
-    previousDelegate.tokenHoldersRepresentedAmount - 1;
-  newDelegate.tokenHoldersRepresentedAmount =
-    newDelegate.tokenHoldersRepresentedAmount + 1;
-  previousDelegate.save();
-  newDelegate.save();
+  
+  if (newDelegate !== null) {
+    tokenHolder.delegate = newDelegate.id;
+    tokenHolder.save();
+  }
+  if (previousDelegate !== null) {
+    previousDelegate.tokenHoldersRepresentedAmount =
+      previousDelegate.tokenHoldersRepresentedAmount - 1;
+    previousDelegate.save();
+  }
+  if (newDelegate !== null) {
+    newDelegate.tokenHoldersRepresentedAmount =
+      newDelegate.tokenHoldersRepresentedAmount + 1;
+    newDelegate.save();
+  }
 }
 
 // - event: DelegateVotesChanged(indexed address,uint256,uint256)
@@ -187,10 +202,12 @@ export function handleDelegateVotesChanged(event: DelegateVotesChanged): void {
   let votesDifference = event.params.newBalance.minus(
     event.params.previousBalance
   );
-
-  delegate.delegatedVotesRaw = event.params.newBalance;
-  delegate.delegatedVotes = toDecimal(event.params.newBalance);
-  delegate.save();
+  
+  if (delegate !== null) {
+    delegate.delegatedVotesRaw = event.params.newBalance;
+    delegate.delegatedVotes = toDecimal(event.params.newBalance);
+    delegate.save();
+  }
 
   if (
     event.params.previousBalance == BIGINT_ZERO &&
