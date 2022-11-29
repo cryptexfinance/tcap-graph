@@ -238,7 +238,7 @@ type Position @entity {
 	owner: String!
 	poolAddress: String!
 	staked: Boolean!
-	token0: Bytes!
+    token0: Bytes!
 	token1: Bytes!
 	# lower tick of the position
 	tickLower: Tick!
@@ -249,6 +249,8 @@ type Position @entity {
 	depositedToken1: BigInt!
 	withdrawnToken0: BigInt!
 	withdrawnToken1: BigInt!
+    secondsPerLiquidityInsideX128: BigInt
+	stakedBlockNumber: BigInt!
 }
 
 type APR @entity {

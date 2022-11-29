@@ -1618,6 +1618,35 @@ export class Position extends Entity {
   set withdrawnToken1(value: BigInt) {
     this.set("withdrawnToken1", Value.fromBigInt(value));
   }
+
+  get secondsPerLiquidityInsideX128(): BigInt | null {
+    let value = this.get("secondsPerLiquidityInsideX128");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set secondsPerLiquidityInsideX128(value: BigInt | null) {
+    if (!value) {
+      this.unset("secondsPerLiquidityInsideX128");
+    } else {
+      this.set(
+        "secondsPerLiquidityInsideX128",
+        Value.fromBigInt(<BigInt>value)
+      );
+    }
+  }
+
+  get stakedBlockNumber(): BigInt {
+    let value = this.get("stakedBlockNumber");
+    return value!.toBigInt();
+  }
+
+  set stakedBlockNumber(value: BigInt) {
+    this.set("stakedBlockNumber", Value.fromBigInt(value));
+  }
 }
 
 export class APR extends Entity {
